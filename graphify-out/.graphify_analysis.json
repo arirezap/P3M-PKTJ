@@ -1,0 +1,339 @@
+{
+  "communities": {
+    "0": [
+      "composer",
+      "composer_autoload",
+      "composer_autoload_dev",
+      "composer_autoload_dev_psr_4",
+      "composer_autoload_psr_4",
+      "composer_description",
+      "composer_keywords",
+      "composer_license",
+      "composer_minimum_stability",
+      "composer_name",
+      "composer_prefer_stable",
+      "composer_psr_4_app",
+      "composer_psr_4_database_factories",
+      "composer_psr_4_database_seeders",
+      "composer_psr_4_tests",
+      "composer_require",
+      "composer_require_laravel_framework",
+      "composer_require_laravel_tinker",
+      "composer_require_php",
+      "composer_scripts",
+      "composer_scripts_post_autoload_dump",
+      "composer_scripts_post_create_project_cmd",
+      "composer_scripts_post_root_package_install",
+      "composer_scripts_post_update_cmd",
+      "composer_type"
+    ],
+    "1": [
+      "package",
+      "package_dependencies",
+      "package_dependencies_alpinejs",
+      "package_private",
+      "package_scripts",
+      "package_scripts_build",
+      "package_scripts_dev",
+      "package_type",
+      "ref_alpinejs",
+      "ref_autoprefixer",
+      "ref_axios",
+      "ref_laravel_vite_plugin",
+      "ref_postcss",
+      "ref_tailwindcss",
+      "ref_tailwindcss_forms",
+      "ref_vite",
+      "resources_js_app",
+      "resources_js_bootstrap",
+      "tailwind_config",
+      "tailwindcss",
+      "vite_config"
+    ],
+    "2": [
+      "agents_skills_antislop_human_contrast_check",
+      "agents_skills_antislop_human_contrast_check_contrast_ratio",
+      "agents_skills_antislop_human_contrast_check_linearize",
+      "agents_skills_antislop_human_contrast_check_luminance",
+      "agents_skills_antislop_human_contrast_check_main",
+      "agents_skills_antislop_human_contrast_check_parse_hex",
+      "agents_skills_antislop_human_contrast_check_parse_pairing",
+      "agents_skills_antislop_human_contrast_check_parse_reference_rows",
+      "agents_skills_antislop_human_contrast_check_rationale_2",
+      "agents_skills_antislop_human_contrast_check_rationale_36",
+      "agents_skills_antislop_human_contrast_check_rationale_77",
+      "agents_skills_antislop_human_contrast_check_reference_doc_path",
+      "agents_skills_antislop_human_contrast_check_selftest"
+    ],
+    "3": [
+      "database_migrations_0001_01_01_000000_create_users_table",
+      "database_migrations_0001_01_01_000000_create_users_table_down",
+      "database_migrations_0001_01_01_000000_create_users_table_up",
+      "database_migrations_0001_01_01_000001_create_cache_table",
+      "database_migrations_0001_01_01_000001_create_cache_table_down",
+      "database_migrations_0001_01_01_000001_create_cache_table_up",
+      "database_migrations_0001_01_01_000002_create_jobs_table",
+      "database_migrations_0001_01_01_000002_create_jobs_table_down",
+      "database_migrations_0001_01_01_000002_create_jobs_table_up",
+      "illuminate_database_migrations_migration",
+      "illuminate_database_schema_blueprint",
+      "illuminate_support_facades_schema"
+    ],
+    "4": [
+      "agents_skills_antislop_human_contrast_mcp",
+      "agents_skills_antislop_human_contrast_mcp_channel",
+      "agents_skills_antislop_human_contrast_mcp_check_contrast",
+      "agents_skills_antislop_human_contrast_mcp_contrast_ratio",
+      "agents_skills_antislop_human_contrast_mcp_error",
+      "agents_skills_antislop_human_contrast_mcp_main",
+      "agents_skills_antislop_human_contrast_mcp_rationale_2",
+      "agents_skills_antislop_human_contrast_mcp_relative_luminance",
+      "agents_skills_antislop_human_contrast_mcp_reply",
+      "agents_skills_antislop_human_contrast_mcp_send",
+      "agents_skills_antislop_human_contrast_mcp_text"
+    ],
+    "5": [
+      "config_cache",
+      "config_database",
+      "config_session",
+      "database_factories_userfactory",
+      "database_factories_userfactory_userfactory",
+      "database_factories_userfactory_userfactory_definition",
+      "database_factories_userfactory_userfactory_unverified",
+      "illuminate_database_eloquent_factories_factory",
+      "illuminate_support_facades_hash",
+      "illuminate_support_str",
+      "static"
+    ],
+    "6": [
+      "app_models_user",
+      "app_models_user_user",
+      "app_models_user_user_casts",
+      "database_seeders_databaseseeder",
+      "database_seeders_databaseseeder_databaseseeder",
+      "database_seeders_databaseseeder_databaseseeder_run",
+      "illuminate_database_eloquent_factories_hasfactory",
+      "illuminate_database_seeder",
+      "illuminate_foundation_auth_user",
+      "illuminate_notifications_notifiable"
+    ],
+    "7": [
+      "composer_require_dev",
+      "composer_require_dev_fakerphp_faker",
+      "composer_require_dev_laravel_pint",
+      "composer_require_dev_laravel_sail",
+      "composer_require_dev_mockery_mockery",
+      "composer_require_dev_nunomaduro_collision",
+      "composer_require_dev_phpunit_phpunit",
+      "composer_require_dev_spatie_laravel_ignition"
+    ],
+    "8": [
+      "package_devdependencies",
+      "package_devdependencies_autoprefixer",
+      "package_devdependencies_axios",
+      "package_devdependencies_laravel_vite_plugin",
+      "package_devdependencies_postcss",
+      "package_devdependencies_tailwindcss",
+      "package_devdependencies_tailwindcss_forms",
+      "package_devdependencies_vite"
+    ],
+    "9": [
+      "composer_allow_plugins_pestphp_pest_plugin",
+      "composer_allow_plugins_php_http_discovery",
+      "composer_config",
+      "composer_config_allow_plugins",
+      "composer_config_optimize_autoloader",
+      "composer_config_preferred_install",
+      "composer_config_sort_packages"
+    ],
+    "10": [
+      "illuminate_foundation_testing_testcase",
+      "tests_feature_exampletest",
+      "tests_feature_exampletest_exampletest",
+      "tests_feature_exampletest_exampletest_test_the_application_returns_a_successful_response",
+      "tests_testcase",
+      "tests_testcase_testcase"
+    ],
+    "11": [
+      "app_providers_appserviceprovider",
+      "app_providers_appserviceprovider_appserviceprovider",
+      "app_providers_appserviceprovider_appserviceprovider_boot",
+      "app_providers_appserviceprovider_appserviceprovider_register",
+      "illuminate_support_serviceprovider"
+    ],
+    "12": [
+      "composer_branch_alias_dev_master",
+      "composer_extra",
+      "composer_extra_branch_alias",
+      "composer_extra_laravel",
+      "composer_laravel_dont_discover"
+    ],
+    "13": [
+      "config_logging",
+      "monolog_handler_nullhandler",
+      "monolog_handler_streamhandler",
+      "monolog_handler_syslogudphandler",
+      "monolog_processor_psrlogmessageprocessor"
+    ],
+    "14": [
+      "bootstrap_app",
+      "illuminate_foundation_application",
+      "illuminate_foundation_configuration_exceptions",
+      "illuminate_foundation_configuration_middleware"
+    ],
+    "15": [
+      "phpunit_framework_testcase",
+      "tests_unit_exampletest",
+      "tests_unit_exampletest_exampletest",
+      "tests_unit_exampletest_exampletest_test_that_true_is_true"
+    ],
+    "16": [
+      "illuminate_foundation_inspiring",
+      "illuminate_support_facades_artisan",
+      "routes_console"
+    ],
+    "17": [
+      "app_http_controllers_controller",
+      "app_http_controllers_controller_controller"
+    ],
+    "18": [
+      "illuminate_http_request",
+      "public_index"
+    ],
+    "19": [
+      "illuminate_support_facades_route",
+      "routes_web"
+    ],
+    "20": [
+      "artisan"
+    ],
+    "21": [
+      "bootstrap_providers"
+    ],
+    "22": [
+      "config_app"
+    ],
+    "23": [
+      "config_auth"
+    ],
+    "24": [
+      "config_filesystems"
+    ],
+    "25": [
+      "config_mail"
+    ],
+    "26": [
+      "config_queue"
+    ],
+    "27": [
+      "config_services"
+    ],
+    "28": [
+      "postcss_config"
+    ],
+    "29": [
+      "resources_views_welcome_blade"
+    ]
+  },
+  "cohesion": {
+    "0": 0.08,
+    "1": 0.10476190476190476,
+    "2": 0.28205128205128205,
+    "3": 0.22727272727272727,
+    "4": 0.32727272727272727,
+    "5": 0.21818181818181817,
+    "6": 0.3111111111111111,
+    "7": 0.25,
+    "8": 0.25,
+    "9": 0.2857142857142857,
+    "10": 0.4666666666666667,
+    "11": 0.5,
+    "12": 0.4,
+    "13": 0.4,
+    "14": 0.5,
+    "15": 0.6666666666666666,
+    "16": 0.6666666666666666,
+    "17": 1.0,
+    "18": 1.0,
+    "19": 1.0,
+    "20": 1.0,
+    "21": 1.0,
+    "22": 1.0,
+    "23": 1.0,
+    "24": 1.0,
+    "25": 1.0,
+    "26": 1.0,
+    "27": 1.0,
+    "28": 1.0,
+    "29": 1.0
+  },
+  "gods": [
+    {
+      "id": "composer_require_dev",
+      "label": "require-dev",
+      "degree": 8
+    },
+    {
+      "id": "app_models_user_user",
+      "label": "User",
+      "degree": 7
+    },
+    {
+      "id": "agents_skills_antislop_human_contrast_check_selftest",
+      "label": "selftest()",
+      "degree": 6
+    },
+    {
+      "id": "agents_skills_antislop_human_contrast_mcp_main",
+      "label": "main()",
+      "degree": 5
+    },
+    {
+      "id": "composer_scripts",
+      "label": "scripts",
+      "degree": 5
+    },
+    {
+      "id": "composer_config",
+      "label": "config",
+      "degree": 5
+    },
+    {
+      "id": "agents_skills_antislop_human_contrast_check_parse_pairing",
+      "label": "parse_pairing()",
+      "degree": 4
+    },
+    {
+      "id": "agents_skills_antislop_human_contrast_check_contrast_ratio",
+      "label": "contrast_ratio()",
+      "degree": 4
+    },
+    {
+      "id": "agents_skills_antislop_human_contrast_check_main",
+      "label": "main()",
+      "degree": 4
+    },
+    {
+      "id": "app_providers_appserviceprovider_appserviceprovider",
+      "label": "AppServiceProvider",
+      "degree": 4
+    }
+  ],
+  "surprises": [
+    {
+      "source": "ExampleTest",
+      "target": "TestCase",
+      "source_files": [
+        "tests/Feature/ExampleTest.php",
+        "tests/TestCase.php"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "inherits",
+      "why": "cross-file semantic connection"
+    }
+  ],
+  "tokens": {
+    "input": 0,
+    "output": 0
+  }
+}
