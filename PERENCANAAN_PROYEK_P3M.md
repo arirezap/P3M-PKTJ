@@ -1,11 +1,11 @@
-# 📋 Dokumen Spesifikasi & Perencanaan Proyek Website P3M
+﻿# Dokumen Spesifikasi & Perencanaan Proyek Website P3M
 *(Pusat Penelitian dan Pengabdian kepada Masyarakat - PKTJ)*
 
 ---
 
 ## 1. Ringkasan & Tujuan Proyek
 Website P3M PKTJ berfungsi sebagai:
-1. **Portal Publik & Repositori Resmi**: Menampilkan profil kelembagaan, visi-misi, dokumen renstra & roadmap, rekapitulasi capaian riset & pengabdian dengan grafik interaktif per prodi dan per tahun, etalase luaran (publikasi, HKI, produk/jasa), kerjasama, serta pusat unduhan dokumen (panduan & SOP).
+1. **Portal Publik & Repositori terstandar**: Menampilkan profil kelembagaan, visi-misi, dokumen renstra & roadmap, rekapitulasi capaian riset & pengabdian dengan grafik interaktif per prodi dan per tahun, etalase luaran (publikasi, HKI, produk/jasa), kerjasama, serta pusat unduhan dokumen (panduan & SOP).
 2. **Sistem Informasi Manajemen Riset & Pengabdian (SIM P3M / Internal)**: Portal terotentikasi bagi dosen untuk mengajukan usulan proposal riset/pengabdian lengkap dengan RAB biaya, memantau alur review secara transparan, hingga penetapan keputusan pendanaan.
 
 ---
@@ -20,9 +20,9 @@ Website P3M PKTJ berfungsi sebagai:
 | **Frontend Interaktif** | **Laravel Blade + Alpine.js / Livewire** | Sangat responsif, filter dinamis, tanpa daemon Node.js di server |
 | **Visualisasi Grafik** | **Chart.js / ApexCharts** | Untuk grafik statistik riset & pengabdian per tahun/prodi |
 | **Panduan UI/UX** | **[design.md](design.md)** | Simpel, elegan, anti-AI slop, font **Poppins**, dominan putih dengan aksen biru & kuning Perhubungan, footer biru gelap, **Grid 4px & Multi-Device** |
-| **Filter Standar Kode & UI** | **[anti-slop](AGENTS.md)** | Plugin rulebook resmi untuk mencegah UI generik, fake data, dan komentar AI slop |
+| **Filter Standar Kode & UI** | **[anti-slop](AGENTS.md)** | Plugin rulebook terstandar untuk mencegah UI generik, fake data, dan komentar AI slop |
 | **Codebase & Architecture Graph** | **[graphify](.agents/rules/graphify.md)** | Ekstraksi dan pemetaan struktur arsitektur codebase ke dalam graf relasi (*knowledge graph*) |
-| **Aset Logo** | **[logoPKTJ.png](logoPKTJ.png)** | Logo resmi PKTJ transparan resolusi tinggi sudah siap digunakan |
+| **Aset Logo** | **[logoPKTJ.png](logoPKTJ.png)** | Logo PKTJ transparan resolusi tinggi sudah siap digunakan |
 | **Deployment Target** | **cPanel Hosting via Git Push-Pull** | Menggunakan menu *Git™ Version Control* cPanel |
 
 ---
@@ -82,7 +82,7 @@ Agar seluruh konten di portal publik bersifat dinamis dan mudah dikelola tanpa m
 
 1. **CMS Beranda & Profil Kelembagaan**:
    - **Banner & Hero**: Kelola slider gambar, judul headline sambutan, dan tombol aksi.
-   - **Video Profil**: Kelola tautan embed video profil resmi P3M PKTJ.
+   - **Video Profil**: Kelola tautan embed video profil terstandar P3M PKTJ.
    - **Visi, Misi & Tujuan**: Editor teks dinamis visi, misi, dan sasaran strategis.
    - **Struktur Organisasi (SDM)**: Upload bagan struktur, tambah/edit data pengurus (foto, nama, NIP/NIDN, jabatan).
 
@@ -113,7 +113,7 @@ Agar seluruh konten di portal publik bersifat dinamis dan mudah dikelola tanpa m
 
 8. **CMS Tautan Jurnal & Kontak**:
    - Konfigurasi URL langsung ke portal Jurnal OJS P3M PKTJ.
-   - Pengaturan kontak resmi, alamat kampus, email, dan akun media sosial.
+   - Pengaturan kontak kelembagaan, alamat kampus, email, dan akun media sosial.
 
 ---
 
@@ -144,7 +144,7 @@ Area terotentikasi untuk dosen/peneliti, reviewer, dan admin:
 
 Tabel-tabel utama yang akan dibuat:
 1. `users`: Akun (Dosen, Reviewer, Admin), NIDN/NIP, Prodi, nomor kontak, foto.
-2. `prodis`: Master data program studi di lingkungan kampus.
+2. `prodis`: Master data Program Studi PKTJ (D4 RSTJ, D4 TRO, D3 TO).
 3. `peneliti_profiles`: Data kepakaran, link SINTA, Google Scholar, Scopus dosen.
 4. `proposals`: Usulan riset/pengabdian (tipe: Penelitian / PkM, judul, abstrak, prodi, tahun, skema, sumber dana, file PDF, status).
 5. `proposal_members`: Anggota tim pengusul (dosen anggota & mahasiswa).
@@ -187,7 +187,7 @@ Tabel-tabel utama yang akan dibuat:
    - Konfigurasi koneksi MySQL `.env` ke phpMyAdmin lokal.
 2. **Langkah 2: Pembuatan Migration Database & Model (phpMyAdmin)**
    - Buat tabel users, roles, prodi, profil dosen, dokumen, proposal, reviewer, luaran, dan kerjasama.
-   - Isi data awal (seeder prodi & akun admin/dosen tester).
+   - Isi data awal (seeder 3 Program Studi PKTJ: D4 RSTJ, D4 TRO, D3 TO, serta akun admin, dosen, reviewer tester).
 3. **Langkah 3: Pembuatan Portal Publik**
    - Beranda, Halaman Profil (Renstra, Roadmap, Struktur SDM, Direktori Dosen & Publikasi).
    - Halaman Riset & PkM (Tabel + Grafik Statistik per prodi/tahun).
