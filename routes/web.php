@@ -17,6 +17,8 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Dosen\DashboardController as DosenDashboardController;
 use App\Http\Controllers\Dosen\ProposalController as DosenProposalController;
+use App\Http\Controllers\Dosen\MonevController as DosenMonevController;
+use App\Http\Controllers\Dosen\FinalReportController as DosenFinalReportController;
 use App\Http\Controllers\Reviewer\DashboardController as ReviewerDashboardController;
 use App\Http\Controllers\Reviewer\ProposalReviewController as ReviewerProposalReviewController;
 use App\Http\Controllers\HomeController;
@@ -69,12 +71,13 @@ Route::prefix('pengabdian')->name('pengabdian.')->group(function () {
     Route::get('/kerjasama/{collaboration}/unduh', [PublicCommunityServiceCollaborationController::class, 'downloadDocument'])->name('kerjasama.unduh');
 });
 
-// Halaman Publik Layanan (Panduan dan Pedoman Mutu)
+// Halaman Publik Layanan (Panduan, Pedoman Mutu & SOP)
 Route::prefix('layanan')->name('layanan.')->group(function () {
     Route::get('/', function () {
         return redirect()->route('layanan.panduan-pedoman');
     });
     Route::get('/panduan-pedoman', [PublicGuidelineController::class, 'index'])->name('panduan-pedoman');
+    Route::get('/sop', [PublicGuidelineController::class, 'sop'])->name('sop');
     Route::get('/panduan-pedoman/{document}/unduh', [PublicGuidelineController::class, 'download'])->name('panduan-pedoman.unduh');
 });
 
@@ -88,7 +91,7 @@ Route::get('/dokumen/{document}/unduh', [ProfileController::class, 'downloadDocu
 */
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [LoginController::class, 'login'])->name('login.post');
+    Route::post('/login', [LoginController::class, 'login'])->middleware('throttle:15,1')->name('login.post');
 });
 
 Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
@@ -105,6 +108,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
     // Sub-Menu 1: Modul Penelitian (Siklus Submission s.d. Archive & Penugasan Reviewer)
     Route::prefix('penelitian')->name('penelitian.')->group(function () {
         Route::get('/', [AdminResearchProposalController::class, 'index'])->name('index');
+        Route::get('{proposal}/print', [AdminResearchProposalController::class, 'print'])->name('print');
         Route::post('{proposal}/assign-reviewer', [AdminResearchProposalController::class, 'assignReviewer'])->name('assign-reviewer');
         Route::patch('{proposal}/update-status', [AdminResearchProposalController::class, 'updateStatus'])->name('update-status');
         Route::post('{proposal}/archive', [AdminResearchProposalController::class, 'archive'])->name('archive');
@@ -113,6 +117,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
     // Sub-Menu 2: Modul Pengabdian kepada Masyarakat (Siklus Submission s.d. Archive & Penugasan Reviewer)
     Route::prefix('pengabdian-masyarakat')->name('pengabdian.')->group(function () {
         Route::get('/', [AdminCommunityServiceProposalController::class, 'index'])->name('index');
+        Route::get('{proposal}/print', [AdminCommunityServiceProposalController::class, 'print'])->name('print');
         Route::post('{proposal}/assign-reviewer', [AdminCommunityServiceProposalController::class, 'assignReviewer'])->name('assign-reviewer');
         Route::patch('{proposal}/update-status', [AdminCommunityServiceProposalController::class, 'updateStatus'])->name('update-status');
         Route::post('{proposal}/archive', [AdminCommunityServiceProposalController::class, 'archive'])->name('archive');
@@ -152,6 +157,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
     Route::post('users', [AdminUserController::class, 'store'])->name('users.store');
     Route::get('users/{user}/edit', [AdminUserController::class, 'edit'])->name('users.edit');
     Route::put('users/{user}', [AdminUserController::class, 'update'])->name('users.update');
+    Route::patch('users/{user}/roles', [AdminUserController::class, 'updateRoles'])->name('users.update-roles');
     Route::patch('users/{user}/toggle-status', [AdminUserController::class, 'toggleStatus'])->name('users.toggle-status');
 
     // CMS Pengaturan Beranda & Video Profil
@@ -161,6 +167,10 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
     // CMS Pengaturan Visi, Misi & Tujuan
     Route::get('settings/visi-misi', [AdminSettingController::class, 'editVisiMisi'])->name('settings.visi-misi');
     Route::put('settings/visi-misi', [AdminSettingController::class, 'updateVisiMisi'])->name('settings.visi-misi.update');
+
+    // CMS Pengaturan Header (Navbar) & Footer
+    Route::get('settings/header-footer', [AdminSettingController::class, 'editHeaderFooter'])->name('settings.header-footer');
+    Route::put('settings/header-footer', [AdminSettingController::class, 'updateHeaderFooter'])->name('settings.header-footer.update');
 
     // CMS Struktur Organisasi & Sumber Daya Manusia (SDM)
     Route::get('organization', [AdminOrganizationController::class, 'index'])->name('organization.index');
@@ -183,6 +193,17 @@ Route::prefix('dosen')->middleware(['auth', 'role:dosen'])->name('dosen.')->grou
     Route::resource('proposals', DosenProposalController::class)->except(['index']);
     Route::post('proposals/{proposal}/submit', [DosenProposalController::class, 'submit'])->name('proposals.submit');
     Route::post('proposals/{proposal}/revision', [DosenProposalController::class, 'uploadRevision'])->name('proposals.upload-revision');
+
+    // Pemantauan & Evaluasi (Monev - PDF Hal. 10–12)
+    Route::get('proposals/{proposal}/monev', [DosenMonevController::class, 'create'])->name('proposals.monev.create');
+    Route::post('proposals/{proposal}/monev', [DosenMonevController::class, 'store'])->name('proposals.monev.store');
+    Route::get('proposals/{proposal}/monev/detail', [DosenMonevController::class, 'show'])->name('proposals.monev.show');
+
+    // Pelaporan Akhir Kegiatan (Laporan Akhir - PDF Hal. 13–14)
+    Route::get('proposals/{proposal}/laporan-akhir', [DosenFinalReportController::class, 'create'])->name('proposals.final-report.create');
+    Route::post('proposals/{proposal}/laporan-akhir', [DosenFinalReportController::class, 'store'])->name('proposals.final-report.store');
+    Route::get('proposals/{proposal}/laporan-akhir/detail', [DosenFinalReportController::class, 'show'])->name('proposals.final-report.show');
+    Route::post('proposals/{proposal}/laporan-akhir/revisi', [DosenFinalReportController::class, 'uploadRevision'])->name('proposals.final-report.revision');
 });
 
 /*
@@ -193,5 +214,14 @@ Route::prefix('dosen')->middleware(['auth', 'role:dosen'])->name('dosen.')->grou
 Route::prefix('reviewer')->middleware(['auth', 'role:reviewer'])->name('reviewer.')->group(function () {
     Route::get('/dashboard', [ReviewerDashboardController::class, 'index'])->name('dashboard');
     Route::get('/reviews/{review}', [ReviewerProposalReviewController::class, 'show'])->name('reviews.show');
+    Route::post('/reviews/{review}/agree', [ReviewerProposalReviewController::class, 'agreeReview'])->name('reviews.agree');
     Route::put('/reviews/{review}', [ReviewerProposalReviewController::class, 'update'])->name('reviews.update');
+
+    // Penilaian Kemajuan Monev oleh Reviewer (PDF Hal. 17 & 19)
+    Route::get('/reviews/{review}/monev', [ReviewerProposalReviewController::class, 'monevShow'])->name('reviews.monev.show');
+    Route::put('/reviews/{review}/monev', [ReviewerProposalReviewController::class, 'monevUpdate'])->name('reviews.monev.update');
+
+    // Penilaian Laporan Akhir oleh Reviewer (PDF Hal. 17 & 19)
+    Route::get('/reviews/{review}/laporan-akhir', [ReviewerProposalReviewController::class, 'finalReportShow'])->name('reviews.final-report.show');
+    Route::put('/reviews/{review}/laporan-akhir', [ReviewerProposalReviewController::class, 'finalReportUpdate'])->name('reviews.final-report.update');
 });

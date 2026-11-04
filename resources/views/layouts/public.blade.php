@@ -7,6 +7,11 @@
     <title>@yield('title', 'P3M Politeknik Keselamatan Transportasi Jalan')</title>
     <meta name="description" content="@yield('meta_description', 'Portal Pusat Penelitian dan Pengabdian kepada Masyarakat (P3M) Politeknik Keselamatan Transportasi Jalan (PKTJ) Tegal.')">
     
+    <!-- Favicon / Shortcut Icon (Logo PKTJ) -->
+    <link rel="icon" type="image/png" href="{{ asset('images/logoPKTJ.png') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('images/logoPKTJ.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/logoPKTJ.png') }}">
+
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

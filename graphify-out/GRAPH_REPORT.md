@@ -1,17 +1,17 @@
-# Graph Report - p3m  (2026-11-01)
+# Graph Report - p3m  (2026-11-03)
 
 ## Corpus Check
-- 429 files · ~888,429 words
+- 465 files · ~967,653 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 65 file(s) not represented in the graph (top: .css 45, (none) 17, .example 1)
 
 ## Summary
-- 4557 nodes · 6301 edges · 581 communities (219 shown, 362 thin omitted)
-- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 97 edges (avg confidence: 0.85)
+- 4953 nodes · 6847 edges · 608 communities (234 shown, 374 thin omitted)
+- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 97 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `f560eb81`
+- Built from commit: `d35f1eb5`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -27,13 +27,13 @@
 - Group 1: Hard Gate (absolute, no exceptions)
 - antislop-layoutmobile
 - User
-- AppServiceProvider
+- Setting
 - antislop-ui
 - logging.php
 - bootstrap/app.php
 - ExampleTest
-- console.php
-- Setting
+- Panduan Audit Kode & Tampilan P3M PKTJ
+- Collaboration
 - antislop
 - Part 1: AI Slop Patterns (Warning Signs)
 - What You Must Do When Invoked
@@ -112,15 +112,14 @@
 - createDOMPurify
 - FormComponentWithLabelSpec
 - eS
-- Illuminate\Http\RedirectResponse
+- Audit: Menu & Fitur Beranda dari Seluruh Jenis User
 - tinymce/package.json
 - AstNode
 - AstNode
 - CommonFormat
 - hi
 - xh
-- 4.4.0 - 2016-06-30
-- Research
+- Document
 - execCommand
 - tinymce/composer.json
 - EditorManager
@@ -153,7 +152,7 @@
 - BaseToolbarButtonInstanceApi
 - PERENCANAAN_PROYEK_P3M.md
 - antislop
-- 7. Standar Responsivitas & Multi-Device (PC, Laptop, Tablet, Smartphone)
+- Create Pipeline v1
 - 5.10.0 - 2021-10-11
 - 5.8.0 - 2021-05-06
 - 5.9.0 - 2021-08-26
@@ -164,7 +163,6 @@
 - CommonMenuItemInstanceApi
 - DomSerializerSettings
 - DomTreeWalker
-- AdminCmsTest
 - 5.0.0-beta-1 - 2018-11-30
 - 5.0.0-preview-2 - 2018-10-10
 - 5.0.0-preview-4 - 2018-11-12
@@ -183,8 +181,8 @@
 - 7.9.0 - 2025-05-15
 - BaseDialogFooterButtonSpec
 - BeforeGetContentEvent
-- 10. Sistem Animasi & Interaktivitas Profesional (Motion Design System)
-- 9. Referensi Benchmarking & ATM (Amati, Tiru, Modifikasi) — LPPM Universitas Brawijaya (UB)
+- A. Kualitas Kode
+- 5.3 Alur Telaah Bidang Penelitian (Reviewer View)
 - 4.1.3 - 2014-07-29
 - 4.3.0 - 2015-11-23
 - 4.3.4 - 2016-02-11
@@ -232,7 +230,7 @@
 - Shortcuts
 - Illuminate\Support\Str
 - 4.1.0 - 2014-06-18
-- 4.1.2 - 2014-07-15
+- DBOPS Changeset Generation
 - 4.1.4 - 2014-08-21
 - 4.1.6 - 2014-10-08
 - 4.1.7 - 2014-11-27
@@ -243,31 +241,31 @@
 - 4.2.6 - 2015-09-28
 - 4.3.13 - 2016-06-08
 - 4.3.3 - 2016-01-14
-- 4.1.10 - 2015-05-05
-- PRODUCT REQUIREMENT DOCUMENT (PRD)
+- 2026_11_02_000001_add_roles_to_users_table.php
+- DOKUMEN SPESIFIKASI KEBUTUHAN SISTEM (PRD)
 - 4.4.1 - 2016-07-26
 - 4.6.7 - 2017-09-18
-- Prodi
+- 4.2 Alur Kerja Peneliti: Skema Penelitian & Pengabdian kepada Masyarakat
 - 4.6.1 - 2017-05-10
 - 4.6.5 - 2017-08-02
-- 6.1 Formulir Terstruktur Pendaftaran Proposal (8 Tahapan Step-by-Step)
-- Output
 - 4.7.3 - 2017-11-23
 - 4.4.2 - 2016-08-25
 - Illuminate\Support\Facades\Schema
-- 5.0.3 - 2019-03-19
 - 12. Mandat Konsistensi Desain Global & Clean Code (Global Design Consistency & Reusable Layouts)
 - 4.9.0 - 2018-11-27
+- 4.5.3 - 2017-02-01
 - 6.8.1 - 2023-11-29
 - 4.9.5 - 2019-07-02
+- 4.1.5 - 2014-09-09
+- Illuminate\Database\Schema\Blueprint
 - 5.0.16 - 2019-09-24
+- 4.3.10 - 2016-04-12
 - 4.7.11 - 2018-04-11
 - 6.7.3 - 2023-11-15
 - 4.8.2 - 2018-08-09
 - 8.8.0 - 2026-07-15
 - 8.10.0 - 2026-10-14
 - 8.2.0 - 2025-10-23
-- Illuminate\Database\Schema\Blueprint
 - 8.9.0 - 2026-08-27
 - BaseButtonSpec
 - BasePluginMetadata
@@ -278,28 +276,32 @@
 - NodeChange
 - Quirks
 - 4.3.6 - 2016-03-01
-- 4.1 Rincian Fitur Portal Publik
+- 4.3.12 - 2016-05-10
 - 5.0.8 - 2019-06-18
-- ReviewerReviewTest
+- ProposalReview
+- 4.3.2 - 2015-12-14
 - 6.8.3 - 2024-02-08
-- CheckRole.php
+- 4.3.7 - 2016-03-02
 - 4.8.0 - 2018-06-27
-- 4.9.3 - 2019-01-31
-- 6. SPESIFIKASI MODUL 3: SISTEM INFORMASI MANAJEMEN - TAMPILAN PENELITI (PENELITI VIEW) (PDF Hal. 5–14)
-- 7. SPESIFIKASI MODUL 4: SISTEM INFORMASI MANAJEMEN - TAMPILAN REVIEWER (REVIEWER VIEW) (PDF Hal. 15–20)
+- 4.7.1 - 2017-10-09
+- 4.7.4 - 2017-12-05
+- 4.7.5 - 2018-01-22
+- 4.7.6 - 2018-01-29
+- 4.7.8 - 2018-02-26
+- 4.7.7 - 2018-02-19
 - 5.0.0-preview-3 - 2018-10-18
 - 4.1.1 - 2014-07-08
-- 9. ATURAN BISNIS & BATASAN KHUSUS INSTITUSI PKTJ
-- 5. SPESIFIKASI MODUL 2: SISTEM INFORMASI MANAJEMEN - TAMPILAN ADMINISTRATOR (ADMIN VIEW) (PDF Hal. 3–4)
-- 4.2.2 - 2015-07-22
-- 2. RINGKASAN EKSEKUTIF & TUJUAN PRODUK
+- 4.7.9 - 2018-02-27
+- 4.9.2 - 2018-12-17
+- 4.9.4 - 2019-03-20
+- 4.9.6 - 2019-09-02
 - 4.7.13 - 2018-05-16
-- 4.3.10 - 2016-04-12
-- 4.3.1 - 2015-11-30
-- 4.2.7 - 2015-10-27
+- Harness v1 Native Actions Reference
+- Instructions
+- SAST (Static Application Security Testing)
 - 4.8.5 - 2018-10-30
-- 4.3.11 - 2016-04-25
-- 4.5.2 - 2017-01-04
+- Instructions
+- Instructions
 - autosave/plugin.js
 - importcss/plugin.js
 - save/plugin.js
@@ -361,65 +363,76 @@
 - TableEventData
 - ViewButtonApi
 - 4.9.1 - 2018-12-04
-- 4.6.3 - 2017-05-30
-- 4.6.4 - 2017-06-13
-- 6.1.2 - 2022-07-29
-- 4.9.11 - 2020-07-13
-- 4.9.4 - 2019-03-20
-- 4.9.8 - 2020-01-28
-- 4.9.9 - 2020-03-25
-- 5.10.2 - 2021-11-17
+- DBOPS Liquibase YAML Rules
+- Harness v1 Pipeline Spec Reference
+- Step Types
+- Stages
+- Failure Strategy (`on-failure`)
+- 4.3.8 - 2016-03-15
+- 4.1.2 - 2014-07-15
 - 6.8.2 - 2023-12-11
+- Strategy (Matrix, For, While)
+- 4.1.9 - 2015-03-10
+- Parallel and Group
+- Template Definitions
+- Harness Skills & Pipeline Guidelines
+- Repository and Clone
+- 4.2.3 - 2015-07-30
+- AppServiceProvider.php
 - 5.0.9 - 2019-06-26
+- 5.10.3 - 2022-02-09
 - 5.1.3 - 2019-12-04
-- 5.1.1 - 2019-10-28
-- 5.2.1 - 2020-03-25
-- 8.2.2 - 2025-11-17
-- 5.2.2 - 2020-04-23
-- 8.8.2 - 2026-07-27
-- 5.3.2 - 2020-06-10
-- 5.4.2 - 2020-08-17
-- 5.8.1 - 2021-05-20
-- 6.0.3 - 2022-05-25
-- 6.3.2 - 2023-02-22
-- 6.5.1 - 2023-06-19
-- 5.7.1 - 2021-03-17
-- 6.7.2 - 2023-10-25
-- 7.2.1 - 2024-07-03
-- 8.2.1 - 2025-11-06
-- 8.3.1 - 2025-12-17
-- 7.6.1 - 2025-01-22
+- 6.1.1 - 2022-07-27
+- 6.4.1 - 2023-03-29
+- 7.9.1 - 2025-05-29
+- 4.5.2 - 2017-01-04
+- 4.6.3 - 2017-05-30
+- 6.3.1 - 2022-12-06
+- 4.6.4 - 2017-06-13
+- 4.9.10 - 2020-04-23
+- 8.0.2 - 2025-08-14
+- B. Tampilan & Konsistensi Desain
+- Prodi
+- CheckRole.php
 - 8.3.2 - 2026-01-14
+- 5.1.1 - 2019-10-28
+- 5.3.1 - 2020-05-27
+- Research
+- 6.0.1 - 2022-03-23
+- 6.1.2 - 2022-07-29
+- Output
+- 6.3.2 - 2023-02-22
+- 8.3.1 - 2025-12-17
 - 8.5.1 - 2026-05-19
 
 ## God Nodes (most connected - your core abstractions)
 1. `Changelog` - 211 edges
-2. `User` - 110 edges
-3. `Prodi` - 99 edges
-4. `Proposal` - 49 edges
-5. `Controller` - 48 edges
+2. `User` - 128 edges
+3. `Prodi` - 102 edges
+4. `Proposal` - 70 edges
+5. `Controller` - 52 edges
 6. `Editor` - 47 edges
 7. `YL` - 47 edges
-8. `Editor` - 45 edges
-9. `TestCase` - 42 edges
+8. `TestCase` - 46 edges
+9. `Editor` - 45 edges
 10. `t()` - 33 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `DosenMonevAndFinalReportTest` --references--> `Prodi`  [EXTRACTED]
+  tests/Feature/DosenMonevAndFinalReportTest.php → app/Models/Prodi.php
 - `DosenProposalTest` --references--> `Prodi`  [EXTRACTED]
   tests/Feature/DosenProposalTest.php → app/Models/Prodi.php
 - `ReviewerReviewTest` --references--> `Prodi`  [EXTRACTED]
   tests/Feature/ReviewerReviewTest.php → app/Models/Prodi.php
-- `ReviewerReviewTest` --references--> `Proposal`  [EXTRACTED]
-  tests/Feature/ReviewerReviewTest.php → app/Models/Proposal.php
-- `ReviewerReviewTest` --references--> `ProposalReview`  [EXTRACTED]
-  tests/Feature/ReviewerReviewTest.php → app/Models/ProposalReview.php
-- `AdminCmsTest` --references--> `User`  [EXTRACTED]
-  tests/Feature/AdminCmsTest.php → app/Models/User.php
+- `UserMultiRoleTest` --references--> `Prodi`  [EXTRACTED]
+  tests/Feature/UserMultiRoleTest.php → app/Models/Prodi.php
+- `DosenMonevAndFinalReportTest` --references--> `Proposal`  [EXTRACTED]
+  tests/Feature/DosenMonevAndFinalReportTest.php → app/Models/Proposal.php
 
 ## Import Cycles
 - None detected.
 
-## Communities (581 total, 362 thin omitted)
+## Communities (608 total, 374 thin omitted)
 
 ### Community 0 - "composer.json"
 Cohesion: 0.04
@@ -438,12 +451,12 @@ Cohesion: 0.33
 Nodes (10): _channel(), check_contrast(), contrast_ratio(), _error(), main(), Minimal MCP stdio server exposing the antislop contrast checker as a tool. All…, relative_luminance(), _reply() (+2 more)
 
 ### Community 5 - "Proposal"
-Cohesion: 0.14
-Nodes (3): ProposalController, Proposal, DosenProposalTest
+Cohesion: 0.06
+Nodes (7): FinalReportController, MonevController, ProposalController, Proposal, Illuminate\Database\Eloquent\Relations\HasMany, Illuminate\Database\Eloquent\Relations\HasOne, DosenProposalTest
 
 ### Community 6 - "Illuminate\Database\Eloquent\Relations\BelongsTo"
-Cohesion: 0.07
-Nodes (12): CommunityServiceOutput, OrganizationMember, ProposalBudget, ProposalMember, Illuminate\Database\Eloquent\Builder, Illuminate\Database\Eloquent\Factories\HasFactory, Illuminate\Database\Eloquent\Model, Illuminate\Database\Eloquent\Relations\BelongsTo (+4 more)
+Cohesion: 0.05
+Nodes (13): CommunityServiceOutput, Post, ProposalBudget, ProposalFinalReport, ProposalMember, ProposalMonev, Illuminate\Database\Eloquent\Factories\HasFactory, Illuminate\Database\Eloquent\Model (+5 more)
 
 ### Community 7 - "Tone & Voice"
 Cohesion: 0.05
@@ -459,7 +472,11 @@ Nodes (30): 100vh Sections, antislop-layoutmobile, Bottom Nav That Eats Content,
 
 ### Community 10 - "User"
 Cohesion: 0.03
-Nodes (18): Document, User, Illuminate\Foundation\Testing\RefreshDatabase, Illuminate\Foundation\Testing\TestCase, Illuminate\Http\UploadedFile, Illuminate\Support\Facades\Storage, AdminSettingTest, AdminWorkflowTest (+10 more)
+Nodes (16): User, Illuminate\Foundation\Testing\RefreshDatabase, Illuminate\Foundation\Testing\TestCase, Illuminate\Http\UploadedFile, Illuminate\Support\Facades\Storage, AdminCmsTest, AdminSettingTest, AdminWorkflowTest (+8 more)
+
+### Community 11 - "Setting"
+Cohesion: 0.17
+Nodes (4): SettingController, HomeController, Setting, self
 
 ### Community 12 - "antislop-ui"
 Cohesion: 0.18
@@ -473,9 +490,13 @@ Nodes (4): Monolog\Handler\NullHandler, Monolog\Handler\StreamHandler, Monolog\H
 Cohesion: 0.50
 Nodes (3): Illuminate\Foundation\Application, Illuminate\Foundation\Configuration\Exceptions, Illuminate\Foundation\Configuration\Middleware
 
-### Community 17 - "Setting"
-Cohesion: 0.12
-Nodes (8): SettingController, Setting, DatabaseSeeder, OrganizationMemberSeeder, ProdiSeeder, UserSeeder, Illuminate\Database\Seeder, self
+### Community 16 - "Panduan Audit Kode & Tampilan P3M PKTJ"
+Cohesion: 0.14
+Nodes (14): 0. Cara Pakai, C. Kepatuhan Mandat Proyek (AGENTS.md), Contoh Perintah ke AI Agent, D1. Pemeriksaan Wajib, D2. Kualitas Kode, D3. Tampilan & Mandat Proyek, D4. Deteksi Query N+1 (Opsional, Lingkungan Lokal), D. Perintah Pemeriksaan Otomatis (+6 more)
+
+### Community 17 - "Collaboration"
+Cohesion: 0.05
+Nodes (12): OrganizationController, Collaboration, OrganizationMember, CollaborationSeeder, OrganizationMemberSeeder, ProdiSeeder, UserSeeder, Illuminate\Database\Eloquent\Builder (+4 more)
 
 ### Community 18 - "antislop"
 Cohesion: 0.22
@@ -494,8 +515,8 @@ Cohesion: 0.18
 Nodes (11): 1. Beranda (Homepage), 1. Peran Pengguna (User Roles), 2. Profil, 3. Rincian Kebutuhan Fitur (Berdasarkan File Excel Kebutuhan), 3. Riset (Penelitian), 4. Pengabdian kepada Masyarakat (PkM), 5. Layanan & Regulasi, 6. Jurnal (+3 more)
 
 ### Community 32 - "design.md"
-Cohesion: 0.17
-Nodes (11): 11. Protokol Verifikasi Tampilan & Pembagian Kerja (User vs AI Agent), 1. Filosofi & Prinsip Desain, 2. Palet Warna (Color System), 3. Tipografi, 4. Sistem Grid Spasial 4px (The 4px Grid System), 5. Aturan Penggunaan Ikon (Strict Minimalist), 8. Aset Pendukung yang Sudah Tersedia, A. Skala Spasial & Pemetaan Tailwind CSS (+3 more)
+Cohesion: 0.09
+Nodes (22): 10. Sistem Animasi & Interaktivitas Profesional (Motion Design System), 11. Protokol Verifikasi Tampilan & Pembagian Kerja (User vs AI Agent), 1. Filosofi & Prinsip Desain, 2. Palet Warna (Color System), 3. Tipografi, 4. Sistem Grid Spasial 4px (The 4px Grid System), 5. Aturan Penggunaan Ikon (Strict Minimalist), 7. Standar Responsivitas & Multi-Device (PC, Laptop, Tablet, Smartphone) (+14 more)
 
 ### Community 33 - "antislop-human"
 Cohesion: 0.10
@@ -579,7 +600,7 @@ Nodes (137): TODO: Think about the types for this, or find a better way for this
 
 ### Community 62 - "Changelog"
 Cohesion: 0.01
-Nodes (135): 4.1.5 - 2014-09-09, 4.1.9 - 2015-03-10, 4.2.1 - 2015-06-29, 4.2.3 - 2015-07-30, 4.2.8 - 2015-11-13, 4.3.12 - 2016-05-10, 4.3.2 - 2015-12-14, 4.3.5 - 2016-02-11 (+127 more)
+Nodes (136): 4.1.10 - 2015-05-05, 4.2.1 - 2015-06-29, 4.2.2 - 2015-07-22, 4.2.7 - 2015-10-27, 4.2.8 - 2015-11-13, 4.3.11 - 2016-04-25, 4.3.1 - 2015-11-30, 4.3.5 - 2016-02-11 (+128 more)
 
 ### Community 63 - "tinymce.js"
 Cohesion: 0.02
@@ -677,9 +698,9 @@ Nodes (18): CheckboxSpec, CollectionSpec, ColorInputSpec, ColorPickerSpec, Custo
 Cohesion: 0.21
 Nodes (5): D(), eS, overrideDefaults(), _setBaseUrl(), setup()
 
-### Community 111 - "Illuminate\Http\RedirectResponse"
-Cohesion: 0.05
-Nodes (29): CommunityServiceController, CommunityServiceOutputController, CommunityServiceProposalController, DocumentController, OrganizationController, ProposalController, ResearchProposalController, UserController (+21 more)
+### Community 111 - "Audit: Menu & Fitur Beranda dari Seluruh Jenis User"
+Cohesion: 0.18
+Nodes (10): 1. Analisis Fitur & Menu Beranda Berdasarkan Jenis Pengguna, 2. Ringkasan Skor Kepatuhan, 3. Hasil Pemeriksaan Otomatis, 4. Tabel Temuan Audit & Resolusi, 5. Keputusan Akhir, A. Pengguna Tamu / Publik (Guest / Belum Masuk), Audit: Menu & Fitur Beranda dari Seluruh Jenis User, B. Pengguna Dosen (Terautentikasi / Sudah Masuk) (+2 more)
 
 ### Community 112 - "tinymce/package.json"
 Cohesion: 0.12
@@ -693,13 +714,9 @@ Nodes (16): BaseFormat, Block, BlockFormat, BlockStyleFormat, CommonFormat, Comm
 Cohesion: 0.14
 Nodes (4): add(), createEditor(), hi, items()
 
-### Community 118 - "4.4.0 - 2016-06-30"
-Cohesion: 0.67
-Nodes (3): 4.4.0 - 2016-06-30, Added, Fixed
-
-### Community 119 - "Research"
-Cohesion: 0.06
-Nodes (8): DashboardController, PostController, HomeController, CommunityService, Post, Research, PublicCommunityServicePageTest, PublicResearchPageTest
+### Community 118 - "Document"
+Cohesion: 0.08
+Nodes (5): DocumentController, Document, PublicGuidelinePageTest, PublicRenstraTest, PublicRoadmapTest
 
 ### Community 121 - "tinymce/composer.json"
 Cohesion: 0.14
@@ -762,16 +779,16 @@ Cohesion: 0.29
 Nodes (7): BaseToolbarButtonInstanceApi, BaseToolbarToggleButtonInstanceApi, ContextFormButtonInstanceApi, ContextFormToggleButtonInstanceApi, GroupToolbarButtonInstanceApi, ToolbarButtonInstanceApi, ToolbarToggleButtonInstanceApi
 
 ### Community 150 - "PERENCANAAN_PROYEK_P3M.md"
-Cohesion: 0.20
+Cohesion: 0.18
 Nodes (7): Panduan Agent Proyek Website P3M PKTJ, graphify, 1. Ringkasan & Tujuan Proyek, 2. Keputusan Tech Stack (Final), 4. Perancangan Struktur Basis Data (MySQL / phpMyAdmin), 5. Alur Kerja Git & Deployment cPanel, 6. Rencana Tahapan Eksekusi (Roadmap)
 
 ### Community 151 - "antislop"
-Cohesion: 0.18
-Nodes (11): antislop, Mandat 3 Program Studi PKTJ (Hanya 3 Prodi), Mandat Bahasa & Komunikasi (Bebas Jargon IT Rumit), Mandat Graphify Knowledge Graph (Query Konteks & Update Pasca Sesi), Mandat Larangan Kebocoran Catatan Teknis ke UI Publik (No Dev Notes in UI), Mandat Larangan Keras Emoji di Seluruh Sistem (Strict Zero-Emoji Policy), Mandat Larangan Keras Membuka Browser Otomatis (No Autonomous Browser Launch), Mandat Larangan Penggunaan Kata 'Resmi' (Strict Prohibited 'Resmi' Policy) (+3 more)
+Cohesion: 0.17
+Nodes (12): antislop, Mandat 3 Program Studi PKTJ (Hanya 3 Prodi), Mandat Bahasa & Komunikasi (Bebas Jargon IT Rumit), Mandat Graphify Knowledge Graph (Query Konteks & Update Pasca Sesi), Mandat Harness Skills & Pipeline CI/CD (Otomasi Pengujian & Keamanan), Mandat Larangan Kebocoran Catatan Teknis ke UI Publik (No Dev Notes in UI), Mandat Larangan Keras Emoji di Seluruh Sistem (Strict Zero-Emoji Policy), Mandat Larangan Keras Membuka Browser Otomatis (No Autonomous Browser Launch) (+4 more)
 
-### Community 152 - "7. Standar Responsivitas & Multi-Device (PC, Laptop, Tablet, Smartphone)"
-Cohesion: 0.67
-Nodes (3): 7. Standar Responsivitas & Multi-Device (PC, Laptop, Tablet, Smartphone), A. Strategi Breakpoint (Tailwind CSS), B. Aturan Tata Letak & Ergonomi Mobile (Smartphone & Tablet)
+### Community 152 - "Create Pipeline v1"
+Cohesion: 0.06
+Nodes (30): Action Step, Approval (stage-level), Approval Step (inline), Background Step, CI Stage, Common v1 Syntax Errors, Complete CD Example, Complete CI Example (+22 more)
 
 ### Community 153 - "5.10.0 - 2021-10-11"
 Cohesion: 0.33
@@ -881,13 +898,13 @@ Nodes (5): BaseDialogFooterButtonSpec, DialogFooterMenuButtonSpec, DialogFooterN
 Cohesion: 0.40
 Nodes (5): BeforeGetContentEvent, GetContentArgs, GetContentEvent, GetSelectionContentArgs, SaveContentEvent
 
-### Community 182 - "10. Sistem Animasi & Interaktivitas Profesional (Motion Design System)"
-Cohesion: 0.50
-Nodes (4): 10. Sistem Animasi & Interaktivitas Profesional (Motion Design System), A. Filosofi Gerakan (Motion Principles), B. Spesifikasi Rincian Animasi Komponen Front Page, C. Konfigurasi Transisi Tailwind CSS
+### Community 182 - "A. Kualitas Kode"
+Cohesion: 0.22
+Nodes (9): A1. Clean Code, A2. SOLID Principles, A3. Self-Documenting Code, A4. Testable Code (Dapat Diuji), A5. Performant & Scalable, A6. Keamanan, A7. Database & Integritas Data, A8. Penanganan Error & Log (+1 more)
 
-### Community 183 - "9. Referensi Benchmarking & ATM (Amati, Tiru, Modifikasi) — LPPM Universitas Brawijaya (UB)"
-Cohesion: 0.50
-Nodes (4): 9. Referensi Benchmarking & ATM (Amati, Tiru, Modifikasi) — LPPM Universitas Brawijaya (UB), A. AMATI (Analisis UI/UX & Pola Informasi LPPM UB), B. TIRU (Pola Efektif yang Diadopsi untuk P3M PKTJ), C. MODIFIKASI (Sentuhan Khas, Peningkatan Kualitas, & Standar PKTJ)
+### Community 183 - "5.3 Alur Telaah Bidang Penelitian (Reviewer View)"
+Cohesion: 0.22
+Nodes (9): 1. Daftar Review, 2. Proposal, 3. Monev, 4. Laporan Kegiatan (Laporan Akhir), 5.1 Otentikasi & Halaman Utama Reviewer, 5.2 Standar Skala Skor Penilaian Reviewer, 5.3 Alur Telaah Bidang Penelitian (Reviewer View), 5.4 Alur Telaah Bidang Pengabdian kepada Masyarakat / PKM (Reviewer View) (+1 more)
 
 ### Community 184 - "4.1.3 - 2014-07-29"
 Cohesion: 0.50
@@ -1073,9 +1090,9 @@ Nodes (4): UserFactory, Illuminate\Database\Eloquent\Factories\Factory, Illumina
 Cohesion: 0.67
 Nodes (3): 4.1.0 - 2014-06-18, Added, Fixed
 
-### Community 231 - "4.1.2 - 2014-07-15"
-Cohesion: 0.67
-Nodes (3): 4.1.2 - 2014-07-15, Added, Fixed
+### Community 231 - "DBOPS Changeset Generation"
+Cohesion: 0.07
+Nodes (29): 3-B-1: List existing object names, 3-B-2: Conflict check for CREATE intents, 3-B-3: Fetch full metadata for modify/drop intents, 3-B-4: Resolve foreign key column mappings, `"accept_commit"` — Save + Execute Pipeline, `"accept"` — Save only, DBOPS Changeset Generation, `"deny"` — Discard (+21 more)
 
 ### Community 232 - "4.1.4 - 2014-08-21"
 Cohesion: 0.67
@@ -1117,9 +1134,13 @@ Nodes (3): 4.3.13 - 2016-06-08, Added, Fixed
 Cohesion: 0.67
 Nodes (3): 4.3.3 - 2016-01-14, Added, Fixed
 
-### Community 243 - "PRODUCT REQUIREMENT DOCUMENT (PRD)"
+### Community 242 - "2026_11_02_000001_add_roles_to_users_table.php"
+Cohesion: 0.25
+Nodes (3): Illuminate\Foundation\Inspiring, Illuminate\Support\Facades\Artisan, Illuminate\Support\Facades\DB
+
+### Community 243 - "DOKUMEN SPESIFIKASI KEBUTUHAN SISTEM (PRD)"
 Cohesion: 0.18
-Nodes (10): 10. MATRIKS KETERLACAKAN KEBUTUHAN (*TRACEABILITY MATRIX*) & STATUS IMPLEMENTASI, 11.1 Tahapan Sprint Mendatang, 11. ROADMAP EKSEKUSI PENGEMBANGAN BERTAHAP (SPRINT ROADMAP), 12. PENUTUP & PENGESAHAN DOKUMEN, 1. DOKUMEN KONTROL & METADATA, 3. ARSITEKTUR PENGGUNA & MATRIKS HAK AKSES (RBAC), 8. SPESIFIKASI MODEL ENTITAS & STRUKTUR BASIS DATA, POLITEKNIK KESELAMATAN TRANSPORTASI JALAN (PKTJ) TEGAL (+2 more)
+Nodes (11): 1. PENDAHULUAN & PRINSIP PENGEMBANGAN, 2. KEBUTUHAN WEBSITE P3M (PORTAL PUBLIK), 3.1 Otentikasi & Halaman Utama Admin, 3.2 Alur Meja Kerja Modul Penelitian & Pengabdian kepada Masyarakat (Admin View), 3.3 Menu Pengaturan (Admin View), 3. KEBUTUHAN SISTEM INFORMASI MANAJEMEN - ADMIN VIEW, 6. BATASAN KHUSUS & STANDAR KUALITAS INSTITUSI PKTJ, DOKUMEN SPESIFIKASI KEBUTUHAN SISTEM (PRD) (+3 more)
 
 ### Community 244 - "4.4.1 - 2016-07-26"
 Cohesion: 0.67
@@ -1129,9 +1150,9 @@ Nodes (3): 4.4.1 - 2016-07-26, Added, Fixed
 Cohesion: 0.67
 Nodes (3): 4.6.7 - 2017-09-18, Added, Fixed
 
-### Community 246 - "Prodi"
-Cohesion: 0.05
-Nodes (8): CollaborationController, ResearchController, Collaboration, Prodi, CollaborationSeeder, Illuminate\Database\Eloquent\Relations\HasMany, PublicCollaborationPageTest, PublicCommunityServiceCollaborationPageTest
+### Community 246 - "4.2 Alur Kerja Peneliti: Skema Penelitian & Pengabdian kepada Masyarakat"
+Cohesion: 0.22
+Nodes (9): 1. Pendaftaran Proposal, 2. Review Proposal, 3. Monev (Pemantauan dan Evaluasi), 4.1 Otentikasi & Halaman Utama Peneliti, 4.2 Alur Kerja Peneliti: Skema Penelitian & Pengabdian kepada Masyarakat, 4. KEBUTUHAN SISTEM INFORMASI MANAJEMEN - PENELITI VIEW, 4. Review Monev, 5. Laporan Kegiatan (Laporan Akhir) (+1 more)
 
 ### Community 247 - "4.6.1 - 2017-05-10"
 Cohesion: 0.67
@@ -1141,14 +1162,6 @@ Nodes (3): 4.6.1 - 2017-05-10, Added, Fixed
 Cohesion: 0.67
 Nodes (3): 4.6.5 - 2017-08-02, Added, Fixed
 
-### Community 249 - "6.1 Formulir Terstruktur Pendaftaran Proposal (8 Tahapan Step-by-Step)"
-Cohesion: 0.22
-Nodes (9): 1. Identitas Usulan, 2. Anggota Pengusul, 3. Atribut Usulan, 4. Luaran & Target, 5. Rencana Anggaran Biaya (RAB Rinci), 6.1 Formulir Terstruktur Pendaftaran Proposal (8 Tahapan Step-by-Step), 6. Jadwal Pelaksanaan Kegiatan, 7. Kelengkapan Lain & Kemitraan (+1 more)
-
-### Community 250 - "Output"
-Cohesion: 0.12
-Nodes (3): OutputController, Output, PublicOutputPageTest
-
 ### Community 251 - "4.7.3 - 2017-11-23"
 Cohesion: 0.67
 Nodes (3): 4.7.3 - 2017-11-23, Added, Fixed
@@ -1157,10 +1170,6 @@ Nodes (3): 4.7.3 - 2017-11-23, Added, Fixed
 Cohesion: 0.67
 Nodes (3): 4.4.2 - 2016-08-25, Added, Fixed
 
-### Community 254 - "5.0.3 - 2019-03-19"
-Cohesion: 0.67
-Nodes (3): 5.0.3 - 2019-03-19, Changed, Fixed
-
 ### Community 255 - "12. Mandat Konsistensi Desain Global & Clean Code (Global Design Consistency & Reusable Layouts)"
 Cohesion: 0.33
 Nodes (6): 12. Mandat Konsistensi Desain Global & Clean Code (Global Design Consistency & Reusable Layouts), A. Prinsip Single Source of Truth & Clean Code (DRY), B. Struktur Baku Top Navigation Menu (7 Menu Utama), C. Aturan Visual Indikator Halaman Aktif (Active State), D. Ergonomi & Stabilitas Interaksi Dropdown (Anti-Flicker), E. Konsistensi Mobile Navigation Drawer
@@ -1168,6 +1177,10 @@ Nodes (6): 12. Mandat Konsistensi Desain Global & Clean Code (Global Design Cons
 ### Community 256 - "4.9.0 - 2018-11-27"
 Cohesion: 0.67
 Nodes (3): 4.9.0 - 2018-11-27, Added, Fixed
+
+### Community 257 - "4.5.3 - 2017-02-01"
+Cohesion: 0.67
+Nodes (3): 4.5.3 - 2017-02-01, Added, Fixed
 
 ### Community 258 - "6.8.1 - 2023-11-29"
 Cohesion: 0.67
@@ -1237,85 +1250,145 @@ Nodes (3): InlineBasePattern, InlineCmdPattern, InlineFormatPattern
 Cohesion: 0.67
 Nodes (3): 4.3.6 - 2016-03-01, Added, Fixed
 
-### Community 282 - "4.1 Rincian Fitur Portal Publik"
-Cohesion: 0.25
-Nodes (8): 4.1.1 Menu Beranda (Homepage), 4.1.2 Menu Profil, 4.1.3 Menu Riset, 4.1.4 Menu Pengabdian, 4.1.5 Menu Layanan, 4.1.6 Menu Jurnal & Pintu Masuk SIM, 4.1 Rincian Fitur Portal Publik, 4. SPESIFIKASI MODUL 1: PORTAL WEB PUBLIK & CMS P3M (PDF Hal. 1–2)
-
 ### Community 283 - "5.0.8 - 2019-06-18"
 Cohesion: 0.67
 Nodes (3): 5.0.8 - 2019-06-18, Added, Fixed
+
+### Community 284 - "ProposalReview"
+Cohesion: 0.12
+Nodes (3): ProposalReviewController, ProposalReview, ReviewerReviewTest
 
 ### Community 286 - "6.8.3 - 2024-02-08"
 Cohesion: 0.67
 Nodes (3): 6.8.3 - 2024-02-08, Changed, Fixed
 
-### Community 287 - "CheckRole.php"
-Cohesion: 0.60
-Nodes (3): CheckRole, Closure, Symfony\Component\HttpFoundation\Response
-
 ### Community 288 - "4.8.0 - 2018-06-27"
 Cohesion: 0.67
 Nodes (3): 4.8.0 - 2018-06-27, Added, Fixed
 
-### Community 289 - "4.9.3 - 2019-01-31"
+### Community 301 - "4.7.7 - 2018-02-19"
 Cohesion: 0.67
-Nodes (3): 4.9.3 - 2019-01-31, Added, Fixed
-
-### Community 293 - "6. SPESIFIKASI MODUL 3: SISTEM INFORMASI MANAJEMEN - TAMPILAN PENELITI (PENELITI VIEW) (PDF Hal. 5–14)"
-Cohesion: 0.33
-Nodes (6): 6.2 Pemantauan Status & Pengunggahan Revisi Usulan, 6.3 Pengisian Instrumen Pemantauan dan Evaluasi (Monev), 6.4 Pelaporan Akhir Kegiatan (Laporan Akhir), 6. SPESIFIKASI MODUL 3: SISTEM INFORMASI MANAJEMEN - TAMPILAN PENELITI (PENELITI VIEW) (PDF Hal. 5–14), A. 7 Butir Pertanyaan Pilihan Ganda Capaian (Indikator Kinerja), B. 7 Butir Pertanyaan Essai Kesesuaian (Evaluasi Pelaksanaan)
-
-### Community 297 - "7. SPESIFIKASI MODUL 4: SISTEM INFORMASI MANAJEMEN - TAMPILAN REVIEWER (REVIEWER VIEW) (PDF Hal. 15–20)"
-Cohesion: 0.33
-Nodes (6): 7.1 Standar Skala Skor Penilaian, 7.2 Rubrik Penilaian Proposal Penelitian (PDF Hal. 16), 7.3 Rubrik Penilaian Proposal Pengabdian kepada Masyarakat (PKM) (PDF Hal. 18), 7.4 Rubrik Penilaian Pemantauan dan Evaluasi (Monev) (PDF Hal. 17 & 19), 7.5 Rubrik Penilaian Laporan Akhir Kegiatan (PDF Hal. 17 & 19), 7. SPESIFIKASI MODUL 4: SISTEM INFORMASI MANAJEMEN - TAMPILAN REVIEWER (REVIEWER VIEW) (PDF Hal. 15–20)
+Nodes (3): 4.7.7 - 2018-02-19, Added, Fixed
 
 ### Community 302 - "5.0.0-preview-3 - 2018-10-18"
 Cohesion: 0.67
 Nodes (3): 5.0.0-preview-3 - 2018-10-18, Changed, Fixed
 
-### Community 304 - "9. ATURAN BISNIS & BATASAN KHUSUS INSTITUSI PKTJ"
-Cohesion: 0.29
-Nodes (7): 9.1 Kebijakan 3 Program Studi di Lingkungan PKTJ (Strict 3 Official Prodis Only), 9.2 Kebijakan Larangan Keras Emoji (Strict Zero-Emoji Policy), 9.3 Standar Spasial Grid 4px Tailwind CSS (Strict 4px Multiples Rule), 9.4 Komunikasi Bebas Jargon IT Rumit (User-Centric Academic Wording), 9.5 Mandat Desain Multi-Device Responsif, 9.6 Kebijakan Larangan Penggunaan Kata 'Resmi' (Strict Prohibited 'Resmi' Policy), 9. ATURAN BISNIS & BATASAN KHUSUS INSTITUSI PKTJ
-
-### Community 305 - "5. SPESIFIKASI MODUL 2: SISTEM INFORMASI MANAJEMEN - TAMPILAN ADMINISTRATOR (ADMIN VIEW) (PDF Hal. 3–4)"
-Cohesion: 0.50
-Nodes (4): 5.1 Struktur Navigasi Administrator, 5.2 Alur Meja Kerja Penelitian & Pengabdian (Admin View), 5.3 Modul Pengaturan (User & Roles), 5. SPESIFIKASI MODUL 2: SISTEM INFORMASI MANAJEMEN - TAMPILAN ADMINISTRATOR (ADMIN VIEW) (PDF Hal. 3–4)
-
-### Community 308 - "2. RINGKASAN EKSEKUTIF & TUJUAN PRODUK"
-Cohesion: 0.67
-Nodes (3): 2.1 Latar Belakang, 2.2 Visi & Sasaran Produk, 2. RINGKASAN EKSEKUTIF & TUJUAN PRODUK
-
 ### Community 309 - "4.7.13 - 2018-05-16"
 Cohesion: 0.67
 Nodes (3): 4.7.13 - 2018-05-16, Added, Fixed
+
+### Community 310 - "Harness v1 Native Actions Reference"
+Cohesion: 0.07
+Nodes (29): Action syntax (spec-defined actions), Approvals, Artifact Upload, AWS ECS Deployment, AWS Serverless & Lambda, Azure Deployment, buildAndPushToDocker Key Inputs, Cache (+21 more)
+
+### Community 311 - "Instructions"
+Cohesion: 0.08
+Nodes (24): Analysis Framework, Artifact Errors, Build Failures, Cannot Find Execution, Configuration Errors, Debug Pipeline, Deployment Errors, Diagnose Parameters (+16 more)
+
+### Community 312 - "SAST (Static Application Security Testing)"
+Cohesion: 0.08
+Nodes (23): Bandit (Python - Open Source), Black Duck (by Synopsys), Brakeman (Ruby - Open Source), Checkmarx, Checkmarx One, CodeQL, Configuration Notes, Coverity (Open Source) (+15 more)
 
 ### Community 313 - "4.8.5 - 2018-10-30"
 Cohesion: 0.67
 Nodes (3): 4.8.5 - 2018-10-30, Added, Fixed
 
+### Community 314 - "Instructions"
+Cohesion: 0.09
+Nodes (21): Add Gitleaks to existing CI pipeline, Add secret scan early in pipeline, Configure Secret Scan, Connector Not Found in Pipeline, Examples, Instructions, No Secret Results After Scan, Performance Notes (+13 more)
+
+### Community 315 - "Instructions"
+Cohesion: 0.09
+Nodes (21): Add Harness Code scan to CI pipeline, Add scanner to existing pipeline, Configure Repo Scan, Configure SAST for Python project, Connector Not Found in Pipeline, Examples, Instructions, No Security Results After Scan (+13 more)
+
 ### Community 514 - "4.9.1 - 2018-12-04"
 Cohesion: 0.67
 Nodes (3): 4.9.1 - 2018-12-04, Added, Fixed
 
+### Community 520 - "DBOPS Liquibase YAML Rules"
+Cohesion: 0.11
+Nodes (17): Author, Update Mode, and Error Recovery, Batch Data Migrations, Clarifying Questions Policy, Column resolution, Common Change Types (SQL Examples), createdAt / updatedAt on New SQL Tables, Database-Type Timestamp Rules, DBOPS Liquibase YAML Rules (+9 more)
+
+### Community 531 - "Harness v1 Pipeline Spec Reference"
+Cohesion: 0.15
+Nodes (12): Caching, Complete CD Example (Kubernetes Rolling), Complete CI Example, Event Triggers (`on`), Expressions, Global Environment Variables, Harness v1 Pipeline Spec Reference, Inputs (+4 more)
+
+### Community 532 - "Step Types"
+Cohesion: 0.22
+Nodes (9): Action Step, Approval Step (inline), Background Step, Barrier Step, Queue Step, Run Step, Run Test Step, Step Types (+1 more)
+
+### Community 533 - "Stages"
+Cohesion: 0.25
+Nodes (8): CI Stage (steps only), CI Stage with Runtime, Deployment Stage (service + environment), Multi-Service / Multi-Environment, Pipeline-Level Service/Environment, Stage with Conditional, Stage with Delegate, Stages
+
+### Community 535 - "Failure Strategy (`on-failure`)"
+Cohesion: 0.40
+Nodes (5): Basic Actions, Failure Strategy (`on-failure`), Manual Intervention, Retry, Retry with Manual Intervention Fallback
+
+### Community 548 - "4.1.2 - 2014-07-15"
+Cohesion: 0.67
+Nodes (3): 4.1.2 - 2014-07-15, Added, Fixed
+
+### Community 550 - "Strategy (Matrix, For, While)"
+Cohesion: 0.40
+Nodes (5): For Loop, Matrix (stage-level), Matrix (step-level), Strategy (Matrix, For, While), While Loop
+
+### Community 552 - "Parallel and Group"
+Cohesion: 0.40
+Nodes (5): Parallel and Group, Parallel Stages, Parallel Steps, Stage Group, Step Group
+
+### Community 553 - "Template Definitions"
+Cohesion: 0.50
+Nodes (4): Multi-Step Template (via group), Stage Template, Step Template, Template Definitions
+
+### Community 555 - "Repository and Clone"
+Cohesion: 0.67
+Nodes (3): Clone Configurations, Repository, Repository and Clone
+
+### Community 558 - "AppServiceProvider.php"
+Cohesion: 0.40
+Nodes (3): AppServiceProvider, Illuminate\Support\Facades\View, Illuminate\Support\ServiceProvider
+
+### Community 580 - "B. Tampilan & Konsistensi Desain"
+Cohesion: 0.33
+Nodes (6): B1. Konsistensi Garis Desain, B2. Responsif Multi-Device, B3. Aksesibilitas, B4. Status Tampilan & Interaksi, B5. Bahasa & Teks Antarmuka, B. Tampilan & Konsistensi Desain
+
+### Community 581 - "Prodi"
+Cohesion: 0.05
+Nodes (28): CollaborationController, CommunityServiceController, CommunityServiceOutputController, CommunityServiceProposalController, PostController, ProposalController, ResearchController, ResearchProposalController (+20 more)
+
+### Community 582 - "CheckRole.php"
+Cohesion: 0.60
+Nodes (3): CheckRole, Closure, Symfony\Component\HttpFoundation\Response
+
+### Community 591 - "Research"
+Cohesion: 0.08
+Nodes (6): DashboardController, CommunityService, Research, DatabaseSeeder, PublicCommunityServicePageTest, PublicResearchPageTest
+
+### Community 598 - "Output"
+Cohesion: 0.12
+Nodes (3): OutputController, Output, PublicOutputPageTest
+
 ## Knowledge Gaps
-- **1382 isolated node(s):** `name`, `type`, `description`, `keywords`, `license` (+1377 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2892 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **362 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **1595 isolated node(s):** `name`, `type`, `description`, `keywords`, `license` (+1590 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 3162 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **374 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `t()` connect `t` to `model.js`, `c`, `a`, `n`, `i`, `s`, `tinymce.min.js`, `a`, `theme.min.js`, `C`, `theme.js`, `m`, `i`, `l`, `a`, `h`, `h`, `tinymce.js`?**
-  _High betweenness centrality (0.070) - this node is a cross-community bridge._
-- **Why does `EditorManager` connect `EditorManager` to `Observable`, `tinymce.d.ts`?**
+- **Why does `t()` connect `t` to `theme.js`, `tinymce.js`, `model.js`, `c`, `tinymce.min.js`, `theme.min.js`, `C`, `m`, `i`, `l`, `a`, `h`, `h`, `a`, `n`, `i`, `s`, `c`, `a`?**
   _High betweenness centrality (0.057) - this node is a cross-community bridge._
+- **Why does `EditorManager` connect `EditorManager` to `Observable`, `tinymce.d.ts`?**
+  _High betweenness centrality (0.050) - this node is a cross-community bridge._
 - **Why does `DOMUtils` connect `DOMUtils` to `tinymce.d.ts`?**
-  _High betweenness centrality (0.051) - this node is a cross-community bridge._
+  _High betweenness centrality (0.040) - this node is a cross-community bridge._
 - **What connects `name`, `type`, `description` to the rest of the system?**
-  _1382 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _1595 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `composer.json` be split into smaller, more focused modules?**
   _Cohesion score 0.044444444444444446 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.06881720430107527 - nodes in this community are weakly interconnected._
 - **Should `Proposal` be split into smaller, more focused modules?**
-  _Cohesion score 0.1396011396011396 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06428571428571428 - nodes in this community are weakly interconnected._

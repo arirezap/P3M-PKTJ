@@ -58,15 +58,42 @@ class ProposalController extends Controller
             'skema' => 'required|string|max:150',
             'tahun_anggaran' => 'required|integer|digits:4',
             'sumber_dana' => 'nullable|string|max:100',
+            'kata_kunci' => 'nullable|string|max:255',
+            'bidang_fokus' => 'nullable|string|max:150',
+            'lama_kegiatan_tahun' => 'nullable|integer|min:1|max:5',
+            'topik_kegiatan' => 'nullable|string|max:255',
+            'lokasi_kegiatan' => 'nullable|string|max:255',
+            'bank_nama' => 'nullable|string|max:100',
+            'bank_rekening' => 'nullable|string|max:50',
+            'bank_pemilik' => 'nullable|string|max:150',
+            'nama_berkas_proposal' => 'nullable|string|max:255',
+            'nama_mitra' => 'nullable|string|max:255',
+            'kontribusi_mitra' => 'nullable|string|max:255',
+            'dana_mitra' => 'nullable|numeric|min:0',
+            'dana_tambahan' => 'nullable|numeric|min:0',
+            'file_mitra' => 'nullable|file|mimes:pdf|max:10240',
             'action_type' => 'required|in:draft,diajukan',
             'file_proposal' => 'nullable|file|mimes:pdf|max:10240',
+            'persetujuan_konfirmasi' => 'nullable|boolean',
+            'luaran_target' => 'nullable|array',
+            'luaran_target.*.jenis' => 'required_with:luaran_target|string|max:100',
+            'luaran_target.*.keterangan' => 'nullable|string|max:500',
+            'jadwal_kegiatan' => 'nullable|array',
+            'jadwal_kegiatan.*.nama_kegiatan' => 'required_with:jadwal_kegiatan|string|max:255',
+            'jadwal_kegiatan.*.tahun' => 'nullable|integer|min:1|max:5',
+            'jadwal_kegiatan.*.tanggal_mulai' => 'nullable|date',
+            'jadwal_kegiatan.*.tanggal_selesai' => 'nullable|date',
             'members' => 'nullable|array',
             'members.*.nama' => 'required_with:members|string|max:255',
-            'members.*.peran' => 'required_with:members|in:dosen_anggota,mahasiswa',
+            'members.*.peran' => 'required_with:members|string|max:50',
+            'members.*.kategori_anggota' => 'nullable|string|max:30',
+            'members.*.asal_instansi' => 'nullable|string|max:255',
+            'members.*.negara' => 'nullable|string|max:100',
             'members.*.nidn_nim' => 'nullable|string|max:30',
             'members.*.tugas' => 'nullable|string|max:255',
             'budgets' => 'nullable|array',
             'budgets.*.kategori_belanja' => 'required_with:budgets|string|max:50',
+            'budgets.*.tahun_ke' => 'nullable|integer|min:1|max:5',
             'budgets.*.uraian' => 'required_with:budgets|string|max:255',
             'budgets.*.volume' => 'required_with:budgets|numeric|min:0.01',
             'budgets.*.satuan' => 'required_with:budgets|string|max:50',
@@ -100,6 +127,12 @@ class ProposalController extends Controller
                 $filePath = $request->file('file_proposal')->store('proposals', 'public');
             }
 
+            // Unggah berkas mitra jika ada
+            $fileMitraPath = null;
+            if ($request->hasFile('file_mitra')) {
+                $fileMitraPath = $request->file('file_mitra')->store('proposals_mitra', 'public');
+            }
+
             // Hitung total anggaran dari item RAB
             $totalAnggaran = 0;
             $budgetItems = [];
@@ -112,6 +145,7 @@ class ProposalController extends Controller
 
                     $budgetItems[] = [
                         'kategori_belanja' => $b['kategori_belanja'],
+                        'tahun_ke' => $b['tahun_ke'] ?? 1,
                         'uraian' => $b['uraian'],
                         'volume' => $volume,
                         'satuan' => $b['satuan'],
@@ -126,12 +160,29 @@ class ProposalController extends Controller
                 'jenis' => $validated['jenis'],
                 'judul' => $validated['judul'],
                 'abstrak' => $validated['abstrak'] ?? null,
+                'kata_kunci' => $validated['kata_kunci'] ?? null,
+                'bidang_fokus' => $validated['bidang_fokus'] ?? null,
+                'lama_kegiatan_tahun' => $validated['lama_kegiatan_tahun'] ?? 1,
+                'topik_kegiatan' => $validated['topik_kegiatan'] ?? null,
+                'lokasi_kegiatan' => $validated['lokasi_kegiatan'] ?? null,
                 'prodi_id' => $validated['prodi_id'],
                 'user_id' => $user->id,
                 'tahun_anggaran' => $validated['tahun_anggaran'],
                 'skema' => $validated['skema'],
                 'sumber_dana' => $validated['sumber_dana'] ?? 'DIPA PKTJ',
                 'total_anggaran' => $totalAnggaran,
+                'bank_nama' => $validated['bank_nama'] ?? null,
+                'bank_rekening' => $validated['bank_rekening'] ?? null,
+                'bank_pemilik' => $validated['bank_pemilik'] ?? null,
+                'nama_berkas_proposal' => $validated['nama_berkas_proposal'] ?? null,
+                'nama_mitra' => $validated['nama_mitra'] ?? null,
+                'kontribusi_mitra' => $validated['kontribusi_mitra'] ?? null,
+                'dana_mitra' => $validated['dana_mitra'] ?? null,
+                'dana_tambahan' => $validated['dana_tambahan'] ?? null,
+                'luaran_target' => $validated['luaran_target'] ?? null,
+                'jadwal_kegiatan' => $validated['jadwal_kegiatan'] ?? null,
+                'persetujuan_konfirmasi' => (bool) ($request->input('persetujuan_konfirmasi', false)),
+                'file_mitra' => $fileMitraPath,
                 'file_proposal' => $filePath,
                 'status' => $validated['action_type'],
             ]);
@@ -146,10 +197,15 @@ class ProposalController extends Controller
                         $userId = $matchedUser?->id;
                     }
 
+                    $kategori = $m['kategori_anggota'] ?? (($m['peran'] === 'mahasiswa') ? 'taruna' : 'internal');
+
                     $proposal->members()->create([
                         'user_id' => $userId,
                         'nama' => $m['nama'],
                         'peran' => $m['peran'],
+                        'kategori_anggota' => $kategori,
+                        'asal_instansi' => $m['asal_instansi'] ?? 'Politeknik Keselamatan Transportasi Jalan',
+                        'negara' => $m['negara'] ?? 'Indonesia',
                         'nidn_nim' => $m['nidn_nim'] ?? null,
                         'tugas' => $m['tugas'] ?? null,
                     ]);
@@ -250,15 +306,42 @@ class ProposalController extends Controller
             'skema' => 'required|string|max:150',
             'tahun_anggaran' => 'required|integer|digits:4',
             'sumber_dana' => 'nullable|string|max:100',
+            'kata_kunci' => 'nullable|string|max:255',
+            'bidang_fokus' => 'nullable|string|max:150',
+            'lama_kegiatan_tahun' => 'nullable|integer|min:1|max:5',
+            'topik_kegiatan' => 'nullable|string|max:255',
+            'lokasi_kegiatan' => 'nullable|string|max:255',
+            'bank_nama' => 'nullable|string|max:100',
+            'bank_rekening' => 'nullable|string|max:50',
+            'bank_pemilik' => 'nullable|string|max:150',
+            'nama_berkas_proposal' => 'nullable|string|max:255',
+            'nama_mitra' => 'nullable|string|max:255',
+            'kontribusi_mitra' => 'nullable|string|max:255',
+            'dana_mitra' => 'nullable|numeric|min:0',
+            'dana_tambahan' => 'nullable|numeric|min:0',
+            'file_mitra' => 'nullable|file|mimes:pdf|max:10240',
             'action_type' => 'required|in:draft,diajukan',
             'file_proposal' => 'nullable|file|mimes:pdf|max:10240',
+            'persetujuan_konfirmasi' => 'nullable|boolean',
+            'luaran_target' => 'nullable|array',
+            'luaran_target.*.jenis' => 'required_with:luaran_target|string|max:100',
+            'luaran_target.*.keterangan' => 'nullable|string|max:500',
+            'jadwal_kegiatan' => 'nullable|array',
+            'jadwal_kegiatan.*.nama_kegiatan' => 'required_with:jadwal_kegiatan|string|max:255',
+            'jadwal_kegiatan.*.tahun' => 'nullable|integer|min:1|max:5',
+            'jadwal_kegiatan.*.tanggal_mulai' => 'nullable|date',
+            'jadwal_kegiatan.*.tanggal_selesai' => 'nullable|date',
             'members' => 'nullable|array',
             'members.*.nama' => 'required_with:members|string|max:255',
-            'members.*.peran' => 'required_with:members|in:dosen_anggota,mahasiswa',
+            'members.*.peran' => 'required_with:members|string|max:50',
+            'members.*.kategori_anggota' => 'nullable|string|max:30',
+            'members.*.asal_instansi' => 'nullable|string|max:255',
+            'members.*.negara' => 'nullable|string|max:100',
             'members.*.nidn_nim' => 'nullable|string|max:30',
             'members.*.tugas' => 'nullable|string|max:255',
             'budgets' => 'nullable|array',
             'budgets.*.kategori_belanja' => 'required_with:budgets|string|max:50',
+            'budgets.*.tahun_ke' => 'nullable|integer|min:1|max:5',
             'budgets.*.uraian' => 'required_with:budgets|string|max:255',
             'budgets.*.volume' => 'required_with:budgets|numeric|min:0.01',
             'budgets.*.satuan' => 'required_with:budgets|string|max:50',
@@ -277,6 +360,15 @@ class ProposalController extends Controller
                 $filePath = $request->file('file_proposal')->store('proposals', 'public');
             }
 
+            // Unggah berkas mitra jika ada
+            $fileMitraPath = $proposal->file_mitra;
+            if ($request->hasFile('file_mitra')) {
+                if ($fileMitraPath && Storage::disk('public')->exists($fileMitraPath)) {
+                    Storage::disk('public')->delete($fileMitraPath);
+                }
+                $fileMitraPath = $request->file('file_mitra')->store('proposals_mitra', 'public');
+            }
+
             // Hitung total anggaran
             $totalAnggaran = 0;
             $budgetItems = [];
@@ -289,6 +381,7 @@ class ProposalController extends Controller
 
                     $budgetItems[] = [
                         'kategori_belanja' => $b['kategori_belanja'],
+                        'tahun_ke' => $b['tahun_ke'] ?? 1,
                         'uraian' => $b['uraian'],
                         'volume' => $volume,
                         'satuan' => $b['satuan'],
@@ -307,11 +400,28 @@ class ProposalController extends Controller
                 'jenis' => $validated['jenis'],
                 'judul' => $validated['judul'],
                 'abstrak' => $validated['abstrak'] ?? null,
+                'kata_kunci' => $validated['kata_kunci'] ?? null,
+                'bidang_fokus' => $validated['bidang_fokus'] ?? null,
+                'lama_kegiatan_tahun' => $validated['lama_kegiatan_tahun'] ?? 1,
+                'topik_kegiatan' => $validated['topik_kegiatan'] ?? null,
+                'lokasi_kegiatan' => $validated['lokasi_kegiatan'] ?? null,
                 'prodi_id' => $validated['prodi_id'],
                 'tahun_anggaran' => $validated['tahun_anggaran'],
                 'skema' => $validated['skema'],
                 'sumber_dana' => $validated['sumber_dana'] ?? 'DIPA PKTJ',
                 'total_anggaran' => $totalAnggaran,
+                'bank_nama' => $validated['bank_nama'] ?? null,
+                'bank_rekening' => $validated['bank_rekening'] ?? null,
+                'bank_pemilik' => $validated['bank_pemilik'] ?? null,
+                'nama_berkas_proposal' => $validated['nama_berkas_proposal'] ?? $proposal->nama_berkas_proposal,
+                'nama_mitra' => $validated['nama_mitra'] ?? null,
+                'kontribusi_mitra' => $validated['kontribusi_mitra'] ?? null,
+                'dana_mitra' => $validated['dana_mitra'] ?? null,
+                'dana_tambahan' => $validated['dana_tambahan'] ?? null,
+                'luaran_target' => $validated['luaran_target'] ?? null,
+                'jadwal_kegiatan' => $validated['jadwal_kegiatan'] ?? null,
+                'persetujuan_konfirmasi' => (bool) ($request->input('persetujuan_konfirmasi', false)),
+                'file_mitra' => $fileMitraPath,
                 'file_proposal' => $filePath,
                 'status' => $newStatus,
             ]);
@@ -326,10 +436,15 @@ class ProposalController extends Controller
                         $userId = $matchedUser?->id;
                     }
 
+                    $kategori = $m['kategori_anggota'] ?? (($m['peran'] === 'mahasiswa') ? 'taruna' : 'internal');
+
                     $proposal->members()->create([
                         'user_id' => $userId,
                         'nama' => $m['nama'],
                         'peran' => $m['peran'],
+                        'kategori_anggota' => $kategori,
+                        'asal_instansi' => $m['asal_instansi'] ?? 'Politeknik Keselamatan Transportasi Jalan',
+                        'negara' => $m['negara'] ?? 'Indonesia',
                         'nidn_nim' => $m['nidn_nim'] ?? null,
                         'tugas' => $m['tugas'] ?? null,
                     ]);

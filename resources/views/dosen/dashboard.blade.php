@@ -63,11 +63,46 @@
 
     </div>
 
+    <!-- Tab Navigasi Skema Kegiatan (Penelitian vs Pengabdian) -->
+    <div class="border-b border-slate-200">
+        <nav class="flex space-x-2 sm:space-x-4 overflow-x-auto" aria-label="Tabs Usulan">
+            <a href="{{ route('dosen.dashboard', ['tab' => 'semua']) }}"
+               class="whitespace-nowrap py-3 px-4 border-b-2 font-semibold text-xs leading-4 transition-colors flex items-center gap-2 {{ $selectedTab === 'semua' ? 'border-[#0B2A59] text-[#0B2A59]' : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300' }}">
+                <span>Semua Usulan</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold {{ $selectedTab === 'semua' ? 'bg-blue-100 text-[#0B2A59]' : 'bg-slate-100 text-slate-600' }}">
+                    {{ $tabCounts['semua'] }}
+                </span>
+            </a>
+            <a href="{{ route('dosen.dashboard', ['tab' => 'penelitian']) }}"
+               class="whitespace-nowrap py-3 px-4 border-b-2 font-semibold text-xs leading-4 transition-colors flex items-center gap-2 {{ $selectedTab === 'penelitian' ? 'border-[#0B2A59] text-[#0B2A59]' : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300' }}">
+                <span>Penelitian</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold {{ $selectedTab === 'penelitian' ? 'bg-blue-100 text-[#0B2A59]' : 'bg-slate-100 text-slate-600' }}">
+                    {{ $tabCounts['penelitian'] }}
+                </span>
+            </a>
+            <a href="{{ route('dosen.dashboard', ['tab' => 'pengabdian']) }}"
+               class="whitespace-nowrap py-3 px-4 border-b-2 font-semibold text-xs leading-4 transition-colors flex items-center gap-2 {{ $selectedTab === 'pengabdian' ? 'border-[#0B2A59] text-[#0B2A59]' : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300' }}">
+                <span>Pengabdian kepada Masyarakat</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold {{ $selectedTab === 'pengabdian' ? 'bg-blue-100 text-[#0B2A59]' : 'bg-slate-100 text-slate-600' }}">
+                    {{ $tabCounts['pengabdian'] }}
+                </span>
+            </a>
+        </nav>
+    </div>
+
     <!-- Daftar Usulan Proposal Aktif -->
     <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm space-y-4 p-6">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-                <h2 class="text-base font-bold text-[#0B2A59] leading-6">Daftar Usulan Penelitian & Pengabdian Masyarakat</h2>
+                <h2 class="text-base font-bold text-[#0B2A59] leading-6">
+                    @if($selectedTab === 'penelitian')
+                        Daftar Usulan Penelitian
+                    @elseif($selectedTab === 'pengabdian')
+                        Daftar Usulan Pengabdian kepada Masyarakat
+                    @else
+                        Daftar Seluruh Usulan Penelitian & Pengabdian Masyarakat
+                    @endif
+                </h2>
                 <p class="text-xs text-slate-500 leading-4">Pantau tahapan seleksi, catatan reviewer, dan rincian anggaran biaya usulan Anda.</p>
             </div>
         </div>

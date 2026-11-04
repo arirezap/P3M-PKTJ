@@ -19,9 +19,26 @@ class CommunityServiceProposalController extends Controller
      */
     public function index(Request $request): View
     {
-        $query = Proposal::with(['prodi', 'ketua', 'reviews.reviewer'])
+        $query = Proposal::with(['prodi', 'ketua', 'reviews.reviewer', 'monev', 'finalReport'])
             ->pengabdian()
             ->latest('id');
+
+        // 4 Menu/Tab Utama Sesuai Dokumen Acuan PDF Halaman 3-4
+        $selectedTab = $request->query('tab', 'masuk');
+        if ($selectedTab === 'belum_ditugaskan') {
+            $query->whereIn('status', ['diajukan', 'verifikasi_administrasi'])
+                  ->whereDoesntHave('reviews');
+        } elseif ($selectedTab === 'sedang_ditugaskan') {
+            $query->where(function ($q) {
+                $q->where('status', 'sedang_direview')
+                  ->orWhere(function ($sub) {
+                      $sub->whereIn('status', ['verifikasi_administrasi', 'revisi'])
+                          ->whereHas('reviews');
+                  });
+            });
+        } elseif ($selectedTab === 'arsip') {
+            $query->where('status', 'archive');
+        }
 
         // Filter Tahapan / Status Siklus
         $selectedStatus = $request->query('status', 'semua');
@@ -101,11 +118,30 @@ class CommunityServiceProposalController extends Controller
             ->orderByDesc('tahun_anggaran')
             ->pluck('tahun_anggaran');
 
+        $tabCounts = [
+            'masuk' => Proposal::pengabdian()->count(),
+            'belum_ditugaskan' => Proposal::pengabdian()
+                ->whereIn('status', ['diajukan', 'verifikasi_administrasi'])
+                ->whereDoesntHave('reviews')
+                ->count(),
+            'sedang_ditugaskan' => Proposal::pengabdian()
+                ->where(function ($q) {
+                    $q->where('status', 'sedang_direview')
+                      ->orWhere(function ($sub) {
+                          $sub->whereIn('status', ['verifikasi_administrasi', 'revisi'])
+                              ->whereHas('reviews');
+                      });
+                })->count(),
+            'arsip' => Proposal::pengabdian()->where('status', 'archive')->count(),
+        ];
+
         return view('admin.pengabdian.index', compact(
             'proposals',
             'prodis',
             'reviewers',
             'stats',
+            'tabCounts',
+            'selectedTab',
             'selectedStatus',
             'selectedProdi',
             'selectedYear',
@@ -193,6 +229,28 @@ class CommunityServiceProposalController extends Controller
         ]);
 
         return back()->with('success', "Kegiatan PkM {$proposal->kode_usulan} berhasil diarsipkan (Archive).");
+    }
+
+    /**
+     * Cetak lembar rekapitulasi capaian dan arsip kegiatan PkM (Printable Sheet).
+     */
+    public function print(Proposal $proposal): View
+    {
+        if ($proposal->jenis !== 'pengabdian') {
+            abort(404);
+        }
+
+        $proposal->load([
+            'prodi',
+            'ketua.prodi',
+            'members',
+            'budgets',
+            'reviews.reviewer.prodi',
+            'monev',
+            'finalReport',
+        ]);
+
+        return view('admin.proposals.print', compact('proposal'));
     }
 }
 

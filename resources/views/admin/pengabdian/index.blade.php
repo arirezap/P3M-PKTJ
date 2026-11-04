@@ -33,6 +33,43 @@
         </div>
     </div>
 
+    <!-- 4 MENU UTAMA MEJA KERJA PENGABDIAN MASYARAKAT (SESUAI DOKUMEN ACUAN PDF HALAMAN 3-4) -->
+    <div class="bg-white border border-slate-200 rounded-2xl p-2 shadow-xs">
+        <nav class="flex space-x-2 overflow-x-auto text-xs font-semibold">
+            <a href="{{ route('admin.pengabdian.index', array_merge(request()->except('tab', 'page'), ['tab' => 'masuk'])) }}"
+               class="inline-flex items-center gap-2 px-4 py-3 rounded-xl transition-colors whitespace-nowrap {{ $selectedTab === 'masuk' ? 'bg-[#0B2A59] text-white shadow-xs' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' }}">
+                <span>Daftar Proposal dan Laporan Masuk</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] {{ $selectedTab === 'masuk' ? 'bg-white/20 text-white' : 'bg-slate-200 text-slate-700' }}">
+                    {{ $tabCounts['masuk'] }}
+                </span>
+            </a>
+
+            <a href="{{ route('admin.pengabdian.index', array_merge(request()->except('tab', 'page'), ['tab' => 'belum_ditugaskan'])) }}"
+               class="inline-flex items-center gap-2 px-4 py-3 rounded-xl transition-colors whitespace-nowrap {{ $selectedTab === 'belum_ditugaskan' ? 'bg-amber-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' }}">
+                <span>Belum Ditugaskan</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] {{ $selectedTab === 'belum_ditugaskan' ? 'bg-white/20 text-white' : 'bg-amber-100 text-amber-800' }}">
+                    {{ $tabCounts['belum_ditugaskan'] }}
+                </span>
+            </a>
+
+            <a href="{{ route('admin.pengabdian.index', array_merge(request()->except('tab', 'page'), ['tab' => 'sedang_ditugaskan'])) }}"
+               class="inline-flex items-center gap-2 px-4 py-3 rounded-xl transition-colors whitespace-nowrap {{ $selectedTab === 'sedang_ditugaskan' ? 'bg-purple-700 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' }}">
+                <span>Sedang Ditugaskan</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] {{ $selectedTab === 'sedang_ditugaskan' ? 'bg-white/20 text-white' : 'bg-purple-100 text-purple-800' }}">
+                    {{ $tabCounts['sedang_ditugaskan'] }}
+                </span>
+            </a>
+
+            <a href="{{ route('admin.pengabdian.index', array_merge(request()->except('tab', 'page'), ['tab' => 'arsip'])) }}"
+               class="inline-flex items-center gap-2 px-4 py-3 rounded-xl transition-colors whitespace-nowrap {{ $selectedTab === 'arsip' ? 'bg-slate-800 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' }}">
+                <span>Arsip Selesai</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] {{ $selectedTab === 'arsip' ? 'bg-white/20 text-white' : 'bg-slate-200 text-slate-700' }}">
+                    {{ $tabCounts['arsip'] }}
+                </span>
+            </a>
+        </nav>
+    </div>
+
     <!-- PIPELINE INDIKATOR SIKLUS PKM (SUBMISSION S.D. ARCHIVE) -->
     <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs space-y-4">
         <div class="flex items-center justify-between">
@@ -96,6 +133,7 @@
     <!-- FILTER PENCARIAN & SELEKSI PRODI -->
     <div class="bg-white border border-slate-200 rounded-xl p-4 sm:p-5 shadow-xs">
         <form method="GET" action="{{ route('admin.pengabdian.index') }}" class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+            <input type="hidden" name="tab" value="{{ $selectedTab }}">
             
             <!-- Filter Status Dropdown -->
             <div>
@@ -204,21 +242,38 @@
                                     <span>•</span>
                                     <span>Sumber: {{ $prop->sumber_dana }}</span>
                                 </div>
-                                @if($prop->file_proposal)
-                                    <div class="mt-2">
-                                        <a href="{{ asset('storage/' . $prop->file_proposal) }}" target="_blank" class="inline-flex items-center gap-1 text-[11px] font-semibold text-[#0B2A59] hover:underline">
-                                            <span>Unduh Berkas Usulan</span>
-                                            <span>↗</span>
+                                <div class="mt-2.5 flex flex-wrap items-center gap-1.5 pt-2 border-t border-slate-100">
+                                    @if($prop->file_proposal)
+                                        <a href="{{ asset('storage/' . $prop->file_proposal) }}" target="_blank" class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-50 text-[#0B2A59] border border-blue-200 hover:bg-blue-100 transition-colors leading-4" title="Unduh Berkas Usulan Proposal PKM">
+                                            <svg class="w-3 h-3 text-[#0B2A59]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                            <span>Proposal</span>
                                         </a>
-                                        @if($prop->file_revisi)
-                                            <span class="text-slate-300 mx-1">|</span>
-                                            <a href="{{ asset('storage/' . $prop->file_revisi) }}" target="_blank" class="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 hover:underline">
-                                                <span>Berkas Revisi</span>
-                                                <span>↗</span>
-                                            </a>
-                                        @endif
-                                    </div>
-                                @endif
+                                    @endif
+                                    @if($prop->file_revisi)
+                                        <a href="{{ asset('storage/' . $prop->file_revisi) }}" target="_blank" class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 hover:bg-emerald-100 transition-colors leading-4" title="Unduh Berkas Revisi Proposal PKM">
+                                            <svg class="w-3 h-3 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                                            <span>Revisi</span>
+                                        </a>
+                                    @endif
+                                    @if($prop->monev && $prop->monev->file_laporan_kemajuan)
+                                        <a href="{{ asset('storage/' . $prop->monev->file_laporan_kemajuan) }}" target="_blank" class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-indigo-50 text-indigo-800 border border-indigo-200 hover:bg-indigo-100 transition-colors leading-4" title="Unduh Berkas Monev Lapangan PKM">
+                                            <svg class="w-3 h-3 text-indigo-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                                            <span>Monev</span>
+                                        </a>
+                                    @endif
+                                    @if($prop->finalReport && $prop->finalReport->file_laporan_akhir)
+                                        <a href="{{ asset('storage/' . $prop->finalReport->file_laporan_akhir) }}" target="_blank" class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 hover:bg-emerald-100 transition-colors leading-4" title="Unduh Berkas Laporan Akhir Kegiatan PKM">
+                                            <svg class="w-3 h-3 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                            <span>Laporan Kegiatan</span>
+                                        </a>
+                                    @endif
+                                    @if($prop->finalReport && $prop->finalReport->file_spj)
+                                        <a href="{{ asset('storage/' . $prop->finalReport->file_spj) }}" target="_blank" class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-teal-50 text-teal-800 border border-teal-200 hover:bg-teal-100 transition-colors leading-4" title="Unduh Berkas SPJ 100%">
+                                            <svg class="w-3 h-3 text-teal-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                                            <span>SPJ</span>
+                                        </a>
+                                    @endif
+                                </div>
                             </td>
 
                             <!-- Ketua & Prodi -->

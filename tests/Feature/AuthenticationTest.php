@@ -15,6 +15,7 @@ class AuthenticationTest extends TestCase
         parent::setUp();
         $this->seed();
     }
+
     public function test_login_screen_can_be_rendered(): void
     {
         $response = $this->get('/login');
@@ -54,6 +55,31 @@ class AuthenticationTest extends TestCase
 
         $this->assertAuthenticated();
         $response->assertRedirect('/reviewer/dashboard');
+    }
+
+    public function test_user_can_authenticate_using_nidn_nip(): void
+    {
+        $response = $this->post('/login', [
+            'login' => '0612048001',
+            'password' => 'password',
+        ]);
+
+        $this->assertAuthenticated();
+        $response->assertRedirect('/dosen/dashboard');
+    }
+
+    public function test_deactivated_user_cannot_authenticate(): void
+    {
+        $user = User::where('email', 'dosen@pktj.ac.id')->first();
+        $user->update(['status_aktif' => false]);
+
+        $response = $this->post('/login', [
+            'login' => 'dosen@pktj.ac.id',
+            'password' => 'password',
+        ]);
+
+        $this->assertGuest();
+        $response->assertSessionHasErrors(['login']);
     }
 
     public function test_users_cannot_authenticate_with_invalid_password(): void

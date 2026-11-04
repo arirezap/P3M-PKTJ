@@ -156,4 +156,50 @@ class PublicGuidelinePageTest extends TestCase
             'id' => $doc->id,
         ]);
     }
+
+    public function test_public_can_access_sop_page(): void
+    {
+        $response = $this->get(route('layanan.sop'));
+
+        $response->assertStatus(200);
+        $response->assertSee('Standar Operasional Prosedur (SOP)');
+        $response->assertSee('SOP Bidang Penelitian');
+        $response->assertSee('SOP Bidang Pengabdian kepada Masyarakat');
+        $response->assertSee('Standar Operasional Prosedur (SOP) Pengusulan Riset DIPA');
+        $response->assertSee('Standar Operasional Prosedur (SOP) Pengabdian kepada Masyarakat');
+    }
+
+    public function test_search_sop_by_keyword(): void
+    {
+        $response = $this->get(route('layanan.sop', ['q' => 'DIPA']));
+
+        $response->assertStatus(200);
+        $response->assertSee('Standar Operasional Prosedur (SOP) Pengusulan Riset DIPA');
+        $response->assertDontSee('Standar Operasional Prosedur (SOP) Pengabdian kepada Masyarakat');
+    }
+
+    public function test_download_sop_increments_counter(): void
+    {
+        Storage::fake('public');
+
+        $admin = User::where('role', 'admin')->first();
+        $file = UploadedFile::fake()->create('sop_test.pdf', 400, 'application/pdf');
+        $path = $file->store('documents', 'public');
+
+        $doc = Document::create([
+            'judul' => 'SOP Pengujian Rem Kendaraan',
+            'kategori' => 'sop_penelitian',
+            'deskripsi' => 'Deskripsi berkas uji coba SOP unduhan.',
+            'file_path' => $path,
+            'file_size' => '400 KB',
+            'tahun' => '2026',
+            'user_id' => $admin->id,
+            'download_count' => 2,
+        ]);
+
+        $response = $this->get(route('layanan.panduan-pedoman.unduh', $doc));
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals(3, $doc->fresh()->download_count);
+    }
 }

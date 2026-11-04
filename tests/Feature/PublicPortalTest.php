@@ -39,15 +39,15 @@ class PublicPortalTest extends TestCase
         $response->assertSee('D3 TO');
     }
 
-    public function test_landing_page_displays_dynamic_posts_and_documents(): void
+    public function test_landing_page_displays_dynamic_posts_and_announcements(): void
     {
         $response = $this->get('/');
 
         $response->assertStatus(200);
-        // Cek berita dari seeder
+        // Cek pengumuman dari seeder
         $response->assertSee('Sosialisasi Panduan Call for Proposals');
-        // Cek dokumen dari seeder
-        $response->assertSee('Standar Operasional Prosedur (SOP) Pengusulan Riset DIPA');
+        // Cek berita dari seeder
+        $response->assertSee('Diseminasi Hasil Riset Prototipe Sensor Blind Spot');
     }
 
     public function test_homepage_fulfills_stakeholder_requirements_tentang_p3m_video_profil_berita_terkini(): void
@@ -79,8 +79,9 @@ class PublicPortalTest extends TestCase
         $response = $this->get('/');
 
         $response->assertStatus(200);
-        $response->assertSee('Login SIM P3M');
-        $response->assertSee('Masuk ke SIM P3M PKTJ');
+        $response->assertSee(route('login'));
+        $response->assertDontSee('Masuk ke SIM P3M PKTJ');
+        $response->assertDontSee('Masuk SIM P3M');
     }
 
     public function test_navbar_and_footer_display_dashboard_and_logout_for_authenticated_admin(): void
@@ -107,5 +108,18 @@ class PublicPortalTest extends TestCase
         $response->assertSee(route('dosen.dashboard'));
         $response->assertSee('Keluar');
         $response->assertSee('Buka Portal Dosen SIM');
+    }
+
+    public function test_navbar_and_footer_display_dashboard_and_logout_for_authenticated_reviewer(): void
+    {
+        $reviewer = User::where('role', 'reviewer')->first();
+
+        $response = $this->actingAs($reviewer)->get('/');
+
+        $response->assertStatus(200);
+        $response->assertSee('Portal Reviewer');
+        $response->assertSee(route('reviewer.dashboard'));
+        $response->assertSee('Keluar');
+        $response->assertSee('Buka Portal Reviewer SIM');
     }
 }

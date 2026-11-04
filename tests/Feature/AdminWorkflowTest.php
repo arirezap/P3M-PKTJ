@@ -98,14 +98,39 @@ class AdminWorkflowTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('Manajemen Usulan & Progres Kegiatan Penelitian', false);
-        $response->assertSee('Submission');
-        $response->assertSee('Verifikasi');
-        $response->assertSee('Review');
-        $response->assertSee('Archive');
+        $response->assertSee('Daftar Proposal dan Laporan Masuk');
+        $response->assertSee('Belum Ditugaskan');
+        $response->assertSee('Sedang Ditugaskan');
+        $response->assertSee('Arsip Selesai');
         $response->assertSee('Program Studi');
         $response->assertSee('D4 RSTJ');
         $response->assertSee('D4 TRO');
         $response->assertSee('D3 TO');
+    }
+
+    public function test_admin_can_filter_penelitian_and_pengabdian_by_four_main_tabs(): void
+    {
+        $admin = User::where('role', 'admin')->first();
+
+        // 1. Tab Belum Ditugaskan
+        $resBelum = $this->actingAs($admin)->get(route('admin.penelitian.index', ['tab' => 'belum_ditugaskan']));
+        $resBelum->assertStatus(200);
+        $resBelum->assertSee('Belum Ditugaskan');
+
+        // 2. Tab Sedang Ditugaskan
+        $resSedang = $this->actingAs($admin)->get(route('admin.penelitian.index', ['tab' => 'sedang_ditugaskan']));
+        $resSedang->assertStatus(200);
+        $resSedang->assertSee('Sedang Ditugaskan');
+
+        // 3. Tab Arsip
+        $resArsip = $this->actingAs($admin)->get(route('admin.penelitian.index', ['tab' => 'arsip']));
+        $resArsip->assertStatus(200);
+        $resArsip->assertSee('Arsip Selesai');
+
+        // 4. Pengabdian Tabs
+        $resPkm = $this->actingAs($admin)->get(route('admin.pengabdian.index', ['tab' => 'belum_ditugaskan']));
+        $resPkm->assertStatus(200);
+        $resPkm->assertSee('Belum Ditugaskan');
     }
 
     public function test_admin_can_assign_reviewer_to_research_proposal(): void
@@ -217,5 +242,51 @@ class AdminWorkflowTest extends TestCase
         $archiveResponse = $this->actingAs($admin)->post(route('admin.pengabdian.archive', $proposal));
         $archiveResponse->assertRedirect();
         $this->assertEquals('archive', $proposal->fresh()->status);
+    }
+
+    public function test_admin_can_view_and_print_formal_recapitulation_sheet(): void
+    {
+        $admin = User::where('role', 'admin')->first();
+        $dosen = User::where('role', 'dosen')->first();
+        $prodi = Prodi::first();
+
+        // 1. Usulan Penelitian
+        $penelitian = Proposal::create([
+            'kode_usulan' => 'PR-PRINT-001',
+            'jenis' => 'penelitian',
+            'judul' => 'Riset Evaluasi Geometrik Simpang Rawan Kecelakaan',
+            'prodi_id' => $prodi->id,
+            'user_id' => $dosen->id,
+            'tahun_anggaran' => 2026,
+            'skema' => 'Penelitian Terapan',
+            'sumber_dana' => 'DIPA PKTJ',
+            'total_anggaran' => 35000000,
+            'status' => 'pelaksanaan',
+        ]);
+
+        $resPenelitian = $this->actingAs($admin)->get(route('admin.penelitian.print', $penelitian));
+        $resPenelitian->assertStatus(200);
+        $resPenelitian->assertSee('Lembar Rekapitulasi Capaian');
+        $resPenelitian->assertSee('PR-PRINT-001');
+        $resPenelitian->assertSee('Politeknik Keselamatan Transportasi Jalan');
+
+        // 2. Usulan Pengabdian kepada Masyarakat
+        $pengabdian = Proposal::create([
+            'kode_usulan' => 'PKM-PRINT-001',
+            'jenis' => 'pengabdian',
+            'judul' => 'Pelatihan Keselamatan Pengemudi Angkutan Umum Perkotaan',
+            'prodi_id' => $prodi->id,
+            'user_id' => $dosen->id,
+            'tahun_anggaran' => 2026,
+            'skema' => 'Pengabdian Kemitraan Masyarakat',
+            'sumber_dana' => 'DIPA PKTJ',
+            'total_anggaran' => 20000000,
+            'status' => 'archive',
+        ]);
+
+        $resPengabdian = $this->actingAs($admin)->get(route('admin.pengabdian.print', $pengabdian));
+        $resPengabdian->assertStatus(200);
+        $resPengabdian->assertSee('PKM-PRINT-001');
+        $resPengabdian->assertSee('Pelatihan Keselamatan Pengemudi Angkutan Umum Perkotaan');
     }
 }

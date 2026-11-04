@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'Admin Panel') - CMS P3M PKTJ</title>
 
+    <!-- Favicon / Shortcut Icon (Logo PKTJ) -->
+    <link rel="icon" type="image/png" href="{{ asset('images/logoPKTJ.png') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('images/logoPKTJ.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/logoPKTJ.png') }}">
+
     <!-- Meta CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -138,6 +143,12 @@
                         <span>Visi, Misi & Tujuan</span>
                     </a>
 
+                    <a href="{{ route('admin.settings.header-footer') }}" 
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium transition-colors {{ request()->routeIs('admin.settings.header-footer*') ? 'bg-yellow-500 text-slate-900 font-semibold' : 'text-slate-200 hover:bg-white/10 hover:text-white' }}">
+                        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                        <span>Pengaturan Header & Footer</span>
+                    </a>
+
                     <a href="{{ route('admin.organization.index') }}" 
                        class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium transition-colors {{ request()->routeIs('admin.organization.*') ? 'bg-yellow-500 text-slate-900 font-semibold' : 'text-slate-200 hover:bg-white/10 hover:text-white' }}">
                         <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
@@ -196,8 +207,43 @@
                 </div>
             </div>
 
-            <!-- Profil User Admin -->
+            <!-- Profil User Admin & Role Switcher -->
             <div class="flex items-center gap-3">
+                @if(Auth::check() && Auth::user()->isMultiRole())
+                    <div x-data="{ roleSwitcherOpen: false }" class="relative">
+                        <button @click="roleSwitcherOpen = !roleSwitcherOpen" 
+                                type="button" 
+                                class="inline-flex items-center gap-2 h-9 px-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-xs font-semibold text-slate-700 transition-colors shadow-2xs">
+                            <svg class="w-4 h-4 text-[#0B2A59]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                            <span class="hidden md:inline">Pindah Peran</span>
+                            <svg class="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        
+                        <div x-show="roleSwitcherOpen" 
+                             @click.away="roleSwitcherOpen = false" 
+                             x-cloak 
+                             class="absolute right-0 mt-2 w-56 rounded-xl bg-white shadow-xl border border-slate-200 py-2 z-50 text-xs">
+                            <div class="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">Pilih Panel Peran</div>
+                            <a href="{{ route('admin.dashboard') }}" class="flex items-center justify-between px-3 py-2 bg-purple-50 text-purple-900 font-semibold">
+                                <span>Panel Administrator</span>
+                                <span class="text-[10px] bg-purple-200 text-purple-800 px-1.5 py-0.5 rounded font-bold">Aktif</span>
+                            </a>
+                            @if(Auth::user()->isReviewer())
+                                <a href="{{ route('reviewer.dashboard') }}" class="flex items-center justify-between px-3 py-2 text-slate-700 hover:bg-amber-50 hover:text-amber-900 font-medium transition-colors">
+                                    <span>Portal Reviewer</span>
+                                    <span class="text-xs text-slate-400">&rarr;</span>
+                                </a>
+                            @endif
+                            @if(Auth::user()->isPeneliti())
+                                <a href="{{ route('dosen.dashboard') }}" class="flex items-center justify-between px-3 py-2 text-slate-700 hover:bg-blue-50 hover:text-blue-900 font-medium transition-colors">
+                                    <span>Portal Dosen / Peneliti</span>
+                                    <span class="text-xs text-slate-400">&rarr;</span>
+                                </a>
+                            @endif
+                        </div>
+                    </div>
+                @endif
+
                 <div class="text-right hidden sm:block">
                     <div class="text-xs font-bold text-slate-900 leading-4">{{ Auth::user()->name }}</div>
                     <div class="text-[10px] text-yellow-600 font-semibold leading-3">Administrator P3M</div>

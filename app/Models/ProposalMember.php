@@ -15,6 +15,9 @@ class ProposalMember extends Model
         'user_id',
         'nama',
         'peran',
+        'kategori_anggota',
+        'asal_instansi',
+        'negara',
         'nidn_nim',
         'tugas',
     ];

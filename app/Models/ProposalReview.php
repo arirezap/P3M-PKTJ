@@ -17,10 +17,16 @@ class ProposalReview extends Model
         'skor_metodologi',
         'skor_kelayakan_rab',
         'skor_luaran',
+        'detail_nilai',
         'total_skor',
         'catatan_reviewer',
+        'file_catatan_revisi',
         'rekomendasi',
         'status_review',
+        'disetujui_review_at',
+        'batas_waktu_review',
+        'persetujuan_komitmen',
+        'konfirmasi_hasil',
         'tanggal_review',
     ];
 
@@ -32,6 +38,10 @@ class ProposalReview extends Model
             'skor_kelayakan_rab' => 'decimal:2',
             'skor_luaran' => 'decimal:2',
             'total_skor' => 'decimal:2',
+            'detail_nilai' => 'array',
+            'persetujuan_komitmen' => 'boolean',
+            'disetujui_review_at' => 'datetime',
+            'batas_waktu_review' => 'date',
             'tanggal_review' => 'datetime',
         ];
     }

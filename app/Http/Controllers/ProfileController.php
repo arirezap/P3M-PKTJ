@@ -136,7 +136,12 @@ class ProfileController extends Controller
     {
         $query = User::with(['prodi', 'researches', 'outputs'])
             ->where('status_aktif', true)
-            ->whereIn('role', ['dosen', 'reviewer'])
+            ->where(function ($q) {
+                $q->whereIn('role', ['dosen', 'reviewer', 'peneliti'])
+                  ->orWhereJsonContains('roles', 'peneliti')
+                  ->orWhereJsonContains('roles', 'dosen')
+                  ->orWhereJsonContains('roles', 'reviewer');
+            })
             ->orderBy('name');
 
         if ($request->filled('prodi') && $request->prodi !== 'semua') {
@@ -161,7 +166,14 @@ class ProfileController extends Controller
         $prodis = Prodi::where('status_aktif', true)->orderBy('id')->get();
 
         // Statistik Metrik
-        $totalPeneliti = User::where('status_aktif', true)->whereIn('role', ['dosen', 'reviewer'])->count();
+        $totalPeneliti = User::where('status_aktif', true)
+            ->where(function ($q) {
+                $q->whereIn('role', ['dosen', 'reviewer', 'peneliti'])
+                  ->orWhereJsonContains('roles', 'peneliti')
+                  ->orWhereJsonContains('roles', 'dosen')
+                  ->orWhereJsonContains('roles', 'reviewer');
+            })
+            ->count();
         $totalRiset = Research::count();
         $totalPublikasi = Output::count();
 

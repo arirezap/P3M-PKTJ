@@ -113,6 +113,49 @@ class PublicGuidelineController extends Controller
     }
 
     /**
+     * Menampilkan repositori Layanan > Standar Operasional Prosedur (SOP) P3M PKTJ,
+     * menyajikan pemisahan tegas antara SOP Bidang Penelitian dan SOP Bidang Pengabdian kepada Masyarakat.
+     */
+    public function sop(Request $request): View
+    {
+        $searchQuery = trim($request->query('q', ''));
+
+        $queryPenelitian = Document::where('kategori', 'sop_penelitian')->latest('id');
+        $queryPengabdian = Document::where('kategori', 'sop_pengabdian')->latest('id');
+
+        if (!empty($searchQuery)) {
+            $queryPenelitian->where(function ($q) use ($searchQuery) {
+                $q->where('judul', 'like', "%{$searchQuery}%")
+                  ->orWhere('deskripsi', 'like', "%{$searchQuery}%")
+                  ->orWhere('tahun', 'like', "%{$searchQuery}%");
+            });
+
+            $queryPengabdian->where(function ($q) use ($searchQuery) {
+                $q->where('judul', 'like', "%{$searchQuery}%")
+                  ->orWhere('deskripsi', 'like', "%{$searchQuery}%")
+                  ->orWhere('tahun', 'like', "%{$searchQuery}%");
+            });
+        }
+
+        $sopPenelitian = $queryPenelitian->get();
+        $sopPengabdian = $queryPengabdian->get();
+
+        $stats = [
+            'total_penelitian' => Document::where('kategori', 'sop_penelitian')->count(),
+            'total_pengabdian' => Document::where('kategori', 'sop_pengabdian')->count(),
+            'total_sop' => Document::whereIn('kategori', ['sop_penelitian', 'sop_pengabdian'])->count(),
+            'total_unduhan' => Document::whereIn('kategori', ['sop_penelitian', 'sop_pengabdian'])->sum('download_count'),
+        ];
+
+        return view('layanan.sop', compact(
+            'sopPenelitian',
+            'sopPengabdian',
+            'stats',
+            'searchQuery'
+        ));
+    }
+
+    /**
      * Mengunduh berkas pedoman dan mencatat akumulasi jumlah unduhan.
      */
     public function download(Document $document): StreamedResponse|RedirectResponse

@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Masuk SIM P3M - Politeknik Keselamatan Transportasi Jalan</title>
 
+    <!-- Favicon / Shortcut Icon (Logo PKTJ) -->
+    <link rel="icon" type="image/png" href="{{ asset('images/logoPKTJ.png') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('images/logoPKTJ.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/logoPKTJ.png') }}">
+
     <!-- Meta SEO -->
     <meta name="description" content="Halaman masuk Sistem Informasi Manajemen Penelitian dan Pengabdian kepada Masyarakat (SIM P3M) Politeknik Keselamatan Transportasi Jalan (PKTJ) Tegal.">
 
@@ -30,8 +35,8 @@
                 <span class="text-slate-400 hidden sm:inline">|</span>
                 <span class="text-slate-300 hidden sm:inline">BPSDM Perhubungan</span>
             </div>
-            <a href="/" class="text-yellow-400 hover:underline inline-flex items-center gap-1.5 font-medium">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+            <a href="/" class="text-yellow-400 hover:underline inline-flex items-center gap-2 font-medium">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
                 <span>Kembali ke Portal Publik</span>
             </a>
         </div>
@@ -154,21 +159,21 @@
                     <div class="grid grid-cols-3 gap-2">
                         <button type="button" 
                                 @click="fillAccount('admin@pktj.ac.id', 'password')"
-                                class="h-10 px-2 rounded-lg border border-slate-200 hover:border-[#0B2A59] hover:bg-slate-50 text-[11px] font-medium text-slate-700 transition-colors flex flex-col items-center justify-center leading-3">
+                                class="h-11 px-2 rounded-lg border border-slate-200 hover:border-[#0B2A59] hover:bg-slate-50 text-xs font-medium text-slate-700 transition-colors flex flex-col items-center justify-center leading-4">
                             <span class="font-bold text-[#0B2A59]">Admin</span>
-                            <span class="text-slate-500 text-[10px]">P3M</span>
+                            <span class="text-slate-500 text-[10px] leading-3">P3M</span>
                         </button>
                         <button type="button" 
                                 @click="fillAccount('dosen@pktj.ac.id', 'password')"
-                                class="h-10 px-2 rounded-lg border border-slate-200 hover:border-[#0B2A59] hover:bg-slate-50 text-[11px] font-medium text-slate-700 transition-colors flex flex-col items-center justify-center leading-3">
+                                class="h-11 px-2 rounded-lg border border-slate-200 hover:border-[#0B2A59] hover:bg-slate-50 text-xs font-medium text-slate-700 transition-colors flex flex-col items-center justify-center leading-4">
                             <span class="font-bold text-[#0B2A59]">Dosen</span>
-                            <span class="text-slate-500 text-[10px]">Pengusul</span>
+                            <span class="text-slate-500 text-[10px] leading-3">Pengusul</span>
                         </button>
                         <button type="button" 
                                 @click="fillAccount('reviewer@pktj.ac.id', 'password')"
-                                class="h-10 px-2 rounded-lg border border-slate-200 hover:border-[#0B2A59] hover:bg-slate-50 text-[11px] font-medium text-slate-700 transition-colors flex flex-col items-center justify-center leading-3">
+                                class="h-11 px-2 rounded-lg border border-slate-200 hover:border-[#0B2A59] hover:bg-slate-50 text-xs font-medium text-slate-700 transition-colors flex flex-col items-center justify-center leading-4">
                             <span class="font-bold text-[#0B2A59]">Reviewer</span>
-                            <span class="text-slate-500 text-[10px]">Penilai</span>
+                            <span class="text-slate-500 text-[10px] leading-3">Penilai</span>
                         </button>
                     </div>
                 </div>

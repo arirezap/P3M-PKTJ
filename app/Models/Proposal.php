@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Proposal extends Model
 {
@@ -16,14 +17,31 @@ class Proposal extends Model
         'jenis',
         'judul',
         'abstrak',
+        'kata_kunci',
+        'bidang_fokus',
+        'lama_kegiatan_tahun',
+        'topik_kegiatan',
+        'lokasi_kegiatan',
         'prodi_id',
         'user_id',
         'tahun_anggaran',
         'skema',
         'sumber_dana',
         'total_anggaran',
+        'bank_nama',
+        'bank_rekening',
+        'bank_pemilik',
         'file_proposal',
         'file_revisi',
+        'nama_mitra',
+        'kontribusi_mitra',
+        'dana_mitra',
+        'dana_tambahan',
+        'file_mitra',
+        'nama_berkas_proposal',
+        'luaran_target',
+        'jadwal_kegiatan',
+        'persetujuan_konfirmasi',
         'status',
         'catatan_admin',
     ];
@@ -32,6 +50,11 @@ class Proposal extends Model
     {
         return [
             'total_anggaran' => 'decimal:2',
+            'dana_mitra' => 'decimal:2',
+            'dana_tambahan' => 'decimal:2',
+            'luaran_target' => 'array',
+            'jadwal_kegiatan' => 'array',
+            'persetujuan_konfirmasi' => 'boolean',
         ];
     }
 
@@ -60,6 +83,16 @@ class Proposal extends Model
         return $this->hasMany(ProposalReview::class);
     }
 
+    public function monev(): HasOne
+    {
+        return $this->hasOne(ProposalMonev::class);
+    }
+
+    public function finalReport(): HasOne
+    {
+        return $this->hasOne(ProposalFinalReport::class);
+    }
+
     public function scopePenelitian($query)
     {
         return $query->where('jenis', 'penelitian');
@@ -77,6 +110,6 @@ class Proposal extends Model
 
     public function canBeArchived(): bool
     {
-        return in_array($this->status, ['diterima', 'pelaksanaan']);
+        return in_array($this->status, ['diterima', 'pelaksanaan', 'laporan_akhir']);
     }
 }

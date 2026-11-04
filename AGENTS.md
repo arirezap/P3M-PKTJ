@@ -69,6 +69,15 @@ Dilarang keras menggunakan singkatan atau nama prodi di luar ketiga prodi terseb
 ### Mandat Perencanaan & Wawancara Pengguna (Plan Mode & Grilling Interview)
 1. **Wajib Rencana Implementasi Terarah (Plan Mode)**: Dilarang langsung menulis kode secara membabi buta tanpa rencana tertulis. Buat dokumen rencana kerja (*Implementation Plan*) yang memuat arsitektur database, alur UI/UX, rute, kontroler, dan skenario pengujian.
 2. **Wawancara Pengguna ("Grill Me") Sebelum Eksekusi**: Lakukan proses wawancara/klarifikasi terstruktur (gunakan tool `ask_question` dengan opsi pilihan ganda yang tajam) untuk mendefinisikan apa yang ingin dikerjakan, preferensi tampilan, dan batasan operasional sebelum mulai mengedit kode, agar hasil implementasi terarah dan presisi sesuai kehendak pengguna.
+
+### Mandat Harness Skills & Pipeline CI/CD (Otomasi Pengujian & Keamanan)
+1. **Standar Pipeline Modern v1**: Konfigurasi CI/CD proyek dikelola melalui `.harness/pipeline.yaml` menggunakan sintaks Harness Pipeline v1 modern (flat stages, script field, dan ekspresi `${{ }}`).
+2. **Koleksi Skill Terintegrasi**: Pustaka kemampuan Harness terpasang pada `.agents/skills/`:
+   - `harness-pipeline`: Pembuatan dan pembaruan pipeline v1.
+   - `harness-security`: Pemindaian keamanan (SAST, SCA, dan Secret Scanning via Gitleaks).
+   - `harness-debug`: Analisis kegagalan dan penelusuran log pipeline.
+   - `harness-dbops`: Pengelolaan skema dan migrasi basis data terstruktur.
+3. **Validasi Wajib**: Setiap pipeline wajib menyertakan audit dependensi (`composer audit`), deteksi kebocoran kredensial, kompilasi aset Vite (`npm run build`), dan kelulusan 100% dari 148 tes unit & fitur (`php artisan test`).
 <!-- antislop:end -->
 
 

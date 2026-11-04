@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'Dasbor') - SIM P3M PKTJ</title>
 
+    <!-- Favicon / Shortcut Icon (Logo PKTJ) -->
+    <link rel="icon" type="image/png" href="{{ asset('images/logoPKTJ.png') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('images/logoPKTJ.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/logoPKTJ.png') }}">
+
     <!-- Styles & Scripts via Vite -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -32,6 +37,51 @@
 
                 <!-- User Profile & Tombol Keluar (Logout) -->
                 <div class="flex items-center gap-3">
+                    @if(Auth::check() && Auth::user()->isMultiRole())
+                        <div x-data="{ roleSwitcherOpen: false }" class="relative">
+                            <button @click="roleSwitcherOpen = !roleSwitcherOpen" 
+                                    type="button" 
+                                    class="inline-flex items-center gap-2 h-9 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-semibold text-white transition-colors border border-white/20 shadow-2xs">
+                                <svg class="w-4 h-4 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                                <span class="hidden md:inline">Pindah Peran</span>
+                                <svg class="w-3 h-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                            
+                            <div x-show="roleSwitcherOpen" 
+                                 @click.away="roleSwitcherOpen = false" 
+                                 x-cloak 
+                                 class="absolute right-0 mt-2 w-56 rounded-xl bg-white shadow-xl border border-slate-200 py-2 z-50 text-xs text-slate-800">
+                                <div class="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">Pilih Panel Peran</div>
+                                @if(Auth::user()->isAdmin())
+                                    <a href="{{ route('admin.dashboard') }}" class="flex items-center justify-between px-3 py-2 text-slate-700 hover:bg-purple-50 hover:text-purple-900 font-medium transition-colors">
+                                        <span>Panel Administrator</span>
+                                        <span class="text-xs text-slate-400">&rarr;</span>
+                                    </a>
+                                @endif
+                                @if(Auth::user()->isReviewer())
+                                    <a href="{{ route('reviewer.dashboard') }}" class="flex items-center justify-between px-3 py-2 {{ request()->routeIs('reviewer.*') ? 'bg-amber-50 text-amber-900 font-semibold' : 'text-slate-700 hover:bg-amber-50 hover:text-amber-900 font-medium' }} transition-colors">
+                                        <span>Portal Reviewer</span>
+                                        @if(request()->routeIs('reviewer.*'))
+                                            <span class="text-[10px] bg-amber-200 text-amber-800 px-1.5 py-0.5 rounded font-bold">Aktif</span>
+                                        @else
+                                            <span class="text-xs text-slate-400">&rarr;</span>
+                                        @endif
+                                    </a>
+                                @endif
+                                @if(Auth::user()->isPeneliti())
+                                    <a href="{{ route('dosen.dashboard') }}" class="flex items-center justify-between px-3 py-2 {{ request()->routeIs('dosen.*') ? 'bg-blue-50 text-blue-900 font-semibold' : 'text-slate-700 hover:bg-blue-50 hover:text-blue-900 font-medium' }} transition-colors">
+                                        <span>Portal Dosen / Peneliti</span>
+                                        @if(request()->routeIs('dosen.*'))
+                                            <span class="text-[10px] bg-blue-200 text-blue-800 px-1.5 py-0.5 rounded font-bold">Aktif</span>
+                                        @else
+                                            <span class="text-xs text-slate-400">&rarr;</span>
+                                        @endif
+                                    </a>
+                                @endif
+                            </div>
+                        </div>
+                    @endif
+
                     <div class="hidden sm:flex flex-col text-right">
                         <span class="text-xs font-semibold text-white leading-4">{{ Auth::user()->name }}</span>
                         <span class="text-[10px] text-yellow-300 font-medium leading-3">

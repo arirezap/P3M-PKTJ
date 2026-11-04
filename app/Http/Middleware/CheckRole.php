@@ -23,7 +23,7 @@ class CheckRole
 
         $user = Auth::user();
 
-        if (!in_array($user->role, $roles)) {
+        if (!$user->hasAnyRole($roles)) {
             // Jika pengguna mengakses rute peran lain, arahkan ke dasbor perannya sendiri
             if ($user->isAdmin()) {
                 return redirect('/admin/dashboard');

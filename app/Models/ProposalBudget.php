@@ -13,6 +13,7 @@ class ProposalBudget extends Model
     protected $fillable = [
         'proposal_id',
         'kategori_belanja',
+        'tahun_ke',
         'uraian',
         'volume',
         'satuan',

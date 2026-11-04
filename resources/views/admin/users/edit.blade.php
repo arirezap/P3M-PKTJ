@@ -27,9 +27,13 @@
             @endif
             <div>
                 <span class="block text-xs font-bold text-slate-900 leading-4">{{ $user->name }}</span>
-                <span class="inline-block mt-0.5 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider {{ $user->role === 'admin' ? 'bg-purple-100 text-purple-800' : ($user->role === 'reviewer' ? 'bg-amber-100 text-amber-800' : 'bg-blue-100 text-blue-800') }}">
-                    {{ $user->role }}
-                </span>
+                <div class="flex flex-wrap gap-1 mt-1">
+                    @foreach($user->getRolesList() as $r)
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider {{ $r === 'admin' ? 'bg-purple-100 text-purple-800' : ($r === 'reviewer' ? 'bg-amber-100 text-amber-800' : 'bg-blue-100 text-blue-800') }}">
+                            {{ $r === 'peneliti' ? 'Peneliti' : ucfirst($r) }}
+                        </span>
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>
@@ -99,15 +103,25 @@
                     </select>
                 </div>
 
-                <div>
-                    <label for="role" class="block text-xs font-semibold text-slate-700 mb-1 leading-4">
-                        Peran Sistem (Role) <span class="text-rose-500">*</span>
+                <div class="sm:col-span-2">
+                    <label class="block text-xs font-semibold text-slate-700 mb-2 leading-4">
+                        Peran Sistem / Multi-Peran (Dapat Memilih Lebih dari Satu) <span class="text-rose-500">*</span>
                     </label>
-                    <select id="role" name="role" required class="w-full h-11 border-slate-300 rounded-xl text-xs focus:ring-[#0B2A59] focus:border-[#0B2A59] leading-4">
-                        <option value="dosen" {{ old('role', $user->role) == 'dosen' ? 'selected' : '' }}>Dosen / Peneliti</option>
-                        <option value="reviewer" {{ old('role', $user->role) == 'reviewer' ? 'selected' : '' }}>Reviewer / Penilai</option>
-                        <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Administrator P3M</option>
-                    </select>
+                    <div class="flex flex-wrap items-center gap-6 p-4 rounded-xl border border-slate-200 bg-slate-50/50">
+                        <label class="inline-flex items-center gap-2 cursor-pointer select-none">
+                            <input type="checkbox" name="roles[]" value="peneliti" {{ in_array('peneliti', old('roles', $user->getRolesList()), true) ? 'checked' : '' }} class="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500">
+                            <span class="text-xs font-semibold text-slate-800">Peneliti / Dosen</span>
+                        </label>
+                        <label class="inline-flex items-center gap-2 cursor-pointer select-none">
+                            <input type="checkbox" name="roles[]" value="reviewer" {{ in_array('reviewer', old('roles', $user->getRolesList()), true) ? 'checked' : '' }} class="w-4 h-4 text-amber-600 border-slate-300 rounded focus:ring-amber-500">
+                            <span class="text-xs font-semibold text-slate-800">Reviewer / Penilai</span>
+                        </label>
+                        <label class="inline-flex items-center gap-2 cursor-pointer select-none">
+                            <input type="checkbox" name="roles[]" value="admin" {{ in_array('admin', old('roles', $user->getRolesList()), true) ? 'checked' : '' }} class="w-4 h-4 text-purple-700 border-slate-300 rounded focus:ring-purple-600">
+                            <span class="text-xs font-semibold text-slate-800">Administrator P3M</span>
+                        </label>
+                    </div>
+                    <p class="text-[11px] text-slate-400 mt-1 leading-4">Satu pengguna dapat memegang beberapa peran sekaligus (contoh: Dosen Peneliti yang juga ditugaskan sebagai Reviewer atau Admin).</p>
                 </div>
 
                 <div class="sm:col-span-2">

@@ -45,7 +45,7 @@ class LoginController extends Controller
         if (Auth::attempt([$fieldType => $loginInput, 'password' => $password], $remember)) {
             $user = Auth::user();
 
-            if (!$user->status_aktif) {
+            if (! $user->status_aktif) {
                 Auth::logout();
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
