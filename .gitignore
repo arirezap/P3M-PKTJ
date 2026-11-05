@@ -6,8 +6,8 @@
 /storage/*.key
 /vendor
 .env
-.env.backup
-.env.production
+.env.*
+!.env.example
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
@@ -17,4 +17,26 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-/graphify-out/cache
+
+# Basis Data Cadangan & Dump SQL
+*.sql
+/database/backups/
+
+# Dokumen Spreadsheet Mentah & Dokumen Referensi Internal
+*.xlsx
+*.xls
+*.csv
+/database excel p3m.pdf
+/Kebutuhan Website P3M rev.pdf
+
+# Artefak Bundler Vite Sementara
+vite.config.js.timestamp-*
+
+# Artefak Cadangan & Konversi Graphify
+/graphify-out/cache/
+/graphify-out/converted/
+/graphify-out/20*
+
+# Berkas Sistem Operasi
+.DS_Store
+Thumbs.db
