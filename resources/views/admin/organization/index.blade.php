@@ -5,8 +5,29 @@
 
 @section('content')
 <div class="space-y-8 max-w-6xl mx-auto" x-data="{ 
+    members: {{ $members->map(fn($m) => [
+        'id' => $m->id,
+        'nama' => $m->nama,
+        'nip_nidn' => $m->nip_nidn ?? '',
+        'jabatan' => $m->jabatan,
+        'urutan' => (int)$m->urutan,
+        'deskripsi_tugas' => $m->deskripsi_tugas ?? '',
+        'status_aktif' => (bool)$m->status_aktif,
+        'foto' => $m->foto,
+        'foto_url' => $m->foto ? asset('storage/' . $m->foto) : null,
+        'initials' => strtoupper(substr($m->nama, 0, 2)),
+        'toggle_url' => route('admin.organization.members.toggle-status', $m),
+        'destroy_url' => route('admin.organization.members.destroy', $m),
+        'update_url' => route('admin.organization.members.update', $m),
+    ])->toJson() }},
+    draggedIdx: null,
+    dragOverIdx: null,
+    isSaving: false,
+    toastMessage: '',
+    toastSuccess: true,
     addModalOpen: false, 
     editModalOpen: false,
+    showTreePreview: true,
     editData: {
         id: '',
         nama: '',
@@ -29,6 +50,87 @@
             foto_url: member.foto ? '{{ asset('storage') }}/' + member.foto : ''
         };
         this.editModalOpen = true;
+    },
+    onDragStart(idx, e) {
+        this.draggedIdx = idx;
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', idx);
+    },
+    onDragOver(idx, e) {
+        e.preventDefault();
+        this.dragOverIdx = idx;
+    },
+    onDrop(targetIdx, e) {
+        e.preventDefault();
+        if (this.draggedIdx === null || this.draggedIdx === targetIdx) {
+            this.draggedIdx = null;
+            this.dragOverIdx = null;
+            return;
+        }
+        const movedItem = this.members.splice(this.draggedIdx, 1)[0];
+        this.members.splice(targetIdx, 0, movedItem);
+        this.draggedIdx = null;
+        this.dragOverIdx = null;
+        this.reindexAndSave();
+    },
+    moveUp(idx) {
+        if (idx <= 0) return;
+        const item = this.members.splice(idx, 1)[0];
+        this.members.splice(idx - 1, 0, item);
+        this.reindexAndSave();
+    },
+    moveDown(idx) {
+        if (idx >= this.members.length - 1) return;
+        const item = this.members.splice(idx, 1)[0];
+        this.members.splice(idx + 1, 0, item);
+        this.reindexAndSave();
+    },
+    async reindexAndSave() {
+        this.members.forEach((m, i) => {
+            m.urutan = i + 1;
+        });
+        this.isSaving = true;
+        try {
+            const payload = this.members.map(m => ({ id: m.id, urutan: m.urutan }));
+            const res = await fetch('{{ route('admin.organization.members.reorder') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ orders: payload })
+            });
+            const data = await res.json();
+            if (data.success) {
+                this.toastSuccess = true;
+                this.toastMessage = 'Susunan urutan pengurus berhasil diperbarui.';
+                setTimeout(() => { this.toastMessage = ''; }, 3000);
+            } else {
+                throw new Error(data.message || 'Gagal menyimpan.');
+            }
+        } catch (err) {
+            this.toastSuccess = false;
+            this.toastMessage = 'Terjadi kendala saat menyimpan urutan: ' + err.message;
+            setTimeout(() => { this.toastMessage = ''; }, 4000);
+        } finally {
+            this.isSaving = false;
+        }
+    },
+    get pengarahMembers() {
+        return this.members.filter(m => m.status_aktif && (m.jabatan.toLowerCase().includes('pengarah') || m.jabatan.toLowerCase().includes('pelindung') || m.jabatan.toLowerCase().includes('direktur')) && !m.jabatan.toLowerCase().includes('wakil'));
+    },
+    get penanggungJawabMembers() {
+        return this.members.filter(m => m.status_aktif && !this.pengarahMembers.includes(m) && (m.jabatan.toLowerCase().includes('penanggung jawab') || m.jabatan.toLowerCase().includes('wakil direktur') || m.jabatan.toLowerCase().includes('wadir')));
+    },
+    get pimpinanMembers() {
+        return this.members.filter(m => m.status_aktif && !this.pengarahMembers.includes(m) && !this.penanggungJawabMembers.includes(m) && (m.jabatan.toLowerCase().includes('kepala pusat') || m.jabatan.toLowerCase().includes('kepala p3m') || m.jabatan.toLowerCase().includes('sekretaris')));
+    },
+    get koordinatorMembers() {
+        return this.members.filter(m => m.status_aktif && !this.pengarahMembers.includes(m) && !this.penanggungJawabMembers.includes(m) && !this.pimpinanMembers.includes(m) && (m.jabatan.toLowerCase().includes('koordinator') || m.jabatan.toLowerCase().includes('bidang') || m.jabatan.toLowerCase().includes('sentra')));
+    },
+    get stafMembers() {
+        return this.members.filter(m => m.status_aktif && !this.pengarahMembers.includes(m) && !this.penanggungJawabMembers.includes(m) && !this.pimpinanMembers.includes(m) && !this.koordinatorMembers.includes(m));
     }
 }">
     
@@ -39,7 +141,7 @@
                 <span>Profil Kelembagaan PKTJ</span>
             </div>
             <h1 class="text-2xl font-bold text-[#0B2A59] tracking-tight leading-8">Struktur Organisasi & Sumber Daya Manusia</h1>
-            <p class="text-xs text-slate-500 mt-1 leading-5">Kelola bagan visual, legalitas SK Direktur PKTJ, dan susunan pejabat struktural pengelola P3M.</p>
+            <p class="text-xs text-slate-500 mt-1 leading-5">Kelola bagan visual, legalitas SK Direktur PKTJ, dan susunan pejabat struktural pengelola P3M secara dinamis.</p>
         </div>
         <div class="flex items-center gap-3">
             <a href="{{ route('profil.sdm') }}" target="_blank" 
@@ -59,15 +161,29 @@
         </div>
     </div>
 
-    <!-- Alert Notifikasi Berhasil -->
-    @if(session('success'))
-        <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-center gap-3 shadow-sm">
-            <svg class="w-5 h-5 text-emerald-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <span class="font-medium leading-5">{{ session('success') }}</span>
+    <!-- Toast Notifikasi Reorder Dinamis -->
+    <div x-show="toastMessage" x-cloak 
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0 -translate-y-2"
+         x-transition:enter-end="opacity-100 translate-y-0"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100 translate-y-0"
+         x-transition:leave-end="opacity-0 -translate-y-2"
+         :class="toastSuccess ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-rose-50 border-rose-200 text-rose-800'"
+         class="p-4 rounded-xl border text-xs flex items-center justify-between shadow-sm leading-5">
+        <div class="flex items-center gap-2">
+            <template x-if="toastSuccess">
+                <svg class="w-4 h-4 text-emerald-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            </template>
+            <template x-if="!toastSuccess">
+                <svg class="w-4 h-4 text-rose-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </template>
+            <span x-text="toastMessage" class="font-medium"></span>
         </div>
-    @endif
+        <button @click="toastMessage = ''" type="button" class="text-slate-400 hover:text-slate-600">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+    </div>
 
     <!-- Alert Notifikasi Validasi Error -->
     @if($errors->any())
@@ -110,7 +226,7 @@
                         Judul Utama Bagan Organisasi <span class="text-rose-500">*</span>
                     </label>
                     <input type="text" id="org_title" name="org_title" 
-                           value="{{ old('org_title', $settings['org_title'] ?? '') }}" required
+                           value="{{ old('org_title', $settings['org_title'] ?? 'Struktur Organisasi P3M PKTJ') }}" required
                            class="w-full h-11 px-4 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-[#0B2A59] focus:border-[#0B2A59] leading-5">
                 </div>
 
@@ -167,7 +283,7 @@
                         <div class="space-y-2 flex-1">
                             <input type="file" name="org_chart_image" accept="image/png,image/jpeg,image/webp"
                                    class="block w-full text-xs text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-[#0B2A59] file:text-white hover:file:bg-blue-900 cursor-pointer">
-                            <p class="text-[11px] text-slate-400 leading-4">Format berkas: JPG, PNG, atau WEBP. Ukuran file maksimal 3 MB. Direkomendasikan gambar diagram landscape dengan resolusi minimal 1200 x 800 pixel.</p>
+                            <p class="text-xs text-slate-400 leading-4">Format berkas: JPG, PNG, atau WEBP. Ukuran file maksimal 3 MB. Direkomendasikan gambar diagram landscape dengan resolusi minimal 1200 x 800 pixel.</p>
                         </div>
                     </div>
                 </div>
@@ -182,24 +298,34 @@
         </form>
     </div>
 
-    <!-- Bagian 2: Daftar Pejabat & Pengurus Struktur Organisasi -->
+    <!-- Bagian 2: Susunan Pejabat & Pengurus (Drag & Drop Reordering) -->
     <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
             <div>
                 <span class="text-xs font-bold uppercase tracking-wider text-yellow-600 leading-4">Bagian 2</span>
                 <h2 class="text-lg font-bold text-[#0B2A59] leading-6">Susunan Pejabat & Pengurus Struktural</h2>
-                <p class="text-xs text-slate-500 mt-0.5 leading-4">Daftar personil pengelola P3M diurutkan berdasarkan hierarki penugasan institusi.</p>
+                <p class="text-xs text-slate-500 mt-0.5 leading-4">
+                    Geser baris (drag and drop) atau gunakan tombol panah untuk mengatur urutan hierarki personil. Perubahan langsung disimpan otomatis.
+                </p>
             </div>
-            <div class="text-xs text-slate-500 font-medium">
-                Total Personil: <span class="font-bold text-[#0B2A59]">{{ $members->count() }} orang</span>
+            <div class="flex items-center gap-3">
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-blue-50 text-[#0B2A59] text-xs font-semibold leading-4">
+                    <span x-show="isSaving" class="inline-block w-2 h-2 rounded-full bg-yellow-500 animate-ping mr-1"></span>
+                    <span x-text="isSaving ? 'Menyimpan...' : 'Tersinkronisasi'"></span>
+                </div>
+                <div class="text-xs text-slate-500 font-medium">
+                    Total: <span class="font-bold text-[#0B2A59]" x-text="members.length + ' orang'"></span>
+                </div>
             </div>
         </div>
 
+        <!-- Tabel Susunan Pengurus dengan Drag & Drop -->
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse text-xs">
                 <thead>
                     <tr class="bg-slate-50 border-b border-slate-200 text-slate-700 font-semibold uppercase tracking-wider leading-4">
-                        <th class="py-3.5 px-4 w-16 text-center">Urutan</th>
+                        <th class="py-3.5 px-3 w-12 text-center" title="Geser untuk mengatur urutan">Seret</th>
+                        <th class="py-3.5 px-3 w-16 text-center">Urutan</th>
                         <th class="py-3.5 px-4">Nama Lengkap & NIP</th>
                         <th class="py-3.5 px-4">Jabatan Struktural</th>
                         <th class="py-3.5 px-4">Deskripsi Tugas & Peran</th>
@@ -208,54 +334,89 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100">
-                    @forelse($members as $m)
-                        <tr class="hover:bg-slate-50/80 transition-colors">
-                            <!-- Nomor Urut -->
-                            <td class="py-3.5 px-4 text-center font-bold text-slate-600">
-                                <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-slate-100 text-[#0B2A59] font-bold text-xs">
-                                    {{ $m->urutan }}
-                                </span>
+                    <template x-for="(m, index) in members" :key="m.id">
+                        <tr draggable="true"
+                            @dragstart="onDragStart(index, $event)"
+                            @dragover="onDragOver(index, $event)"
+                            @drop="onDrop(index, $event)"
+                            :class="{
+                                'opacity-40 bg-blue-50': draggedIdx === index,
+                                'border-t-2 border-[#0B2A59] bg-slate-50': dragOverIdx === index && draggedIdx !== index
+                            }"
+                            class="hover:bg-slate-50/80 transition-all cursor-move select-none">
+                            
+                            <!-- Grip Drag Handle -->
+                            <td class="py-3.5 px-3 text-center text-slate-400 hover:text-[#0B2A59]">
+                                <svg class="w-4 h-4 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16" />
+                                </svg>
+                            </td>
+
+                            <!-- Nomor Urut & Tombol Naik/Turun -->
+                            <td class="py-3.5 px-3 text-center">
+                                <div class="flex items-center justify-center gap-1">
+                                    <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-slate-100 text-[#0B2A59] font-bold text-xs"
+                                          x-text="m.urutan">
+                                    </span>
+                                    <div class="flex flex-col gap-0.5">
+                                        <button @click="moveUp(index)" type="button" :disabled="index === 0"
+                                                class="w-4 h-3.5 flex items-center justify-center text-slate-400 hover:text-[#0B2A59] disabled:opacity-20 disabled:cursor-not-allowed">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
+                                        </button>
+                                        <button @click="moveDown(index)" type="button" :disabled="index === members.length - 1"
+                                                class="w-4 h-3.5 flex items-center justify-center text-slate-400 hover:text-[#0B2A59] disabled:opacity-20 disabled:cursor-not-allowed">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                                        </button>
+                                    </div>
+                                </div>
                             </td>
 
                             <!-- Profil & Nama -->
                             <td class="py-3.5 px-4">
                                 <div class="flex items-center gap-3">
-                                    @if($m->foto && \Illuminate\Support\Facades\Storage::disk('public')->exists($m->foto))
-                                        <img src="{{ asset('storage/' . $m->foto) }}" alt="{{ $m->nama }}" 
+                                    <template x-if="m.foto_url">
+                                        <img :src="m.foto_url" :alt="m.nama" 
                                              class="w-10 h-10 rounded-full object-cover border border-slate-200 flex-shrink-0 shadow-xs">
-                                    @else
-                                        <div class="w-10 h-10 rounded-full bg-[#0B2A59]/10 text-[#0B2A59] font-bold text-xs flex items-center justify-center flex-shrink-0 border border-blue-200">
-                                            {{ strtoupper(substr($m->nama, 0, 2)) }}
+                                    </template>
+                                    <template x-if="!m.foto_url">
+                                        <div class="w-10 h-10 rounded-full bg-[#0B2A59]/10 text-[#0B2A59] font-bold text-xs flex items-center justify-center flex-shrink-0 border border-blue-200"
+                                             x-text="m.initials">
                                         </div>
-                                    @endif
+                                    </template>
                                     <div>
-                                        <div class="font-bold text-slate-900 leading-5 text-sm">{{ $m->nama }}</div>
-                                        <div class="text-[11px] text-slate-500 mt-0.5 font-mono">NIP: {{ $m->nip_nidn ?? '-' }}</div>
+                                        <div class="font-bold text-slate-900 leading-5 text-sm" x-text="m.nama"></div>
+                                        <div class="text-xs text-slate-500 mt-0.5 font-mono" x-text="m.nip_nidn ? 'NIP: ' + m.nip_nidn : 'NIP: -'"></div>
                                     </div>
                                 </div>
                             </td>
 
                             <!-- Jabatan Struktural -->
                             <td class="py-3.5 px-4">
-                                <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold leading-4 {{ str_contains(strtolower($m->jabatan), 'pengarah') || str_contains(strtolower($m->jabatan), 'direktur') ? 'bg-amber-100 text-amber-800' : (str_contains(strtolower($m->jabatan), 'kepala') ? 'bg-blue-100 text-[#0B2A59]' : 'bg-slate-100 text-slate-700') }}">
-                                    {{ $m->jabatan }}
+                                <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold leading-4"
+                                      :class="{
+                                          'bg-amber-100 text-amber-800': m.jabatan.toLowerCase().includes('pengarah') || m.jabatan.toLowerCase().includes('direktur'),
+                                          'bg-blue-100 text-[#0B2A59]': m.jabatan.toLowerCase().includes('kepala') || m.jabatan.toLowerCase().includes('sekretaris') || m.jabatan.toLowerCase().includes('penanggung jawab'),
+                                          'bg-slate-100 text-slate-700': !m.jabatan.toLowerCase().includes('pengarah') && !m.jabatan.toLowerCase().includes('direktur') && !m.jabatan.toLowerCase().includes('kepala')
+                                      }"
+                                      x-text="m.jabatan">
                                 </span>
                             </td>
 
                             <!-- Deskripsi Tugas -->
                             <td class="py-3.5 px-4 max-w-xs text-slate-600 leading-5">
-                                <p class="line-clamp-2 text-xs">{{ $m->deskripsi_tugas ?? '-' }}</p>
+                                <p class="line-clamp-2 text-xs" x-text="m.deskripsi_tugas || '-'"></p>
                             </td>
 
                             <!-- Status Keaktifan -->
                             <td class="py-3.5 px-4 text-center">
-                                <form method="POST" action="{{ route('admin.organization.members.toggle-status', $m) }}">
+                                <form method="POST" :action="m.toggle_url">
                                     @csrf
                                     @method('PATCH')
                                     <button type="submit" 
-                                            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold leading-4 transition-colors {{ $m->status_aktif ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200' : 'bg-slate-100 text-slate-500 hover:bg-slate-200' }}">
-                                        <span class="w-1.5 h-1.5 rounded-full mr-1.5 {{ $m->status_aktif ? 'bg-emerald-500' : 'bg-slate-400' }}"></span>
-                                        <span>{{ $m->status_aktif ? 'Aktif' : 'Nonaktif' }}</span>
+                                            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold leading-4 transition-colors"
+                                            :class="m.status_aktif ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'">
+                                        <span class="w-1.5 h-1.5 rounded-full mr-1.5" :class="m.status_aktif ? 'bg-emerald-500' : 'bg-slate-400'"></span>
+                                        <span x-text="m.status_aktif ? 'Aktif' : 'Nonaktif'"></span>
                                     </button>
                                 </form>
                             </td>
@@ -263,15 +424,15 @@
                             <!-- Tombol Aksi -->
                             <td class="py-3.5 px-4 text-right">
                                 <div class="inline-flex items-center gap-1.5">
-                                    <button @click="openEdit({{ json_encode($m) }})" type="button" 
+                                    <button @click="openEdit(m)" type="button" 
                                             title="Ubah Data Pengurus"
                                             class="inline-flex items-center justify-center w-8 h-8 rounded-lg text-slate-600 hover:text-[#0B2A59] hover:bg-slate-100 transition-colors">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                         </svg>
                                     </button>
-                                    <form method="POST" action="{{ route('admin.organization.members.destroy', $m) }}" 
-                                          onsubmit="return confirm('Apakah Anda yakin ingin menghapus {{ $m->nama }} dari struktur organisasi?')">
+                                    <form method="POST" :action="m.destroy_url" 
+                                          :onsubmit="'return confirm(\'Apakah Anda yakin ingin menghapus ' + m.nama + ' dari struktur organisasi?\')'">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" title="Hapus Pengurus"
@@ -284,16 +445,105 @@
                                 </div>
                             </td>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="6" class="py-8 px-4 text-center text-slate-400">
-                                <p class="text-sm">Belum ada personil dalam struktur organisasi.</p>
-                                <p class="text-xs mt-1">Silakan klik tombol "+ Tambah Pengurus Baru" di atas untuk menambahkan data.</p>
-                            </td>
-                        </tr>
-                    @endforelse
+                    </template>
+                    <tr x-show="members.length === 0">
+                        <td colspan="7" class="py-8 px-4 text-center text-slate-400">
+                            <p class="text-sm">Belum ada personil dalam struktur organisasi.</p>
+                            <p class="text-xs mt-1">Silakan klik tombol "+ Tambah Pengurus Baru" di atas untuk menambahkan data.</p>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <!-- Bagian 3: Pratinjau Interaktif Pohon Organisasi (Live Dynamic Tree Preview) -->
+    <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
+            <div>
+                <span class="text-xs font-bold uppercase tracking-wider text-yellow-600 leading-4">Pratinjau Langsung</span>
+                <h2 class="text-lg font-bold text-[#0B2A59] leading-6">Pohon Struktur Organisasi Dinamis</h2>
+                <p class="text-xs text-slate-500 mt-0.5 leading-4">Pratinjau visual susunan hierarki yang akan ditampilkan secara otomatis pada halaman publik.</p>
+            </div>
+            <button @click="showTreePreview = !showTreePreview" type="button" 
+                    class="inline-flex items-center gap-2 h-9 px-3 rounded-lg text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors leading-4">
+                <span x-text="showTreePreview ? 'Sembunyikan Pratinjau' : 'Tampilkan Pratinjau'"></span>
+            </button>
+        </div>
+
+        <div x-show="showTreePreview" class="bg-slate-50 border border-slate-200 rounded-2xl p-6">
+            <div class="max-w-4xl mx-auto space-y-6">
+                
+                <!-- Tingkat 1: Pengarah / Pelindung -->
+                <div x-show="pengarahMembers.length > 0" class="flex flex-col items-center">
+                    <div class="flex flex-wrap justify-center gap-4 w-full">
+                        <template x-for="p in pengarahMembers" :key="p.id">
+                            <div class="bg-[#0B2A59] text-white border-2 border-yellow-400 rounded-2xl p-4 shadow-sm w-full max-w-sm text-center space-y-1">
+                                <span class="text-xs font-bold uppercase tracking-wider text-yellow-300" x-text="p.jabatan"></span>
+                                <h3 class="text-sm font-bold text-white leading-5" x-text="p.nama"></h3>
+                                <p x-show="p.nip_nidn" class="text-xs text-blue-200 leading-4 font-mono" x-text="'NIP: ' + p.nip_nidn"></p>
+                            </div>
+                        </template>
+                    </div>
+                    <div class="w-0.5 h-6 bg-slate-300"></div>
+                </div>
+
+                <!-- Tingkat 2: Penanggung Jawab Akademik & Riset -->
+                <div x-show="penanggungJawabMembers.length > 0" class="flex flex-col items-center">
+                    <div class="flex flex-wrap justify-center gap-4 w-full">
+                        <template x-for="p in penanggungJawabMembers" :key="p.id">
+                            <div class="bg-white border-2 border-[#0B2A59] rounded-2xl p-4 shadow-sm w-full max-w-sm text-center space-y-1">
+                                <span class="text-xs font-bold uppercase tracking-wider text-blue-700" x-text="p.jabatan"></span>
+                                <h3 class="text-sm font-bold text-[#0B2A59] leading-5" x-text="p.nama"></h3>
+                                <p x-show="p.nip_nidn" class="text-xs text-slate-500 leading-4 font-mono" x-text="'NIP: ' + p.nip_nidn"></p>
+                            </div>
+                        </template>
+                    </div>
+                    <div class="w-0.5 h-6 bg-slate-300"></div>
+                </div>
+
+                <!-- Tingkat 3: Pimpinan Inti P3M -->
+                <div x-show="pimpinanMembers.length > 0" class="flex flex-col items-center">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl w-full">
+                        <template x-for="p in pimpinanMembers" :key="p.id">
+                            <div class="bg-blue-50 border border-blue-200 rounded-2xl p-4 text-center space-y-1">
+                                <span class="text-xs font-bold uppercase tracking-wider text-[#0B2A59]" x-text="p.jabatan"></span>
+                                <h3 class="text-sm font-bold text-[#0B2A59] leading-5" x-text="p.nama"></h3>
+                                <p x-show="p.nip_nidn" class="text-xs text-slate-600 leading-4 font-mono" x-text="'NIP: ' + p.nip_nidn"></p>
+                            </div>
+                        </template>
+                    </div>
+                    <div class="w-0.5 h-6 bg-slate-300"></div>
+                </div>
+
+                <!-- Tingkat 4: Koordinator Bidang -->
+                <div x-show="koordinatorMembers.length > 0" class="flex flex-col items-center">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+                        <template x-for="p in koordinatorMembers" :key="p.id">
+                            <div class="bg-white border border-slate-200 rounded-2xl p-4 text-center space-y-1 shadow-xs">
+                                <span class="text-xs font-bold uppercase tracking-wider text-amber-600" x-text="p.jabatan"></span>
+                                <h3 class="text-xs font-bold text-slate-900 leading-4" x-text="p.nama"></h3>
+                                <p x-show="p.nip_nidn" class="text-xs text-slate-500 leading-4 font-mono" x-text="'NIP: ' + p.nip_nidn"></p>
+                            </div>
+                        </template>
+                    </div>
+                    <div x-show="stafMembers.length > 0" class="w-0.5 h-6 bg-slate-300"></div>
+                </div>
+
+                <!-- Tingkat 5: Staf Administrasi & Pengelola SIM -->
+                <div x-show="stafMembers.length > 0" class="flex flex-col items-center">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl w-full">
+                        <template x-for="p in stafMembers" :key="p.id">
+                            <div class="bg-slate-100 border border-slate-200 rounded-2xl p-3 text-center space-y-0.5">
+                                <span class="text-xs font-bold uppercase tracking-wider text-slate-500" x-text="p.jabatan"></span>
+                                <h3 class="text-xs font-bold text-slate-800 leading-4" x-text="p.nama"></h3>
+                                <p x-show="p.nip_nidn" class="text-xs text-slate-500 leading-4 font-mono" x-text="'NIP: ' + p.nip_nidn"></p>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 
@@ -339,7 +589,7 @@
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-700 mb-1 leading-4">Urutan Hierarki <span class="text-rose-500">*</span></label>
-                        <input type="number" name="urutan" value="{{ $members->count() + 1 }}" min="0" required
+                        <input type="number" name="urutan" :value="members.length + 1" min="0" required
                                class="w-full h-11 px-4 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-[#0B2A59] focus:border-[#0B2A59] leading-5">
                     </div>
                 </div>
@@ -360,7 +610,7 @@
                     <label class="block text-xs font-semibold text-slate-700 mb-1 leading-4">Foto Profil Pengurus</label>
                     <input type="file" name="foto" accept="image/png,image/jpeg,image/webp"
                            class="block w-full text-xs text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 cursor-pointer">
-                    <p class="text-[11px] text-slate-400 mt-1 leading-4">Format: JPG, PNG, atau WEBP. Maksimal 2 MB.</p>
+                    <p class="text-xs text-slate-400 mt-1 leading-4">Format: JPG, PNG, atau WEBP. Maksimal 2 MB.</p>
                 </div>
 
                 <div class="pt-2">
@@ -453,7 +703,7 @@
                         <input type="file" name="foto" accept="image/png,image/jpeg,image/webp"
                                class="block w-full text-xs text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 cursor-pointer">
                     </div>
-                    <p class="text-[11px] text-slate-400 mt-1 leading-4">Biarkan kosong jika tidak ingin mengubah foto profil.</p>
+                    <p class="text-xs text-slate-400 mt-1 leading-4">Biarkan kosong jika tidak ingin mengubah foto profil.</p>
                 </div>
 
                 <div class="pt-2">

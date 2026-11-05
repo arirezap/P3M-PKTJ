@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Dosen;
 use App\Http\Controllers\Controller;
 use App\Models\Prodi;
 use App\Models\Proposal;
-use App\Models\ProposalBudget;
-use App\Models\ProposalMember;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -136,7 +134,7 @@ class ProposalController extends Controller
             // Hitung total anggaran dari item RAB
             $totalAnggaran = 0;
             $budgetItems = [];
-            if (!empty($validated['budgets'])) {
+            if (! empty($validated['budgets'])) {
                 foreach ($validated['budgets'] as $b) {
                     $volume = (float) $b['volume'];
                     $hargaSatuan = (float) $b['harga_satuan'];
@@ -188,11 +186,11 @@ class ProposalController extends Controller
             ]);
 
             // Simpan Anggota Tim
-            if (!empty($validated['members'])) {
+            if (! empty($validated['members'])) {
                 foreach ($validated['members'] as $m) {
                     // Cari user dosen jika ada kecocokan NIDN
                     $userId = null;
-                    if ($m['peran'] === 'dosen_anggota' && !empty($m['nidn_nim'])) {
+                    if ($m['peran'] === 'dosen_anggota' && ! empty($m['nidn_nim'])) {
                         $matchedUser = User::where('nidn_nip', $m['nidn_nim'])->first();
                         $userId = $matchedUser?->id;
                     }
@@ -229,7 +227,8 @@ class ProposalController extends Controller
             if (isset($filePath) && Storage::disk('public')->exists($filePath)) {
                 Storage::disk('public')->delete($filePath);
             }
-            return back()->withInput()->with('error', 'Terjadi kendala saat menyimpan usulan: ' . $e->getMessage());
+
+            return back()->withInput()->with('error', 'Terjadi kendala saat menyimpan usulan: '.$e->getMessage());
         }
     }
 
@@ -258,7 +257,7 @@ class ProposalController extends Controller
     {
         $this->authorizeAccess($proposal);
 
-        if (!in_array($proposal->status, ['draft', 'revisi'])) {
+        if (! in_array($proposal->status, ['draft', 'revisi'])) {
             return redirect()->route('dosen.proposals.show', $proposal)
                 ->with('error', 'Usulan yang sedang diproses atau telah diverifikasi tidak dapat diubah.');
         }
@@ -293,7 +292,7 @@ class ProposalController extends Controller
     {
         $this->authorizeAccess($proposal);
 
-        if (!in_array($proposal->status, ['draft', 'revisi'])) {
+        if (! in_array($proposal->status, ['draft', 'revisi'])) {
             return redirect()->route('dosen.proposals.show', $proposal)
                 ->with('error', 'Usulan tidak dalam status yang dapat diubah.');
         }
@@ -372,7 +371,7 @@ class ProposalController extends Controller
             // Hitung total anggaran
             $totalAnggaran = 0;
             $budgetItems = [];
-            if (!empty($validated['budgets'])) {
+            if (! empty($validated['budgets'])) {
                 foreach ($validated['budgets'] as $b) {
                     $volume = (float) $b['volume'];
                     $hargaSatuan = (float) $b['harga_satuan'];
@@ -428,10 +427,10 @@ class ProposalController extends Controller
 
             // Hapus anggota tim lama dan perbarui
             $proposal->members()->delete();
-            if (!empty($validated['members'])) {
+            if (! empty($validated['members'])) {
                 foreach ($validated['members'] as $m) {
                     $userId = null;
-                    if ($m['peran'] === 'dosen_anggota' && !empty($m['nidn_nim'])) {
+                    if ($m['peran'] === 'dosen_anggota' && ! empty($m['nidn_nim'])) {
                         $matchedUser = User::where('nidn_nip', $m['nidn_nim'])->first();
                         $userId = $matchedUser?->id;
                     }
@@ -463,7 +462,8 @@ class ProposalController extends Controller
                 ->with('success', 'Pembaruan usulan proposal berhasil disimpan.');
         } catch (\Throwable $e) {
             DB::rollBack();
-            return back()->withInput()->with('error', 'Gagal memperbarui usulan: ' . $e->getMessage());
+
+            return back()->withInput()->with('error', 'Gagal memperbarui usulan: '.$e->getMessage());
         }
     }
 
@@ -498,7 +498,7 @@ class ProposalController extends Controller
             return back()->with('error', 'Usulan telah dikirimkan sebelumnya.');
         }
 
-        if (!$proposal->file_proposal) {
+        if (! $proposal->file_proposal) {
             return back()->with('error', 'Mohon unggah berkas proposal PDF sebelum mengirimkan usulan.');
         }
 

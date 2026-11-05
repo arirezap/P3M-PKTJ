@@ -29,19 +29,19 @@ class PublicCommunityServiceCollaborationController extends Controller
 
         // Filter Berdasarkan Tahun
         $selectedYear = $request->query('tahun', 'semua');
-        if ($selectedYear !== 'semua' && !empty($selectedYear)) {
+        if ($selectedYear !== 'semua' && ! empty($selectedYear)) {
             $query->where('tahun', $selectedYear);
         }
 
         // Filter Berdasarkan Kategori Mitra
         $selectedKategori = $request->query('kategori', 'semua');
-        if ($selectedKategori !== 'semua' && !empty($selectedKategori)) {
+        if ($selectedKategori !== 'semua' && ! empty($selectedKategori)) {
             $query->where('kategori_mitra', $selectedKategori);
         }
 
         // Filter Berdasarkan Program Studi (3 Program Studi)
         $selectedProdi = $request->query('prodi', 'semua');
-        if ($selectedProdi !== 'semua' && !empty($selectedProdi)) {
+        if ($selectedProdi !== 'semua' && ! empty($selectedProdi)) {
             $query->whereHas('prodi', function ($q) use ($selectedProdi) {
                 if (is_numeric($selectedProdi)) {
                     $q->where('id', $selectedProdi);
@@ -53,7 +53,7 @@ class PublicCommunityServiceCollaborationController extends Controller
 
         // Filter Status Kerjasama (Aktif / Selesai)
         $selectedStatus = $request->query('status', 'semua');
-        if ($selectedStatus !== 'semua' && !empty($selectedStatus)) {
+        if ($selectedStatus !== 'semua' && ! empty($selectedStatus)) {
             $query->where('status_kerjasama', $selectedStatus);
         }
 
@@ -62,9 +62,9 @@ class PublicCommunityServiceCollaborationController extends Controller
             $keyword = $request->q;
             $query->where(function ($q) use ($keyword) {
                 $q->where('nama_mitra', 'like', "%{$keyword}%")
-                  ->orWhere('judul_kerjasama', 'like', "%{$keyword}%")
-                  ->orWhere('nomor_mou_pks', 'like', "%{$keyword}%")
-                  ->orWhere('deskripsi', 'like', "%{$keyword}%");
+                    ->orWhere('judul_kerjasama', 'like', "%{$keyword}%")
+                    ->orWhere('nomor_mou_pks', 'like', "%{$keyword}%")
+                    ->orWhere('deskripsi', 'like', "%{$keyword}%");
             });
         }
 
@@ -85,7 +85,7 @@ class PublicCommunityServiceCollaborationController extends Controller
         $totalKerjasama = $allPengabdian->count();
         $totalAktif = $allPengabdian->where('status_kerjasama', 'aktif')->count();
         $totalPemerintahBumn = $allPengabdian->whereIn('kategori_mitra', ['pemerintah', 'bumn'])->count();
-        $totalDokumen = $allPengabdian->filter(fn($c) => !empty($c->file_dokumen))->count();
+        $totalDokumen = $allPengabdian->filter(fn ($c) => ! empty($c->file_dokumen))->count();
 
         // 6. Hitung Kategori Mitra untuk Filter Tabs
         $kategoriCounts = [
@@ -120,7 +120,8 @@ class PublicCommunityServiceCollaborationController extends Controller
     public function downloadDocument(Collaboration $collaboration): StreamedResponse|RedirectResponse
     {
         if ($collaboration->file_dokumen && Storage::disk('public')->exists($collaboration->file_dokumen)) {
-            $filename = 'Dokumen-Kerjasama-Pengabdian-' . str($collaboration->nama_mitra)->slug()->limit(35) . '-' . $collaboration->tahun . '.pdf';
+            $filename = 'Dokumen-Kerjasama-Pengabdian-'.str($collaboration->nama_mitra)->slug()->limit(35).'-'.$collaboration->tahun.'.pdf';
+
             return Storage::disk('public')->download($collaboration->file_dokumen, $filename);
         }
 

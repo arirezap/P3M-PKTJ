@@ -47,26 +47,27 @@ class PublicCommunityServiceController extends Controller
             if ($activeTab === 'dipa') {
                 $query->where(function ($q) {
                     $q->where('sumber_dana', 'like', '%dipa%')
-                      ->orWhere('sumber_dana', 'like', '%internal%');
+                        ->orWhere('sumber_dana', 'like', '%internal%');
                 });
             } elseif ($activeTab === 'kemdiktisaintek') {
                 $query->where(function ($q) {
                     $q->where('sumber_dana', 'like', '%kemdik%')
-                      ->orWhere('sumber_dana', 'like', '%drtpm%')
-                      ->orWhere('sumber_dana', 'like', '%bima%')
-                      ->orWhere('sumber_dana', 'like', '%nasional%');
+                        ->orWhere('sumber_dana', 'like', '%drtpm%')
+                        ->orWhere('sumber_dana', 'like', '%bima%')
+                        ->orWhere('sumber_dana', 'like', '%nasional%');
                 });
             } elseif ($activeTab === 'industri') {
                 $query->where(function ($q) {
                     $q->where('sumber_dana', 'like', '%industri%')
-                      ->orWhere('sumber_dana', 'like', '%mitra%')
-                      ->orWhere('sumber_dana', 'like', '%csr%')
-                      ->orWhere('sumber_dana', 'like', '%kerjasama%');
+                        ->orWhere('sumber_dana', 'like', '%mitra%')
+                        ->orWhere('sumber_dana', 'like', '%csr%')
+                        ->orWhere('sumber_dana', 'like', '%kerjasama%')
+                        ->orWhere('sumber_dana', 'like', '%eksternal%');
                 });
             } elseif ($activeTab === 'mandiri') {
                 $query->where(function ($q) {
                     $q->where('sumber_dana', 'like', '%mandiri%')
-                      ->orWhere('sumber_dana', 'like', '%swadana%');
+                        ->orWhere('sumber_dana', 'like', '%swadana%');
                 });
             }
         }
@@ -76,12 +77,12 @@ class PublicCommunityServiceController extends Controller
             $keyword = $request->q;
             $query->where(function ($q) use ($keyword) {
                 $q->where('judul', 'like', "%{$keyword}%")
-                  ->orWhere('ketua_pelaksana', 'like', "%{$keyword}%")
-                  ->orWhere('anggota', 'like', "%{$keyword}%")
-                  ->orWhere('mitra', 'like', "%{$keyword}%")
-                  ->orWhere('lokasi_kegiatan', 'like', "%{$keyword}%")
-                  ->orWhere('ringkasan', 'like', "%{$keyword}%")
-                  ->orWhere('skema', 'like', "%{$keyword}%");
+                    ->orWhere('ketua_pelaksana', 'like', "%{$keyword}%")
+                    ->orWhere('anggota', 'like', "%{$keyword}%")
+                    ->orWhere('mitra', 'like', "%{$keyword}%")
+                    ->orWhere('lokasi_kegiatan', 'like', "%{$keyword}%")
+                    ->orWhere('ringkasan', 'like', "%{$keyword}%")
+                    ->orWhere('skema', 'like', "%{$keyword}%");
             });
         }
 
@@ -98,15 +99,16 @@ class PublicCommunityServiceController extends Controller
             })->count(),
             'kemdiktisaintek' => CommunityService::where(function ($q) {
                 $q->where('sumber_dana', 'like', '%kemdik%')
-                  ->orWhere('sumber_dana', 'like', '%drtpm%')
-                  ->orWhere('sumber_dana', 'like', '%bima%')
-                  ->orWhere('sumber_dana', 'like', '%nasional%');
+                    ->orWhere('sumber_dana', 'like', '%drtpm%')
+                    ->orWhere('sumber_dana', 'like', '%bima%')
+                    ->orWhere('sumber_dana', 'like', '%nasional%');
             })->count(),
             'industri' => CommunityService::where(function ($q) {
                 $q->where('sumber_dana', 'like', '%industri%')
-                  ->orWhere('sumber_dana', 'like', '%mitra%')
-                  ->orWhere('sumber_dana', 'like', '%csr%')
-                  ->orWhere('sumber_dana', 'like', '%kerjasama%');
+                    ->orWhere('sumber_dana', 'like', '%mitra%')
+                    ->orWhere('sumber_dana', 'like', '%csr%')
+                    ->orWhere('sumber_dana', 'like', '%kerjasama%')
+                    ->orWhere('sumber_dana', 'like', '%eksternal%');
             })->count(),
             'mandiri' => CommunityService::where(function ($q) {
                 $q->where('sumber_dana', 'like', '%mandiri%')->orWhere('sumber_dana', 'like', '%swadana%');
@@ -124,6 +126,7 @@ class PublicCommunityServiceController extends Controller
         // 6. Statistik 3 Program Studi PKTJ
         $prodiStats = $prodis->map(function ($p) use ($allServices) {
             $filtered = $allServices->where('prodi_id', $p->id);
+
             return [
                 'id' => $p->id,
                 'kode' => $p->kode_prodi,
@@ -137,10 +140,10 @@ class PublicCommunityServiceController extends Controller
         $yearlyStats = $availableYears->sort()->values()->map(function ($yr) use ($allServices, $prodis) {
             $yearGroup = $allServices->where('tahun', $yr);
 
-            $dipaCount = $yearGroup->filter(fn($r) => str_contains(strtolower($r->sumber_dana), 'dipa') || str_contains(strtolower($r->sumber_dana), 'internal'))->count();
-            $kemdikCount = $yearGroup->filter(fn($r) => str_contains(strtolower($r->sumber_dana), 'kemdik') || str_contains(strtolower($r->sumber_dana), 'nasional'))->count();
-            $industriCount = $yearGroup->filter(fn($r) => str_contains(strtolower($r->sumber_dana), 'industri') || str_contains(strtolower($r->sumber_dana), 'mitra') || str_contains(strtolower($r->sumber_dana), 'csr') || str_contains(strtolower($r->sumber_dana), 'kerjasama'))->count();
-            $mandiriCount = $yearGroup->filter(fn($r) => str_contains(strtolower($r->sumber_dana), 'mandiri') || str_contains(strtolower($r->sumber_dana), 'swadana'))->count();
+            $dipaCount = $yearGroup->filter(fn ($r) => str_contains(strtolower($r->sumber_dana), 'dipa') || str_contains(strtolower($r->sumber_dana), 'internal'))->count();
+            $kemdikCount = $yearGroup->filter(fn ($r) => str_contains(strtolower($r->sumber_dana), 'kemdik') || str_contains(strtolower($r->sumber_dana), 'nasional'))->count();
+            $industriCount = $yearGroup->filter(fn ($r) => str_contains(strtolower($r->sumber_dana), 'industri') || str_contains(strtolower($r->sumber_dana), 'mitra') || str_contains(strtolower($r->sumber_dana), 'csr') || str_contains(strtolower($r->sumber_dana), 'kerjasama') || str_contains(strtolower($r->sumber_dana), 'eksternal'))->count();
+            $mandiriCount = $yearGroup->filter(fn ($r) => str_contains(strtolower($r->sumber_dana), 'mandiri') || str_contains(strtolower($r->sumber_dana), 'swadana'))->count();
 
             // Hitung per prodi
             $prodiCounts = [];
@@ -156,9 +159,9 @@ class PublicCommunityServiceController extends Controller
                 'kemdiktisaintek' => $kemdikCount,
                 'industri' => $industriCount,
                 'mandiri' => $mandiriCount,
-                'rstj' => $prodiCounts['D4 RSTJ'] ?? 0,
-                'tro' => $prodiCounts['D4 TRO'] ?? 0,
-                'to' => $prodiCounts['D3 TO'] ?? 0,
+                'rstj' => $prodiCounts['RSTJ'] ?? $prodiCounts['D4 RSTJ'] ?? 0,
+                'tro' => $prodiCounts['TRO'] ?? $prodiCounts['D4 TRO'] ?? 0,
+                'to' => $prodiCounts['TO'] ?? $prodiCounts['D3 TO'] ?? 0,
             ];
         });
 
@@ -189,7 +192,8 @@ class PublicCommunityServiceController extends Controller
     {
         if ($communityService->berkas_laporan && Storage::disk('public')->exists($communityService->berkas_laporan)) {
             $cleanTitle = str($communityService->judul)->slug()->limit(40);
-            $filename = 'Laporan-PkM-' . $cleanTitle . '.pdf';
+            $filename = 'Laporan-PkM-'.$cleanTitle.'.pdf';
+
             return Storage::disk('public')->download($communityService->berkas_laporan, $filename);
         }
 

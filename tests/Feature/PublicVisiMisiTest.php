@@ -25,14 +25,9 @@ class PublicVisiMisiTest extends TestCase
         $response->assertSee('Visi P3M Politeknik Keselamatan Transportasi Jalan');
         $response->assertSeeText('5 Butir Misi Utama P3M PKTJ', false);
         $response->assertSeeText('Tujuan Strategis & Sasaran Mutu', false);
-        $response->assertSee('Penelitian Keselamatan Jalan');
-        $response->assertSeeText('Pengabdian & Desa Binaan', false);
-        $response->assertSee('Kemitraan Multisektor');
-        $response->assertSeeText('Hilirisasi HKI & Jurnal Ilmiah', false);
-        $response->assertSeeText('Tata Kelola Kelembagaan & SIM P3M', false);
-        $response->assertSee('D4 RSTJ');
-        $response->assertSee('D4 TRO');
-        $response->assertSee('D3 TO');
+        $response->assertSee('Reduksi Fatalitas Kecelakaan');
+        $response->assertSee('Kemandirian Riset Vokasi');
+        $response->assertSee('Menyelenggarakan penelitian terapan yang inovatif');
     }
 
     public function test_admin_can_access_visi_misi_settings_page(): void
@@ -44,7 +39,7 @@ class PublicVisiMisiTest extends TestCase
         $response->assertStatus(200);
         $response->assertSeeText('Pengaturan Visi, Misi & Tujuan', false);
         $response->assertSee('Pernyataan Visi P3M');
-        $response->assertSee('5 Butir Misi Kelembagaan');
+        $response->assertSee('Butir Misi Kelembagaan');
         $response->assertSeeText('Tujuan Strategis & Sasaran Mutu', false);
     }
 
@@ -67,6 +62,9 @@ class PublicVisiMisiTest extends TestCase
         $admin = User::where('role', 'admin')->first();
 
         $updateResponse = $this->actingAs($admin)->put(route('admin.settings.visi-misi.update'), [
+            'visi_badge' => 'Arah Haluan Riset & Pengabdian PKTJ 2026 - 2031',
+            'page_title' => 'Visi, Misi & Tujuan P3M Kustom',
+            'page_lead' => 'Landasan strategis pelaksanaan riset terapan dan pengabdian vokasi kustom.',
             'visi_title' => 'Visi Unggulan Riset Vokasi Keselamatan Transportasi 2031',
             'visi_statement' => 'Menjadi pusat rujukan keselamatan transportasi jalan berstandar internasional dan berintegritas tinggi.',
             'visi_subtext' => 'Komitmen institusional riset terapan berkelanjutan.',
@@ -95,6 +93,11 @@ class PublicVisiMisiTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('settings', [
+            'key' => 'page_title',
+            'value' => 'Visi, Misi & Tujuan P3M Kustom',
+        ]);
+
+        $this->assertDatabaseHas('settings', [
             'key' => 'visi_statement',
             'value' => 'Menjadi pusat rujukan keselamatan transportasi jalan berstandar internasional dan berintegritas tinggi.',
         ]);
@@ -102,8 +105,69 @@ class PublicVisiMisiTest extends TestCase
         // Verifikasi halaman publik langsung memuat data yang diperbarui via CMS
         $publicResponse = $this->get(route('profil.visi-misi'));
         $publicResponse->assertStatus(200);
+        $publicResponse->assertSee('Visi, Misi & Tujuan P3M Kustom');
         $publicResponse->assertSee('Visi Unggulan Riset Vokasi Keselamatan Transportasi 2031');
         $publicResponse->assertSee('Menjadi pusat rujukan keselamatan transportasi jalan berstandar internasional dan berintegritas tinggi.');
         $publicResponse->assertSee('Publikasi Internasional Bereputasi');
+    }
+
+    public function test_admin_can_dynamically_add_and_remove_misi_and_tujuan_items(): void
+    {
+        $admin = User::where('role', 'admin')->first();
+
+        // Admin menyimpan 6 butir misi (bertambah) dan 2 butir tujuan (berkurang)
+        $updateResponse = $this->actingAs($admin)->put(route('admin.settings.visi-misi.update'), [
+            'page_title' => 'Visi, Misi & Tujuan Fleksibel',
+            'page_lead' => 'Deskripsi dinamis',
+            'visi_title' => 'Visi Baru',
+            'visi_statement' => 'Pernyataan visi baru',
+            'misi_items' => [
+                'Misi Satu: Keselamatan Transportasi',
+                'Misi Dua: Pengabdian Komunitas',
+                'Misi Tiga: Jejaring Industri',
+                'Misi Empat: Paten dan Jurnal',
+                'Misi Lima: Sistem Informasi',
+                'Misi Enam Baru: Internasionalisasi Riset Terapan',
+            ],
+            'tujuan_items' => [
+                [
+                    'title' => 'Sasaran Mutu Pertama',
+                    'desc' => 'Uraian target sasaran mutu pertama',
+                ],
+                [
+                    'title' => 'Sasaran Mutu Kedua',
+                    'desc' => 'Uraian target sasaran mutu kedua',
+                ],
+            ],
+        ]);
+
+        $updateResponse->assertRedirect(route('admin.settings.visi-misi'));
+        $updateResponse->assertSessionHas('success');
+
+        // Verifikasi pada halaman publik
+        $publicResponse = $this->get(route('profil.visi-misi'));
+        $publicResponse->assertStatus(200);
+        $publicResponse->assertSeeText('6 Butir Misi Utama P3M PKTJ', false);
+        $publicResponse->assertSee('Misi Enam Baru: Internasionalisasi Riset Terapan');
+        $publicResponse->assertSee('Sasaran Mutu Pertama');
+        $publicResponse->assertSee('Sasaran Mutu Kedua');
+        $publicResponse->assertSee('Sasaran 2');
+        $publicResponse->assertDontSee('Sasaran 3');
+    }
+
+    public function test_admin_cannot_save_empty_misi_or_tujuan_items(): void
+    {
+        $admin = User::where('role', 'admin')->first();
+
+        $response = $this->actingAs($admin)->put(route('admin.settings.visi-misi.update'), [
+            'page_title' => 'Visi Misi Uji',
+            'page_lead' => 'Deskripsi Uji',
+            'visi_title' => 'Visi Uji',
+            'visi_statement' => 'Pernyataan Visi Uji',
+            'misi_items' => [],
+            'tujuan_items' => [],
+        ]);
+
+        $response->assertSessionHasErrors(['misi_items', 'tujuan_items']);
     }
 }

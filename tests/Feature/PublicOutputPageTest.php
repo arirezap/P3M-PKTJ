@@ -33,6 +33,64 @@ class PublicOutputPageTest extends TestCase
         $response->assertSee('Hak Kekayaan Intelektual (HKI)');
         $response->assertSee('Produk & Jasa Teknologi', false);
         $response->assertSee('Lisensi Terbuka');
+
+        // Verifikasi kanvas grafik Chart.js
+        $response->assertSee('id="outputPilarChart"', false);
+        $response->assertSee('id="outputProdiChart"', false);
+
+        // Verifikasi kehadiran indikator 4 pemenuhan kebutuhan
+        $response->assertSee('Lisensi:');
+        $response->assertSee('Roadmap:');
+        $response->assertSee('Mitra:');
+        $response->assertSee('Dana:');
+    }
+
+    public function test_author_inventor_is_clickable_when_user_exists(): void
+    {
+        $prodi = Prodi::first();
+        $user = User::factory()->create([
+            'role' => 'dosen',
+            'name' => 'Dr. Inventor Mandiri, M.T.',
+            'status_aktif' => true,
+        ]);
+
+        $output = Output::create([
+            'kategori' => 'publikasi',
+            'judul' => 'Inovasi Deteksi Kelelahan Pengemudi Angkutan Barang Vokasi',
+            'prodi_id' => $prodi->id,
+            'user_id' => $user->id,
+            'author_inventor' => 'Dr. Inventor Mandiri, M.T.',
+            'tahun' => 2026,
+            'nama_jurnal_penerbit' => 'Jurnal Keselamatan Transportasi Jalan',
+            'lisensi' => 'CC-BY-SA 4.0 Open Access',
+            'fase_roadmap' => 'Fase 4: Hilirisasi',
+            'mitra_kerjasama' => 'KNKT & Dishub',
+            'sumber_dana' => 'DIPA PKTJ',
+            'realisasi_dana' => 50000000,
+        ]);
+
+        $response = $this->get(route('riset.luaran', ['q' => 'Inovasi Deteksi Kelelahan Pengemudi Angkutan Barang Vokasi']));
+
+        $response->assertStatus(200);
+        $response->assertSee($output->judul);
+        $response->assertSee(route('profil.peneliti.show', $user));
+    }
+
+    public function test_real_2025_outputs_data_from_excel_is_seeded_without_duplicates(): void
+    {
+        $outputs2025 = Output::where('tahun', 2025)->get();
+        $this->assertCount(184, $outputs2025);
+
+        $this->assertEquals(165, $outputs2025->where('kategori', 'publikasi')->count());
+        $this->assertEquals(6, $outputs2025->where('kategori', 'produk')->count());
+        $this->assertEquals(13, $outputs2025->where('kategori', 'hki')->count());
+
+        // Pastikan tidak ada duplikasi judul dalam kategori yang sama
+        $uniquePairs = $outputs2025->map(fn ($o) => strtolower(trim($o->kategori)).'|'.strtolower(trim($o->judul)))->unique();
+        $this->assertCount(184, $uniquePairs);
+
+        // Pastikan seluruh realisasi dana 2025 dari spreadsheet bernilai 0
+        $this->assertEquals(0, (int) $outputs2025->sum('realisasi_dana'));
     }
 
     public function test_filter_by_kategori_tabs(): void

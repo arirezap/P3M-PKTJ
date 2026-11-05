@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Setting;
+use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,9 +26,9 @@ class AppServiceProvider extends ServiceProvider
             $view->with('navSettings', Setting::getNavigationSettings());
         });
 
-        \Illuminate\Auth\Middleware\RedirectIfAuthenticated::redirectUsing(function ($request) {
+        RedirectIfAuthenticated::redirectUsing(function ($request) {
             $user = auth()->user();
-            if (!$user) {
+            if (! $user) {
                 return '/';
             }
             if ($user->isAdmin()) {
@@ -36,6 +37,7 @@ class AppServiceProvider extends ServiceProvider
             if ($user->isReviewer()) {
                 return route('reviewer.dashboard');
             }
+
             return route('dosen.dashboard');
         });
     }

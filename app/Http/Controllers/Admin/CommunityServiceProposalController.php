@@ -27,14 +27,14 @@ class CommunityServiceProposalController extends Controller
         $selectedTab = $request->query('tab', 'masuk');
         if ($selectedTab === 'belum_ditugaskan') {
             $query->whereIn('status', ['diajukan', 'verifikasi_administrasi'])
-                  ->whereDoesntHave('reviews');
+                ->whereDoesntHave('reviews');
         } elseif ($selectedTab === 'sedang_ditugaskan') {
             $query->where(function ($q) {
                 $q->where('status', 'sedang_direview')
-                  ->orWhere(function ($sub) {
-                      $sub->whereIn('status', ['verifikasi_administrasi', 'revisi'])
-                          ->whereHas('reviews');
-                  });
+                    ->orWhere(function ($sub) {
+                        $sub->whereIn('status', ['verifikasi_administrasi', 'revisi'])
+                            ->whereHas('reviews');
+                    });
             });
         } elseif ($selectedTab === 'arsip') {
             $query->where('status', 'archive');
@@ -42,10 +42,10 @@ class CommunityServiceProposalController extends Controller
 
         // Filter Tahapan / Status Siklus
         $selectedStatus = $request->query('status', 'semua');
-        if ($selectedStatus !== 'semua' && !empty($selectedStatus)) {
+        if ($selectedStatus !== 'semua' && ! empty($selectedStatus)) {
             if ($selectedStatus === 'butuh_reviewer') {
                 $query->whereIn('status', ['diajukan', 'verifikasi_administrasi'])
-                      ->whereDoesntHave('reviews');
+                    ->whereDoesntHave('reviews');
             } elseif ($selectedStatus === 'aktif') {
                 $query->whereNotIn('status', ['draft', 'ditolak', 'archive']);
             } else {
@@ -55,7 +55,7 @@ class CommunityServiceProposalController extends Controller
 
         // Filter Program Studi (3 Program Studi PKTJ: D4 RSTJ, D4 TRO, D3 TO)
         $selectedProdi = $request->query('prodi', 'semua');
-        if ($selectedProdi !== 'semua' && !empty($selectedProdi)) {
+        if ($selectedProdi !== 'semua' && ! empty($selectedProdi)) {
             $query->whereHas('prodi', function ($q) use ($selectedProdi) {
                 if (is_numeric($selectedProdi)) {
                     $q->where('id', $selectedProdi);
@@ -67,19 +67,19 @@ class CommunityServiceProposalController extends Controller
 
         // Filter Tahun Anggaran
         $selectedYear = $request->query('tahun', 'semua');
-        if ($selectedYear !== 'semua' && !empty($selectedYear)) {
+        if ($selectedYear !== 'semua' && ! empty($selectedYear)) {
             $query->where('tahun_anggaran', $selectedYear);
         }
 
         // Pencarian Kata Kunci Judul / Kode Usulan / Nama Pengusul
         $searchQuery = trim($request->query('search', ''));
-        if (!empty($searchQuery)) {
+        if (! empty($searchQuery)) {
             $query->where(function ($q) use ($searchQuery) {
                 $q->where('judul', 'like', "%{$searchQuery}%")
-                  ->orWhere('kode_usulan', 'like', "%{$searchQuery}%")
-                  ->orWhereHas('ketua', function ($userQuery) use ($searchQuery) {
-                      $userQuery->where('name', 'like', "%{$searchQuery}%");
-                  });
+                    ->orWhere('kode_usulan', 'like', "%{$searchQuery}%")
+                    ->orWhereHas('ketua', function ($userQuery) use ($searchQuery) {
+                        $userQuery->where('name', 'like', "%{$searchQuery}%");
+                    });
             });
         }
 
@@ -127,10 +127,10 @@ class CommunityServiceProposalController extends Controller
             'sedang_ditugaskan' => Proposal::pengabdian()
                 ->where(function ($q) {
                     $q->where('status', 'sedang_direview')
-                      ->orWhere(function ($sub) {
-                          $sub->whereIn('status', ['verifikasi_administrasi', 'revisi'])
-                              ->whereHas('reviews');
-                      });
+                        ->orWhere(function ($sub) {
+                            $sub->whereIn('status', ['verifikasi_administrasi', 'revisi'])
+                                ->whereHas('reviews');
+                        });
                 })->count(),
             'arsip' => Proposal::pengabdian()->where('status', 'archive')->count(),
         ];
@@ -201,7 +201,7 @@ class CommunityServiceProposalController extends Controller
         $validated = $request->validate([
             'status' => [
                 'required',
-                'in:diajukan,verifikasi_administrasi,sedang_direview,revisi,diterima,ditolak,pelaksanaan,archive'
+                'in:diajukan,verifikasi_administrasi,sedang_direview,revisi,diterima,ditolak,pelaksanaan,archive',
             ],
             'catatan_admin' => ['nullable', 'string', 'max:1000'],
         ], [
@@ -253,4 +253,3 @@ class CommunityServiceProposalController extends Controller
         return view('admin.proposals.print', compact('proposal'));
     }
 }
-

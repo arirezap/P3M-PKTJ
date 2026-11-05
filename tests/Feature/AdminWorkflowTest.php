@@ -64,13 +64,13 @@ class AdminWorkflowTest extends TestCase
         $response = $this->actingAs($admin)->get(route('admin.dashboard'));
 
         $response->assertStatus(200);
-        
+
         // Memeriksa keberadaan 3 Sub-Menu Utama sesuai dokumen Excel
         $response->assertSee('Pilihan Modul Kerja Utama');
         $response->assertSee('Sub-Menu 1');
         $response->assertSee('Penelitian');
         $response->assertSee('Akses Modul Penelitian');
-        
+
         $response->assertSee('Sub-Menu 2');
         $response->assertSee('Pengabdian kepada Masyarakat');
         $response->assertSee('Akses Modul Pengabdian');

@@ -43,9 +43,9 @@ class CollaborationController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('nama_mitra', 'like', "%{$search}%")
-                  ->orWhere('judul_kerjasama', 'like', "%{$search}%")
-                  ->orWhere('nomor_mou_pks', 'like', "%{$search}%")
-                  ->orWhere('deskripsi', 'like', "%{$search}%");
+                    ->orWhere('judul_kerjasama', 'like', "%{$search}%")
+                    ->orWhere('nomor_mou_pks', 'like', "%{$search}%")
+                    ->orWhere('deskripsi', 'like', "%{$search}%");
             });
         }
 

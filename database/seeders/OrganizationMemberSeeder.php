@@ -18,7 +18,7 @@ class OrganizationMemberSeeder extends Seeder
             'org_sk_number' => 'SK Direktur PKTJ No. KP.004/1/12/PKTJ-2026',
             'org_period' => '2026 – 2031',
             'org_chart_image' => null,
-            'org_title' => 'Struktur Organisasi & Tata Kelola P3M PKTJ',
+            'org_title' => 'Struktur Organisasi P3M PKTJ',
             'org_lead_text' => 'Pusat Penelitian dan Pengabdian kepada Masyarakat (P3M) merupakan unit pelaksana strategis bidang riset terapan dan pengabdian masyarakat di lingkungan Politeknik Keselamatan Transportasi Jalan, berkedudukan langsung di bawah Direktur PKTJ dan dikoordinasikan oleh Wakil Direktur I Bidang Akademik sesuai ketentuan tata kelola Badan Pengembangan SDM Perhubungan.',
         ];
 

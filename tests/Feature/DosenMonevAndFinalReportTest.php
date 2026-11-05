@@ -18,8 +18,11 @@ class DosenMonevAndFinalReportTest extends TestCase
     use RefreshDatabase;
 
     protected User $dosen;
+
     protected User $otherDosen;
+
     protected Prodi $prodi;
+
     protected Proposal $proposal;
 
     protected function setUp(): void
@@ -294,4 +297,3 @@ class DosenMonevAndFinalReportTest extends TestCase
         $this->assertNotNull($report->fresh()->file_revisi_laporan);
     }
 }
-

@@ -31,10 +31,10 @@ class CommunityServiceController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('judul', 'like', "%{$search}%")
-                  ->orWhere('ketua_pelaksana', 'like', "%{$search}%")
-                  ->orWhere('mitra', 'like', "%{$search}%")
-                  ->orWhere('lokasi_kegiatan', 'like', "%{$search}%")
-                  ->orWhere('ringkasan', 'like', "%{$search}%");
+                    ->orWhere('ketua_pelaksana', 'like', "%{$search}%")
+                    ->orWhere('mitra', 'like', "%{$search}%")
+                    ->orWhere('lokasi_kegiatan', 'like', "%{$search}%")
+                    ->orWhere('ringkasan', 'like', "%{$search}%");
             });
         }
 
@@ -51,6 +51,7 @@ class CommunityServiceController extends Controller
     public function create(): View
     {
         $prodis = Prodi::where('status_aktif', true)->get();
+
         return view('admin.community-services.create', compact('prodis'));
     }
 
@@ -97,6 +98,7 @@ class CommunityServiceController extends Controller
     public function edit(CommunityService $communityService): View
     {
         $prodis = Prodi::where('status_aktif', true)->get();
+
         return view('admin.community-services.edit', compact('communityService', 'prodis'));
     }
 

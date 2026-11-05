@@ -1,11 +1,11 @@
 @extends('layouts.public')
 
-@section('title', 'Sumber Daya Manusia & Struktur Organisasi - P3M Politeknik Keselamatan Transportasi Jalan')
-@section('meta_description', 'Struktur organisasi dan susunan sumber daya manusia Pusat Penelitian dan Pengabdian kepada Masyarakat (P3M) Politeknik Keselamatan Transportasi Jalan Tegal.')
+@section('title', 'Struktur Organisasi (SDM) - P3M Politeknik Keselamatan Transportasi Jalan')
+@section('meta_description', 'Struktur organisasi dan susunan pengurus Pusat Penelitian dan Pengabdian kepada Masyarakat (P3M) Politeknik Keselamatan Transportasi Jalan Tegal.')
 
 @section('content')
 <div x-data="{ imageModalOpen: false }">
-<main class="flex-1">
+    <main class="flex-1">
 
         <!-- Hero Section Header -->
         <section class="bg-gradient-to-b from-blue-50/70 via-slate-50/40 to-white py-12 sm:py-16 border-b border-slate-200">
@@ -30,7 +30,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                             </svg>
                         </li>
-                        <li class="font-semibold text-[#0B2A59]">Sumber Daya Manusia</li>
+                        <li class="font-semibold text-[#0B2A59]">Struktur Organisasi (SDM)</li>
                     </ol>
                 </nav>
 
@@ -41,7 +41,7 @@
                             <span>Tata Kelola Kelembagaan Vokasi Kemenhub</span>
                         </div>
                         <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0B2A59] tracking-tight leading-tight">
-                            {{ $settings['org_title'] ?? 'Struktur Organisasi & Sumber Daya Manusia P3M' }}
+                            {{ $settings['org_title'] ?? 'Struktur Organisasi P3M PKTJ' }}
                         </h1>
                         <p class="text-sm sm:text-base text-slate-600 leading-relaxed max-w-3xl">
                             {{ $settings['org_lead_text'] ?? 'Pusat Penelitian dan Pengabdian kepada Masyarakat (P3M) merupakan unit pelaksana strategis bidang riset terapan dan pengabdian masyarakat di lingkungan Politeknik Keselamatan Transportasi Jalan.' }}
@@ -58,21 +58,21 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <span class="text-[11px] font-bold text-yellow-600 uppercase tracking-wider leading-3">Legalitas Organisasi</span>
+                                    <span class="text-xs font-bold text-yellow-600 uppercase tracking-wider leading-3">Legalitas Organisasi</span>
                                     <h3 class="text-xs font-bold text-slate-900 leading-4">SK Direktur PKTJ</h3>
                                 </div>
                             </div>
                             <div class="space-y-2 text-xs">
                                 <div>
-                                    <span class="text-slate-400 block text-[11px]">Nomor Surat Keputusan:</span>
+                                    <span class="text-slate-400 block text-xs">Nomor Surat Keputusan:</span>
                                     <span class="font-semibold text-slate-800 leading-4 font-mono">{{ $settings['org_sk_number'] ?? 'SK Direktur PKTJ' }}</span>
                                 </div>
                                 <div>
-                                    <span class="text-slate-400 block text-[11px]">Masa Bakti Kepengurusan:</span>
+                                    <span class="text-slate-400 block text-xs">Masa Bakti Kepengurusan:</span>
                                     <span class="font-semibold text-[#0B2A59] leading-4">{{ $settings['org_period'] ?? '2026 – 2031' }}</span>
                                 </div>
                                 <div>
-                                    <span class="text-slate-400 block text-[11px]">Jumlah Personil Aktif:</span>
+                                    <span class="text-slate-400 block text-xs">Jumlah Personil Aktif:</span>
                                     <span class="font-bold text-emerald-700 leading-4">{{ $members->count() }} Pejabat & Pengurus</span>
                                 </div>
                             </div>
@@ -133,94 +133,99 @@
                             </div>
                         </div>
                     @else
-                        <!-- Skema Bagan Visual Hirarki Fungsional (Tree View Standar) -->
-                        <div class="max-w-4xl mx-auto py-6 space-y-8">
+                        <!-- Skema Bagan Visual Hirarki Fungsional Dinamis (Tree View) -->
+                        <div class="max-w-4xl mx-auto py-6 space-y-6">
                             
-                            <!-- Tingkat 1: Pengarah / Direktur PKTJ -->
-                            <div class="flex flex-col items-center">
-                                <div class="bg-[#0B2A59] text-white border-2 border-yellow-400 rounded-2xl p-5 shadow-md w-full max-w-md text-center space-y-1">
-                                    <span class="text-[10px] font-bold uppercase tracking-wider text-yellow-300">Pelindung & Pengarah Institusional</span>
-                                    <h3 class="text-base font-bold text-white leading-6">Direktur PKTJ</h3>
-                                    @if($p = $pengarah->firstWhere('urutan', 1) ?? $pengarah->first())
-                                        <p class="text-xs text-blue-200 leading-4">{{ $p->nama }}</p>
-                                    @endif
+                            <!-- Tingkat 1: Pengarah / Pelindung Institusional -->
+                            @if($pengarah->isNotEmpty())
+                                <div class="flex flex-col items-center">
+                                    <div class="flex flex-wrap justify-center gap-4 w-full">
+                                        @foreach($pengarah as $p)
+                                            <div class="bg-[#0B2A59] text-white border-2 border-yellow-400 rounded-2xl p-5 shadow-md w-full max-w-md text-center space-y-1">
+                                                <span class="text-xs font-bold uppercase tracking-wider text-yellow-300">{{ $p->jabatan }}</span>
+                                                <h3 class="text-base font-bold text-white leading-6">{{ $p->nama }}</h3>
+                                                @if($p->nip_nidn)
+                                                    <p class="text-xs text-blue-200 leading-4 font-mono">NIP: {{ $p->nip_nidn }}</p>
+                                                @endif
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="w-0.5 h-6 bg-slate-300"></div>
                                 </div>
-                                <div class="w-0.5 h-6 bg-slate-300"></div>
-                            </div>
+                            @endif
 
-                            <!-- Tingkat 2: Penanggung Jawab Akademik & Riset (Wadir I) -->
-                            <div class="flex flex-col items-center">
-                                <div class="bg-white border-2 border-[#0B2A59] rounded-2xl p-4 shadow-sm w-full max-w-md text-center space-y-1">
-                                    <span class="text-[10px] font-bold uppercase tracking-wider text-blue-700">Penanggung Jawab Akademik</span>
-                                    <h3 class="text-sm font-bold text-[#0B2A59] leading-5">Wakil Direktur I Bidang Akademik</h3>
-                                    @if($p = $pengarah->firstWhere('urutan', 2) ?? $pengarah->skip(1)->first())
-                                        <p class="text-xs text-slate-500 leading-4">{{ $p->nama }}</p>
-                                    @endif
+                            <!-- Tingkat 2: Penanggung Jawab Akademik & Riset -->
+                            @if($penanggungJawab->isNotEmpty())
+                                <div class="flex flex-col items-center">
+                                    <div class="flex flex-wrap justify-center gap-4 w-full">
+                                        @foreach($penanggungJawab as $p)
+                                            <div class="bg-white border-2 border-[#0B2A59] rounded-2xl p-4 shadow-sm w-full max-w-md text-center space-y-1">
+                                                <span class="text-xs font-bold uppercase tracking-wider text-blue-700">{{ $p->jabatan }}</span>
+                                                <h3 class="text-sm font-bold text-[#0B2A59] leading-5">{{ $p->nama }}</h3>
+                                                @if($p->nip_nidn)
+                                                    <p class="text-xs text-slate-500 leading-4 font-mono">NIP: {{ $p->nip_nidn }}</p>
+                                                @endif
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="w-0.5 h-6 bg-slate-300"></div>
                                 </div>
-                                <div class="w-0.5 h-6 bg-slate-300"></div>
-                            </div>
+                            @endif
 
                             <!-- Tingkat 3: Pimpinan Inti P3M -->
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto relative">
-                                <div class="bg-blue-50 border border-blue-200 rounded-2xl p-4 text-center space-y-1">
-                                    <span class="text-[10px] font-bold uppercase tracking-wider text-[#0B2A59]">Pimpinan Satuan Kerja</span>
-                                    <h3 class="text-sm font-bold text-[#0B2A59] leading-5">Kepala Pusat P3M</h3>
-                                    @if($p = $pimpinan->firstWhere('urutan', 3) ?? $pimpinan->first())
-                                        <p class="text-xs text-slate-600 leading-4">{{ $p->nama }}</p>
-                                    @endif
+                            @if($pimpinan->isNotEmpty())
+                                <div class="flex flex-col items-center">
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl w-full">
+                                        @foreach($pimpinan as $p)
+                                            <div class="bg-blue-50 border border-blue-200 rounded-2xl p-4 text-center space-y-1">
+                                                <span class="text-xs font-bold uppercase tracking-wider text-[#0B2A59]">{{ $p->jabatan }}</span>
+                                                <h3 class="text-sm font-bold text-[#0B2A59] leading-5">{{ $p->nama }}</h3>
+                                                @if($p->nip_nidn)
+                                                    <p class="text-xs text-slate-600 leading-4 font-mono">NIP: {{ $p->nip_nidn }}</p>
+                                                @endif
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="w-0.5 h-6 bg-slate-300"></div>
                                 </div>
-                                <div class="bg-blue-50 border border-blue-200 rounded-2xl p-4 text-center space-y-1">
-                                    <span class="text-[10px] font-bold uppercase tracking-wider text-[#0B2A59]">Ketatausahaan & Keuangan</span>
-                                    <h3 class="text-sm font-bold text-[#0B2A59] leading-5">Sekretaris P3M</h3>
-                                    @if($p = $pimpinan->firstWhere('urutan', 4) ?? $pimpinan->skip(1)->first())
-                                        <p class="text-xs text-slate-600 leading-4">{{ $p->nama }}</p>
-                                    @endif
-                                </div>
-                            </div>
+                            @endif
 
-                            <div class="flex justify-center">
-                                <div class="w-0.5 h-6 bg-slate-300"></div>
-                            </div>
-
-                            <!-- Tingkat 4: 3 Koordinator Bidang Strategis -->
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <div class="bg-white border border-slate-200 rounded-2xl p-4 text-center space-y-1 shadow-xs">
-                                    <span class="text-[10px] font-bold uppercase tracking-wider text-amber-600">Bidang Penelitian</span>
-                                    <h3 class="text-xs font-bold text-slate-900 leading-4">Koordinator Penelitian & Hilirisasi</h3>
-                                    @if($p = $koordinator->firstWhere('urutan', 5) ?? $koordinator->first())
-                                        <p class="text-xs text-slate-500 leading-4">{{ $p->nama }}</p>
+                            <!-- Tingkat 4: Koordinator Bidang Strategis & Sentra HKI -->
+                            @if($koordinator->isNotEmpty())
+                                <div class="flex flex-col items-center">
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+                                        @foreach($koordinator as $p)
+                                            <div class="bg-white border border-slate-200 rounded-2xl p-4 text-center space-y-1 shadow-xs">
+                                                <span class="text-xs font-bold uppercase tracking-wider text-amber-600">{{ $p->jabatan }}</span>
+                                                <h3 class="text-xs font-bold text-slate-900 leading-4">{{ $p->nama }}</h3>
+                                                @if($p->nip_nidn)
+                                                    <p class="text-xs text-slate-500 leading-4 font-mono">NIP: {{ $p->nip_nidn }}</p>
+                                                @endif
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    @if($staf->isNotEmpty())
+                                        <div class="w-0.5 h-6 bg-slate-300"></div>
                                     @endif
                                 </div>
-                                <div class="bg-white border border-slate-200 rounded-2xl p-4 text-center space-y-1 shadow-xs">
-                                    <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-600">Bidang Pengabdian</span>
-                                    <h3 class="text-xs font-bold text-slate-900 leading-4">Koordinator Pengabdian Masyarakat</h3>
-                                    @if($p = $koordinator->firstWhere('urutan', 6) ?? $koordinator->skip(1)->first())
-                                        <p class="text-xs text-slate-500 leading-4">{{ $p->nama }}</p>
-                                    @endif
-                                </div>
-                                <div class="bg-white border border-slate-200 rounded-2xl p-4 text-center space-y-1 shadow-xs">
-                                    <span class="text-[10px] font-bold uppercase tracking-wider text-purple-600">Sentra HKI & Publikasi</span>
-                                    <h3 class="text-xs font-bold text-slate-900 leading-4">Koordinator HKI & Jurnal Ilmiah</h3>
-                                    @if($p = $koordinator->firstWhere('urutan', 7) ?? $koordinator->skip(2)->first())
-                                        <p class="text-xs text-slate-500 leading-4">{{ $p->nama }}</p>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="flex justify-center">
-                                <div class="w-0.5 h-6 bg-slate-300"></div>
-                            </div>
+                            @endif
 
                             <!-- Tingkat 5: Staf Administrasi & Pengelola SIM P3M -->
-                            <div class="flex flex-col items-center">
-                                <div class="bg-slate-100 border border-slate-200 rounded-2xl p-3 w-full max-w-md text-center space-y-0.5">
-                                    <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Unit Pendukung Teknis</span>
-                                    <h3 class="text-xs font-bold text-slate-800 leading-4">Staf Administrasi & Pengelola SIM P3M</h3>
-                                    @if($p = $staf->firstWhere('urutan', 8) ?? $staf->first())
-                                        <p class="text-xs text-slate-500 leading-4">{{ $p->nama }}</p>
-                                    @endif
+                            @if($staf->isNotEmpty())
+                                <div class="flex flex-col items-center">
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl w-full">
+                                        @foreach($staf as $p)
+                                            <div class="bg-slate-100 border border-slate-200 rounded-2xl p-3 text-center space-y-0.5">
+                                                <span class="text-xs font-bold uppercase tracking-wider text-slate-500">{{ $p->jabatan }}</span>
+                                                <h3 class="text-xs font-bold text-slate-800 leading-4">{{ $p->nama }}</h3>
+                                                @if($p->nip_nidn)
+                                                    <p class="text-xs text-slate-500 leading-4 font-mono">NIP: {{ $p->nip_nidn }}</p>
+                                                @endif
+                                            </div>
+                                        @endforeach
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
 
                         </div>
                     @endif
@@ -246,7 +251,7 @@
                 </div>
 
                 <!-- Bagian A: Pimpinan & Pengarah Institusional -->
-                @if($pengarah->isNotEmpty() || $pimpinan->isNotEmpty())
+                @if($pengarah->isNotEmpty() || $penanggungJawab->isNotEmpty() || $pimpinan->isNotEmpty())
                     <div class="space-y-6">
                         <div class="flex items-center gap-3 border-b border-slate-200 pb-3">
                             <span class="w-3 h-3 rounded-full bg-[#0B2A59]"></span>
@@ -254,7 +259,7 @@
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            @foreach($pengarah->concat($pimpinan) as $personil)
+                            @foreach($pengarah->concat($penanggungJawab)->concat($pimpinan) as $personil)
                                 <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between space-y-4">
                                     <div class="space-y-4">
                                         <div class="flex items-start gap-4">
@@ -267,12 +272,12 @@
                                                 </div>
                                             @endif
                                             <div>
-                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-semibold leading-4 {{ str_contains(strtolower($personil->jabatan), 'pengarah') || str_contains(strtolower($personil->jabatan), 'direktur') ? 'bg-amber-100 text-amber-800' : 'bg-blue-100 text-[#0B2A59]' }}">
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold leading-4 {{ str_contains(strtolower($personil->jabatan), 'pengarah') || str_contains(strtolower($personil->jabatan), 'direktur') ? 'bg-amber-100 text-amber-800' : 'bg-blue-100 text-[#0B2A59]' }}">
                                                     {{ $personil->jabatan }}
                                                 </span>
                                                 <h4 class="text-sm font-bold text-slate-900 mt-1 leading-5">{{ $personil->nama }}</h4>
                                                 @if($personil->nip_nidn)
-                                                    <p class="text-[11px] text-slate-500 font-mono mt-0.5">NIP: {{ $personil->nip_nidn }}</p>
+                                                    <p class="text-xs text-slate-500 font-mono mt-0.5">NIP: {{ $personil->nip_nidn }}</p>
                                                 @endif
                                             </div>
                                         </div>
@@ -283,7 +288,7 @@
                                             </p>
                                         @endif
                                     </div>
-                                    <div class="pt-2 text-[11px] text-slate-400 font-medium">
+                                    <div class="pt-2 text-xs text-slate-400 font-medium">
                                         Urutan Hierarki #{{ $personil->urutan }}
                                     </div>
                                 </div>
@@ -314,12 +319,12 @@
                                                 </div>
                                             @endif
                                             <div>
-                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-800 leading-4">
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-800 leading-4">
                                                     {{ $personil->jabatan }}
                                                 </span>
                                                 <h4 class="text-sm font-bold text-slate-900 mt-1 leading-5">{{ $personil->nama }}</h4>
                                                 @if($personil->nip_nidn)
-                                                    <p class="text-[11px] text-slate-500 font-mono mt-0.5">NIP: {{ $personil->nip_nidn }}</p>
+                                                    <p class="text-xs text-slate-500 font-mono mt-0.5">NIP: {{ $personil->nip_nidn }}</p>
                                                 @endif
                                             </div>
                                         </div>
@@ -330,7 +335,7 @@
                                             </p>
                                         @endif
                                     </div>
-                                    <div class="pt-2 text-[11px] text-slate-400 font-medium">
+                                    <div class="pt-2 text-xs text-slate-400 font-medium">
                                         Urutan Hierarki #{{ $personil->urutan }}
                                     </div>
                                 </div>
@@ -361,12 +366,12 @@
                                                 </div>
                                             @endif
                                             <div>
-                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-700 leading-4">
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-700 leading-4">
                                                     {{ $personil->jabatan }}
                                                 </span>
                                                 <h4 class="text-sm font-bold text-slate-900 mt-1 leading-5">{{ $personil->nama }}</h4>
                                                 @if($personil->nip_nidn)
-                                                    <p class="text-[11px] text-slate-500 font-mono mt-0.5">NIP: {{ $personil->nip_nidn }}</p>
+                                                    <p class="text-xs text-slate-500 font-mono mt-0.5">NIP: {{ $personil->nip_nidn }}</p>
                                                 @endif
                                             </div>
                                         </div>
@@ -377,7 +382,7 @@
                                             </p>
                                         @endif
                                     </div>
-                                    <div class="pt-2 text-[11px] text-slate-400 font-medium">
+                                    <div class="pt-2 text-xs text-slate-400 font-medium">
                                         Urutan Hierarki #{{ $personil->urutan }}
                                     </div>
                                 </div>
@@ -385,65 +390,6 @@
                         </div>
                     </div>
                 @endif
-
-            </div>
-        </section>
-
-        <!-- Informasi Tugas Pokok & Fungsi Inti (Tupoksi P3M) -->
-        <section class="py-12 sm:py-16 bg-white border-t border-slate-200">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-                
-                <div class="text-center max-w-3xl mx-auto space-y-2">
-                    <span class="text-xs font-bold text-yellow-600 uppercase tracking-wider leading-4">Standar Tata Kerja</span>
-                    <h2 class="text-2xl sm:text-3xl font-bold text-[#0B2A59] tracking-tight leading-8">Tugas Pokok & Wewenang Kelembagaan</h2>
-                    <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">P3M PKTJ menjalankan 4 pilar fungsional tridharma perguruan tinggi bidang keselamatan transportasi jalan.</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <!-- Pilar 1 -->
-                    <div class="p-6 rounded-2xl bg-blue-50/60 border border-blue-100 space-y-3">
-                        <div class="w-10 h-10 rounded-xl bg-[#0B2A59] text-white flex items-center justify-center font-bold text-sm">
-                            01
-                        </div>
-                        <h3 class="text-sm font-bold text-[#0B2A59] leading-5">Penelitian Terapan Vokasi</h3>
-                        <p class="text-xs text-slate-600 leading-relaxed">
-                            Mengkoordinasikan, memfasilitasi, dan mereviu penelitian dosen serta taruna pada 3 Program Studi (D4 RSTJ, D4 TRO, D3 TO).
-                        </p>
-                    </div>
-
-                    <!-- Pilar 2 -->
-                    <div class="p-6 rounded-2xl bg-yellow-50/60 border border-yellow-100 space-y-3">
-                        <div class="w-10 h-10 rounded-xl bg-yellow-500 text-slate-900 flex items-center justify-center font-bold text-sm">
-                            02
-                        </div>
-                        <h3 class="text-sm font-bold text-slate-900 leading-5">Pengabdian Berbasis Aksi</h3>
-                        <p class="text-xs text-slate-600 leading-relaxed">
-                            Menyelenggarakan aksi nyata keselamatan berkendara, pembinaan desa rukun lalu lintas, dan standardisasi kelaikan kendaraan.
-                        </p>
-                    </div>
-
-                    <!-- Pilar 3 -->
-                    <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
-                        <div class="w-10 h-10 rounded-xl bg-slate-800 text-white flex items-center justify-center font-bold text-sm">
-                            03
-                        </div>
-                        <h3 class="text-sm font-bold text-slate-900 leading-5">Sentra HKI & Publikasi</h3>
-                        <p class="text-xs text-slate-600 leading-relaxed">
-                            Memfasilitasi pendaftaran Hak Cipta, Paten inovasi otomotif, serta pengelolaan Indonesian Road Safety Journal terindeks SINTA.
-                        </p>
-                    </div>
-
-                    <!-- Pilar 4 -->
-                    <div class="p-6 rounded-2xl bg-blue-50/60 border border-blue-100 space-y-3">
-                        <div class="w-10 h-10 rounded-xl bg-[#0B2A59] text-white flex items-center justify-center font-bold text-sm">
-                            04
-                        </div>
-                        <h3 class="text-sm font-bold text-[#0B2A59] leading-5">Akuntabilitas & Tata Kelola</h3>
-                        <p class="text-xs text-slate-600 leading-relaxed">
-                            Menjamin transparansi alokasi dana DIPA, monitoring kemajuan proposal, dan pelaporan capaian kinerja penelitian terpadu.
-                        </p>
-                    </div>
-                </div>
 
             </div>
         </section>
@@ -498,6 +444,5 @@
         </div>
     @endif
 
-    <!-- Footer Institusi Kemenhub -->
 </div>
 @endsection

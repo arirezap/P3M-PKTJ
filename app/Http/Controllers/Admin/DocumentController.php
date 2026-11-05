@@ -59,9 +59,9 @@ class DocumentController extends Controller
         ]);
 
         $file = $request->file('file_dokumen');
-        $fileSize = round($file->getSize() / 1024 / 1024, 2) . ' MB';
+        $fileSize = round($file->getSize() / 1024 / 1024, 2).' MB';
         if ($file->getSize() < 1048576) {
-            $fileSize = round($file->getSize() / 1024) . ' KB';
+            $fileSize = round($file->getSize() / 1024).' KB';
         }
 
         $filePath = $file->store('documents', 'public');
@@ -106,9 +106,9 @@ class DocumentController extends Controller
                 Storage::disk('public')->delete($document->file_path);
             }
             $file = $request->file('file_dokumen');
-            $fileSize = round($file->getSize() / 1024 / 1024, 2) . ' MB';
+            $fileSize = round($file->getSize() / 1024 / 1024, 2).' MB';
             if ($file->getSize() < 1048576) {
-                $fileSize = round($file->getSize() / 1024) . ' KB';
+                $fileSize = round($file->getSize() / 1024).' KB';
             }
 
             $document->file_path = $file->store('documents', 'public');

@@ -32,7 +32,7 @@ return new class extends Migration
                 'sedang_direview',
                 'revisi',
                 'diterima',
-                'ditolak'
+                'ditolak',
             ])->default('draft');
             $table->text('catatan_admin')->nullable();
             $table->timestamps();

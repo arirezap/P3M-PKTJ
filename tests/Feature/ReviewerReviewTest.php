@@ -18,12 +18,19 @@ class ReviewerReviewTest extends TestCase
     use RefreshDatabase;
 
     protected User $reviewer;
+
     protected User $otherReviewer;
+
     protected User $dosen;
+
     protected Prodi $prodi;
+
     protected Proposal $proposalPenelitian;
+
     protected Proposal $proposalPengabdian;
+
     protected ProposalReview $reviewPenelitian;
+
     protected ProposalReview $reviewPengabdian;
 
     protected function setUp(): void

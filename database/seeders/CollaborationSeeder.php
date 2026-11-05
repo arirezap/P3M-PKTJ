@@ -238,7 +238,7 @@ class CollaborationSeeder extends Seeder
 
         foreach ($collaborations as $col) {
             // Tulis dummy PDF jika belum ada
-            if ($col['file_dokumen'] && !Storage::disk('public')->exists($col['file_dokumen'])) {
+            if ($col['file_dokumen'] && ! Storage::disk('public')->exists($col['file_dokumen'])) {
                 Storage::disk('public')->put($col['file_dokumen'], $dummyPdfContent);
             }
 

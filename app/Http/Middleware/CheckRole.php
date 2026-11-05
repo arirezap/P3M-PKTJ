@@ -12,18 +12,18 @@ class CheckRole
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  Closure(Request): (Response)  $next
      * @param  string  ...$roles
      */
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             return redirect('/login');
         }
 
         $user = Auth::user();
 
-        if (!$user->hasAnyRole($roles)) {
+        if (! $user->hasAnyRole($roles)) {
             // Jika pengguna mengakses rute peran lain, arahkan ke dasbor perannya sendiri
             if ($user->isAdmin()) {
                 return redirect('/admin/dashboard');

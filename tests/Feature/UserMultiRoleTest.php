@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
 use App\Models\Prodi;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -12,6 +12,7 @@ class UserMultiRoleTest extends TestCase
     use RefreshDatabase;
 
     private User $admin;
+
     private Prodi $prodi;
 
     protected function setUp(): void
@@ -188,4 +189,3 @@ class UserMultiRoleTest extends TestCase
         $this->assertTrue($user->hasRole('peneliti'));
     }
 }
-

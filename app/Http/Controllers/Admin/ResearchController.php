@@ -31,7 +31,7 @@ class ResearchController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('judul', 'like', "%{$search}%")
-                  ->orWhere('ketua_peneliti', 'like', "%{$search}%");
+                    ->orWhere('ketua_peneliti', 'like', "%{$search}%");
             });
         }
 
@@ -48,6 +48,7 @@ class ResearchController extends Controller
     public function create(): View
     {
         $prodis = Prodi::where('status_aktif', true)->get();
+
         return view('admin.researches.create', compact('prodis'));
     }
 
@@ -92,6 +93,7 @@ class ResearchController extends Controller
     public function edit(Research $research): View
     {
         $prodis = Prodi::where('status_aktif', true)->get();
+
         return view('admin.researches.edit', compact('research', 'prodis'));
     }
 

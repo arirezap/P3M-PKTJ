@@ -26,11 +26,62 @@ class PublicSdmTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('Struktur Organisasi');
-        $response->assertSee('Sumber Daya Manusia');
+        $response->assertSee('Struktur Organisasi (SDM)');
         $response->assertSee('Ir. Bambang Istiyanto, M.T.');
         $response->assertSee('Dr. Ir. Hendro Wibowo, M.T.');
         $response->assertSee('Siti Rahmawati, S.Si.T., M.T.');
         $response->assertSee('SK Direktur PKTJ');
+        $response->assertDontSee('Tugas Pokok & Wewenang Kelembagaan');
+    }
+
+    public function test_public_sdm_page_does_not_contain_four_pillars(): void
+    {
+        $response = $this->get(route('profil.sdm'));
+
+        $response->assertStatus(200);
+        $response->assertDontSee('Tugas Pokok & Wewenang Kelembagaan');
+        $response->assertDontSee('P3M PKTJ menjalankan 4 pilar fungsional');
+    }
+
+    public function test_admin_can_reorder_organization_members(): void
+    {
+        $admin = User::where('role', 'admin')->first();
+        $members = OrganizationMember::ordered()->get();
+
+        $this->assertGreaterThanOrEqual(2, $members->count());
+
+        $first = $members[0];
+        $second = $members[1];
+
+        // Swap orders
+        $payload = [
+            'orders' => [
+                ['id' => $first->id, 'urutan' => 2],
+                ['id' => $second->id, 'urutan' => 1],
+            ],
+        ];
+
+        $response = $this->actingAs($admin)->postJson(route('admin.organization.members.reorder'), $payload);
+
+        $response->assertStatus(200);
+        $response->assertJson(['success' => true]);
+
+        $this->assertEquals(2, $first->fresh()->urutan);
+        $this->assertEquals(1, $second->fresh()->urutan);
+    }
+
+    public function test_non_admin_cannot_reorder_organization_members(): void
+    {
+        $dosen = User::where('role', 'dosen')->first();
+        $member = OrganizationMember::first();
+
+        $response = $this->actingAs($dosen)->postJson(route('admin.organization.members.reorder'), [
+            'orders' => [
+                ['id' => $member->id, 'urutan' => 99],
+            ],
+        ]);
+
+        $response->assertStatus(302); // redirected away by role middleware
     }
 
     public function test_admin_can_access_organization_cms(): void
@@ -162,10 +213,10 @@ class PublicSdmTest extends TestCase
         $response->assertSessionHas('success');
 
         $member->refresh();
-        $this->assertEquals(!$initialStatus, $member->status_aktif);
+        $this->assertEquals(! $initialStatus, $member->status_aktif);
 
         // If inactive, it shouldn't show in active public listing
-        if (!$member->status_aktif) {
+        if (! $member->status_aktif) {
             $publicResponse = $this->get(route('profil.sdm'));
             $publicResponse->assertDontSee($member->nama);
         }

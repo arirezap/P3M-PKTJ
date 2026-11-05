@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Dosen;
 
 use App\Http\Controllers\Controller;
 use App\Models\Proposal;
-use App\Models\ProposalFinalReport;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +19,7 @@ class FinalReportController extends Controller
     {
         $this->authorizeAccess($proposal);
 
-        if (!in_array($proposal->status, ['diterima', 'pelaksanaan', 'laporan_akhir', 'archive'])) {
+        if (! in_array($proposal->status, ['diterima', 'pelaksanaan', 'laporan_akhir', 'archive'])) {
             return redirect()->route('dosen.proposals.show', $proposal)
                 ->with('error', 'Laporan akhir hanya dapat disampaikan untuk kegiatan yang telah disetujui / dalam pelaksanaan.');
         }
@@ -41,7 +40,7 @@ class FinalReportController extends Controller
     {
         $this->authorizeAccess($proposal);
 
-        if (!in_array($proposal->status, ['diterima', 'pelaksanaan', 'laporan_akhir'])) {
+        if (! in_array($proposal->status, ['diterima', 'pelaksanaan', 'laporan_akhir'])) {
             return redirect()->route('dosen.proposals.show', $proposal)
                 ->with('error', 'Status usulan saat ini tidak mengizinkan penyerahan laporan akhir.');
         }
@@ -67,11 +66,11 @@ class FinalReportController extends Controller
 
         // Hitung akumulasi realisasi anggaran
         $totalRealisasi = 0;
-        if (!empty($validated['realisasi'])) {
+        if (! empty($validated['realisasi'])) {
             foreach ($validated['realisasi'] as $item) {
                 $totalRealisasi += (float) ($item['realisasi'] ?? 0);
             }
-        } elseif (!empty($validated['total_realisasi_anggaran'])) {
+        } elseif (! empty($validated['total_realisasi_anggaran'])) {
             $totalRealisasi = (float) $validated['total_realisasi_anggaran'];
         }
 
@@ -105,7 +104,7 @@ class FinalReportController extends Controller
         $this->authorizeAccess($proposal);
 
         $finalReport = $proposal->finalReport;
-        if (!$finalReport) {
+        if (! $finalReport) {
             return redirect()->route('dosen.proposals.final-report.create', $proposal)
                 ->with('info', 'Laporan akhir belum disampaikan. Silakan unggah dokumen laporan akhir.');
         }
@@ -121,7 +120,7 @@ class FinalReportController extends Controller
         $this->authorizeAccess($proposal);
 
         $finalReport = $proposal->finalReport;
-        if (!$finalReport || $finalReport->status_laporan !== 'revisi') {
+        if (! $finalReport || $finalReport->status_laporan !== 'revisi') {
             return back()->with('error', 'Laporan akhir tidak dalam status revisi.');
         }
 
@@ -154,4 +153,3 @@ class FinalReportController extends Controller
         }
     }
 }
-

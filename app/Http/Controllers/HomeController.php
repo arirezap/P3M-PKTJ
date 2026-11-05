@@ -31,7 +31,7 @@ class HomeController extends Controller
                 'tanggal' => $p->tanggal_publikasi ? $p->tanggal_publikasi->translatedFormat('d F Y') : '-',
                 'ringkasan' => $p->ringkasan,
                 'konten' => $p->konten,
-                'gambar_sampul' => $p->gambar_sampul ? asset('storage/' . $p->gambar_sampul) : null,
+                'gambar_sampul' => $p->gambar_sampul ? asset('storage/'.$p->gambar_sampul) : null,
             ];
         })->values();
 

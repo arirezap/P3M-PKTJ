@@ -15,7 +15,9 @@ class DosenProposalTest extends TestCase
     use RefreshDatabase;
 
     protected User $dosen;
+
     protected User $otherDosen;
+
     protected Prodi $prodi;
 
     protected function setUp(): void

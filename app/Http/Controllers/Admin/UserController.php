@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class UserController extends Controller
@@ -24,11 +26,11 @@ class UserController extends Controller
             $query->where(function ($q) use ($selectedRole) {
                 if ($selectedRole === 'peneliti' || $selectedRole === 'dosen') {
                     $q->whereJsonContains('roles', 'peneliti')
-                      ->orWhereJsonContains('roles', 'dosen')
-                      ->orWhere('role', 'dosen');
+                        ->orWhereJsonContains('roles', 'dosen')
+                        ->orWhere('role', 'dosen');
                 } else {
                     $q->whereJsonContains('roles', $selectedRole)
-                      ->orWhere('role', $selectedRole);
+                        ->orWhere('role', $selectedRole);
                 }
             });
         }
@@ -37,8 +39,8 @@ class UserController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('email', 'like', "%{$search}%")
-                  ->orWhere('nidn_nip', 'like', "%{$search}%");
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('nidn_nip', 'like', "%{$search}%");
             });
         }
 
@@ -75,13 +77,13 @@ class UserController extends Controller
         $roles = array_values(array_unique($roles));
 
         // Proteksi: jangan sampai admin mencabut peran admin dari akunnya sendiri
-        if ($user->id === auth()->id() && !in_array('admin', $roles, true)) {
+        if ($user->id === auth()->id() && ! in_array('admin', $roles, true)) {
             return back()->with('error', 'Anda tidak dapat mencabut peran Administrator dari akun Anda sendiri.');
         }
 
         // Tentukan primary role untuk kompatibilitas mundur
-        $primaryRole = in_array('admin', $roles, true) 
-            ? 'admin' 
+        $primaryRole = in_array('admin', $roles, true)
+            ? 'admin'
             : (in_array('reviewer', $roles, true) ? 'reviewer' : 'dosen');
 
         $user->update([
@@ -90,7 +92,7 @@ class UserController extends Controller
         ]);
 
         $rolesLabel = implode(', ', array_map(function ($r) {
-            return match($r) {
+            return match ($r) {
                 'admin' => 'Admin',
                 'reviewer' => 'Reviewer',
                 'peneliti' => 'Peneliti',
@@ -127,12 +129,12 @@ class UserController extends Controller
             $defaultRole = $validated['role'] ?? 'dosen';
             $rolesList = [$defaultRole === 'dosen' ? 'peneliti' : $defaultRole];
         } else {
-            $rolesList = array_map(fn($r) => $r === 'dosen' ? 'peneliti' : $r, $rolesList);
+            $rolesList = array_map(fn ($r) => $r === 'dosen' ? 'peneliti' : $r, $rolesList);
         }
         $rolesList = array_values(array_unique($rolesList));
 
-        $primaryRole = in_array('admin', $rolesList, true) 
-            ? 'admin' 
+        $primaryRole = in_array('admin', $rolesList, true)
+            ? 'admin'
             : (in_array('reviewer', $rolesList, true) ? 'reviewer' : 'dosen');
 
         User::create([
@@ -169,7 +171,7 @@ class UserController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', \Illuminate\Validation\Rule::unique('users')->ignore($user->id)],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'password' => ['nullable', 'string', 'min:6'],
             'role' => ['nullable', 'in:admin,dosen,reviewer,peneliti'],
             'roles' => ['nullable', 'array', 'min:1'],
@@ -204,18 +206,18 @@ class UserController extends Controller
         ];
 
         $rolesList = $request->input('roles');
-        if (is_array($rolesList) && !empty($rolesList)) {
-            $rolesList = array_map(fn($r) => $r === 'dosen' ? 'peneliti' : $r, $rolesList);
+        if (is_array($rolesList) && ! empty($rolesList)) {
+            $rolesList = array_map(fn ($r) => $r === 'dosen' ? 'peneliti' : $r, $rolesList);
             $rolesList = array_values(array_unique($rolesList));
 
             // Proteksi: jangan sampai admin mencabut peran admin dari akunnya sendiri
-            if ($user->id === auth()->id() && !in_array('admin', $rolesList, true)) {
+            if ($user->id === auth()->id() && ! in_array('admin', $rolesList, true)) {
                 return back()->with('error', 'Anda tidak dapat mencabut peran Administrator dari akun Anda sendiri.');
             }
 
             $data['roles'] = $rolesList;
-            $data['role'] = in_array('admin', $rolesList, true) 
-                ? 'admin' 
+            $data['role'] = in_array('admin', $rolesList, true)
+                ? 'admin'
                 : (in_array('reviewer', $rolesList, true) ? 'reviewer' : 'dosen');
         } elseif ($request->filled('role')) {
             $singleRole = $validated['role'];
@@ -223,13 +225,13 @@ class UserController extends Controller
             $data['roles'] = [$singleRole === 'dosen' ? 'peneliti' : $singleRole];
         }
 
-        if (!empty($validated['password'])) {
+        if (! empty($validated['password'])) {
             $data['password'] = Hash::make($validated['password']);
         }
 
         if ($request->hasFile('avatar')) {
-            if ($user->avatar && \Illuminate\Support\Facades\Storage::disk('public')->exists($user->avatar)) {
-                \Illuminate\Support\Facades\Storage::disk('public')->delete($user->avatar);
+            if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
+                Storage::disk('public')->delete($user->avatar);
             }
             $data['avatar'] = $request->file('avatar')->store('avatars', 'public');
         }
@@ -248,7 +250,7 @@ class UserController extends Controller
             return back()->with('error', 'Anda tidak dapat menonaktifkan akun sendiri.');
         }
 
-        $user->update(['status_aktif' => !$user->status_aktif]);
+        $user->update(['status_aktif' => ! $user->status_aktif]);
         $statusStr = $user->status_aktif ? 'diaktifkan' : 'dinonaktifkan';
 
         return back()->with('success', "Akun {$user->name} berhasil {$statusStr}.");

@@ -34,7 +34,42 @@ class PublicResearchPageTest extends TestCase
         $response->assertSee('Kemdiktisaintek / Nasional');
         $response->assertSee('Mitra Industri / Eksternal');
         $response->assertSee('Mandiri / Swadana');
-        $response->assertSee('Serapan Riset 3 Program Studi');
+        $response->assertSee('researchTrendChart');
+        $response->assertSee('prodiDistributionChart');
+    }
+
+    public function test_ketua_peneliti_is_clickable_when_user_exists(): void
+    {
+        $dosen = User::where('role', 'dosen')->where('status_aktif', true)->first();
+        $this->assertNotNull($dosen);
+
+        $research = Research::first();
+        $this->assertNotNull($research);
+
+        $research->update([
+            'user_id' => $dosen->id,
+            'ketua_peneliti' => $dosen->name,
+        ]);
+
+        $response = $this->get(route('riset.penelitian'));
+        $response->assertStatus(200);
+        $response->assertSee(route('profil.peneliti.show', $dosen));
+    }
+
+    public function test_real_research_2025_data_is_seeded_and_displayed(): void
+    {
+        $this->assertEquals(27, Research::where('tahun', 2025)->count());
+
+        $sample = Research::where('tahun', 2025)->where('ketua_peneliti', 'Brasie Pradana')->first();
+        $this->assertNotNull($sample);
+        $this->assertEquals('DIPA PKTJ', $sample->sumber_dana);
+        $this->assertEquals(0, (float) $sample->anggaran);
+        $this->assertNotNull($sample->user_id);
+
+        $response = $this->get(route('riset.penelitian', ['tahun' => 2025]));
+        $response->assertStatus(200);
+        $response->assertSee('Brasie Pradana');
+        $response->assertSee('Evaluasi Efektivitas Implementasi Laboratorium Virtual Reality');
     }
 
     public function test_filter_by_prodi(): void

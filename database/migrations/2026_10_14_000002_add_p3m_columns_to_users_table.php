@@ -42,7 +42,7 @@ return new class extends Migration
                 'google_scholar',
                 'scopus_id',
                 'keahlian',
-                'status_aktif'
+                'status_aktif',
             ]);
         });
     }

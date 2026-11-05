@@ -31,7 +31,7 @@ class ProposalController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('judul', 'like', "%{$search}%")
-                  ->orWhere('kode_usulan', 'like', "%{$search}%");
+                    ->orWhere('kode_usulan', 'like', "%{$search}%");
             });
         }
 

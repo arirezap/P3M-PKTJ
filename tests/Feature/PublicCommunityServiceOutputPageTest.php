@@ -46,6 +46,15 @@ class PublicCommunityServiceOutputPageTest extends TestCase
         $response->assertSee('Teknologi Tepat Guna');
     }
 
+    public function test_real_2025_pkm_outputs_data_from_excel_is_seeded_without_duplicates(): void
+    {
+        $outputs2025 = CommunityServiceOutput::where('tahun', 2025)->get();
+        $this->assertCount(33, $outputs2025);
+
+        $uniqueTitles = $outputs2025->pluck('judul')->map(fn ($t) => strtolower(trim($t)))->unique();
+        $this->assertCount(33, $uniqueTitles);
+    }
+
     public function test_filter_by_prodi(): void
     {
         $troProdi = Prodi::where('kode_prodi', 'TRO')->first();

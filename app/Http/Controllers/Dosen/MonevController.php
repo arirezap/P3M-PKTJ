@@ -4,11 +4,9 @@ namespace App\Http\Controllers\Dosen;
 
 use App\Http\Controllers\Controller;
 use App\Models\Proposal;
-use App\Models\ProposalMonev;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class MonevController extends Controller
@@ -20,7 +18,7 @@ class MonevController extends Controller
     {
         $this->authorizeAccess($proposal);
 
-        if (!in_array($proposal->status, ['diterima', 'pelaksanaan', 'laporan_akhir', 'archive'])) {
+        if (! in_array($proposal->status, ['diterima', 'pelaksanaan', 'laporan_akhir', 'archive'])) {
             return redirect()->route('dosen.proposals.show', $proposal)
                 ->with('error', 'Instrumen Monev hanya dapat diisi setelah usulan disetujui / dalam tahap pelaksanaan.');
         }
@@ -39,7 +37,7 @@ class MonevController extends Controller
     {
         $this->authorizeAccess($proposal);
 
-        if (!in_array($proposal->status, ['diterima', 'pelaksanaan'])) {
+        if (! in_array($proposal->status, ['diterima', 'pelaksanaan'])) {
             return redirect()->route('dosen.proposals.show', $proposal)
                 ->with('error', 'Status usulan saat ini tidak mengizinkan pengisian Monev.');
         }
@@ -112,7 +110,7 @@ class MonevController extends Controller
         $this->authorizeAccess($proposal);
 
         $monev = $proposal->monev;
-        if (!$monev) {
+        if (! $monev) {
             return redirect()->route('dosen.proposals.monev.create', $proposal)
                 ->with('info', 'Instrumen Monev belum diisi. Silakan lengkapi formulir berikut.');
         }
@@ -130,4 +128,3 @@ class MonevController extends Controller
         }
     }
 }
-

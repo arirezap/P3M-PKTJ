@@ -10,40 +10,16 @@
             <span class="text-slate-300 hidden md:inline">{{ $nav['top_bar_bpsdm'] ?? 'BPSDM Perhubungan' }}</span>
         </div>
         
-        @auth
-            @php
-                $user = auth()->user();
-                $topDashboardUrl = $user->isAdmin() 
-                    ? route('admin.dashboard') 
-                    : ($user->isReviewer() ? route('reviewer.dashboard') : route('dosen.dashboard'));
-                $topRoleLabel = $user->isAdmin() 
-                    ? 'Admin' 
-                    : ($user->isReviewer() ? 'Reviewer' : 'Dosen');
-            @endphp
-            <div class="flex items-center gap-3 text-xs text-slate-300">
-                <span>Masuk: <strong class="text-white">{{ $user->name }}</strong> ({{ $topRoleLabel }})</span>
-                <span class="text-slate-400">|</span>
-                <a href="{{ $topDashboardUrl }}" class="text-yellow-400 font-semibold hover:underline">Dashboard</a>
-                <span class="text-slate-400">|</span>
-                <form method="POST" action="{{ route('logout') }}" class="inline">
-                    @csrf
-                    <button type="submit" class="text-slate-300 hover:text-white hover:underline focus:outline-none">
-                        Keluar
-                    </button>
-                </form>
-            </div>
-        @else
-            <div class="flex items-center gap-3 text-xs text-slate-300">
-                <span class="hidden md:inline">{{ $nav['top_bar_campus_info'] ?? 'Kampus PKTJ Tegal: Jl. Semeru No. 3' }}</span>
-                <span class="hidden md:inline text-slate-500">|</span>
-                <span class="hidden sm:inline text-yellow-400/90 font-medium">{{ $nav['top_bar_tagline'] ?? 'Portal P3M PKTJ' }}</span>
-                <span class="hidden sm:inline text-slate-500">|</span>
-                <a href="{{ route('login') }}" class="text-slate-300 hover:text-yellow-400 transition-colors flex items-center gap-2 focus:outline-none py-1 px-2 rounded hover:bg-white/10" title="Login">
-                    <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
-                    <span>{{ $nav['navbar_login_button'] ?? 'Login' }}</span>
-                </a>
-            </div>
-        @endauth
+        <div class="flex items-center gap-3 text-xs text-slate-300">
+            <span class="hidden md:inline">{{ $nav['top_bar_campus_info'] ?? 'Kampus PKTJ Tegal: Jl. Semeru No. 3' }}</span>
+            <span class="hidden md:inline text-slate-500">|</span>
+            <span class="hidden sm:inline text-yellow-400/90 font-medium">{{ $nav['top_bar_tagline'] ?? 'Portal P3M PKTJ' }}</span>
+            <span class="hidden sm:inline text-slate-500">|</span>
+            <a href="{{ route('login') }}" class="text-slate-300 hover:text-yellow-400 transition-colors flex items-center gap-2 focus:outline-none py-1 px-2 rounded hover:bg-white/10" title="Login SIM P3M">
+                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
+                <span>{{ $nav['navbar_login_button'] ?? 'Login SIM P3M' }}</span>
+            </a>
+        </div>
     </div>
 </div>
 
@@ -110,7 +86,7 @@
                             </a>
                             <a href="{{ route('profil.sdm') }}" @click="open = false" 
                                 class="block px-4 py-2 text-xs {{ request()->routeIs('profil.sdm') ? 'font-bold text-[#0B2A59] bg-blue-50' : 'font-medium text-slate-700 hover:bg-slate-50 hover:text-[#0B2A59]' }} leading-4">
-                                Sumber Daya Manusia (SDM)
+                                Struktur Organisasi (SDM)
                             </a>
                         </div>
                     </div>
@@ -236,54 +212,8 @@
                 @endif
             </nav>
 
-            <!-- 8. Tombol Aksi Pengguna Terautentikasi (Hanya Tampil Jika Login) -->
-            @auth
-                <div class="hidden sm:flex items-center gap-2 flex-shrink-0">
-                    @php
-                        $user = auth()->user();
-                        $dashboardUrl = $user->isAdmin() 
-                            ? route('admin.dashboard') 
-                            : ($user->isReviewer() ? route('reviewer.dashboard') : route('dosen.dashboard'));
-                        $portalLabel = $user->isAdmin() 
-                            ? 'Panel Admin' 
-                            : ($user->isReviewer() ? 'Portal Reviewer' : 'Portal Dosen');
-                    @endphp
-                    <a href="{{ $dashboardUrl }}" class="inline-flex items-center gap-2 h-10 px-4 text-xs xl:text-sm font-semibold text-white bg-[#0B2A59] hover:bg-blue-900 rounded-lg transition-all duration-200 shadow-sm hover:shadow active:scale-[0.98] focus:ring-2 focus:ring-offset-2 focus:ring-[#0B2A59] leading-5 whitespace-nowrap">
-                        <svg class="w-4 h-4 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                        <span>{{ $portalLabel }}</span>
-                    </a>
-                    <form method="POST" action="{{ route('logout') }}" class="inline">
-                        @csrf
-                        <button type="submit" title="Keluar dari sistem SIM P3M" class="inline-flex items-center justify-center h-10 px-3 text-xs font-semibold text-slate-600 hover:text-rose-600 bg-slate-100 hover:bg-rose-50 border border-slate-200 rounded-lg transition-colors leading-5">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
-                            </svg>
-                            <span class="sr-only">Keluar</span>
-                        </button>
-                    </form>
-                </div>
-            @endauth
-
-            <!-- Tombol Aksi Langsung & Hamburger Mobile (< 1024px) -->
+            <!-- Tombol Hamburger Mobile (< 1024px) (Tap target 48x48px) -->
             <div class="flex items-center gap-2 lg:hidden flex-shrink-0">
-                <!-- Pintasan Dashboard Mobile (< 640px jika login) -->
-                @auth
-                    @php
-                        $user = auth()->user();
-                        $mobileDirectUrl = $user->isAdmin() 
-                            ? route('admin.dashboard') 
-                            : ($user->isReviewer() ? route('reviewer.dashboard') : route('dosen.dashboard'));
-                    @endphp
-                    <div class="sm:hidden">
-                        <a href="{{ $mobileDirectUrl }}" class="inline-flex items-center justify-center h-10 px-3 text-xs font-semibold text-white bg-[#0B2A59] hover:bg-blue-900 rounded-lg transition-colors leading-4">
-                            Portal
-                        </a>
-                    </div>
-                @endauth
-
-                <!-- Tombol Hamburger Mobile (Tap target 48x48px) -->
                 <button @click="mobileMenuOpen = !mobileMenuOpen" type="button" class="inline-flex items-center justify-center w-12 h-12 rounded-lg text-slate-700 hover:text-[#0B2A59] hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-[#0B2A59] transition-colors" aria-label="Buka menu navigasi utama">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path x-show="!mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -326,7 +256,7 @@
                 </a>
                 <a href="{{ route('profil.sdm') }}" @click="mobileMenuOpen = false" 
                    class="flex items-center min-h-[44px] px-3 py-2 rounded-lg text-xs {{ request()->routeIs('profil.sdm') ? 'font-bold text-[#0B2A59] bg-blue-50 border-l-2 border-yellow-500' : 'font-medium text-slate-700 hover:bg-slate-50' }} leading-4 transition-colors">
-                    Sumber Daya Manusia (SDM)
+                    Struktur Organisasi (SDM)
                 </a>
             </div>
         </div>
@@ -403,46 +333,6 @@
             </div>
         @endif
 
-        <!-- Bagian Autentikasi / Panel Akun pada Mobile Drawer (Hanya Tampil Jika Terautentikasi) -->
-        @auth
-            <div class="pt-4 border-t border-slate-200">
-                @php
-                    $user = auth()->user();
-                    $drawerDashboardUrl = $user->isAdmin() 
-                        ? route('admin.dashboard') 
-                        : ($user->isReviewer() ? route('reviewer.dashboard') : route('dosen.dashboard'));
-                    $drawerPortalLabel = $user->isAdmin() 
-                        ? 'Buka Panel Admin' 
-                        : ($user->isReviewer() ? 'Buka Portal Reviewer' : 'Buka Portal Dosen');
-                    $drawerRoleName = $user->isAdmin() 
-                        ? 'Administrator P3M' 
-                        : ($user->isReviewer() ? 'Reviewer Proposal' : 'Dosen Peneliti');
-                @endphp
-                <div class="space-y-3">
-                    <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 flex items-center justify-between">
-                        <div>
-                            <div class="text-xs font-bold text-slate-800 leading-4">{{ $user->name }}</div>
-                            <div class="text-[11px] text-slate-500 leading-3">{{ $drawerRoleName }}</div>
-                        </div>
-                        <span class="px-2 py-1 rounded text-[10px] font-bold bg-blue-100 text-[#0B2A59]">Aktif</span>
-                    </div>
-                    <a href="{{ $drawerDashboardUrl }}" class="flex items-center justify-center gap-2 w-full h-12 text-sm font-semibold text-white bg-[#0B2A59] rounded-lg shadow-sm leading-5">
-                        <svg class="w-4 h-4 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                        <span>{{ $drawerPortalLabel }}</span>
-                    </a>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="flex items-center justify-center gap-2 w-full h-11 text-xs font-semibold text-rose-700 bg-rose-50 border border-rose-200 rounded-lg hover:bg-rose-100 transition-colors leading-4">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
-                            </svg>
-                            <span>Keluar dari SIM P3M</span>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        @endauth
+
     </div>
 </header>

@@ -22,7 +22,7 @@ class DashboardController extends Controller
             'proposal.prodi',
             'proposal.ketua',
             'proposal.monev',
-            'proposal.finalReport'
+            'proposal.finalReport',
         ])
             ->where('reviewer_id', $user->id)
             ->latest()
@@ -32,13 +32,13 @@ class DashboardController extends Controller
             'total_penugasan' => $allReviews->count(),
             'menunggu' => $allReviews->where('status_review', 'menunggu')->count(),
             'selesai' => $allReviews->where('status_review', 'selesai')->count(),
-            'monev_antrean' => $allReviews->filter(fn($r) => $r->proposal && $r->proposal->monev && $r->proposal->monev->status_monev !== 'dinilai')->count(),
-            'laporan_antrean' => $allReviews->filter(fn($r) => $r->proposal && $r->proposal->finalReport && $r->proposal->finalReport->status_laporan !== 'diterima')->count(),
+            'monev_antrean' => $allReviews->filter(fn ($r) => $r->proposal && $r->proposal->monev && $r->proposal->monev->status_monev !== 'dinilai')->count(),
+            'laporan_antrean' => $allReviews->filter(fn ($r) => $r->proposal && $r->proposal->finalReport && $r->proposal->finalReport->status_laporan !== 'diterima')->count(),
         ];
 
         $reviews = match ($tab) {
-            'penelitian' => $allReviews->filter(fn($r) => $r->proposal && $r->proposal->jenis === 'penelitian'),
-            'pengabdian' => $allReviews->filter(fn($r) => $r->proposal && $r->proposal->jenis === 'pengabdian'),
+            'penelitian' => $allReviews->filter(fn ($r) => $r->proposal && $r->proposal->jenis === 'penelitian'),
+            'pengabdian' => $allReviews->filter(fn ($r) => $r->proposal && $r->proposal->jenis === 'pengabdian'),
             default => $allReviews,
         };
 

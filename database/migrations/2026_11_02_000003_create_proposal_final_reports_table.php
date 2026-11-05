@@ -48,4 +48,3 @@ return new class extends Migration
         Schema::dropIfExists('proposal_final_reports');
     }
 };
-

@@ -20,15 +20,6 @@
         </div>
     </div>
 
-    <!-- Notifikasi Flash Message -->
-    @if(session('success'))
-        <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-center justify-between leading-4">
-            <div class="flex items-center gap-2">
-                <svg class="w-4 h-4 text-emerald-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                <span>{{ session('success') }}</span>
-            </div>
-        </div>
-    @endif
 
     <!-- 4 Kartu Metrik Ringkasan Kerjasama (Strict 4px Spatial Grid) -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

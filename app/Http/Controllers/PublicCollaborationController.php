@@ -29,19 +29,19 @@ class PublicCollaborationController extends Controller
 
         // Filter Tahun
         $selectedYear = $request->query('tahun', 'semua');
-        if ($selectedYear !== 'semua' && !empty($selectedYear)) {
+        if ($selectedYear !== 'semua' && ! empty($selectedYear)) {
             $query->where('tahun', $selectedYear);
         }
 
         // Filter Kategori Mitra
         $selectedKategori = $request->query('kategori', 'semua');
-        if ($selectedKategori !== 'semua' && !empty($selectedKategori)) {
+        if ($selectedKategori !== 'semua' && ! empty($selectedKategori)) {
             $query->where('kategori_mitra', $selectedKategori);
         }
 
         // Filter Program Studi (3 Prodi)
         $selectedProdi = $request->query('prodi', 'semua');
-        if ($selectedProdi !== 'semua' && !empty($selectedProdi)) {
+        if ($selectedProdi !== 'semua' && ! empty($selectedProdi)) {
             $query->whereHas('prodi', function ($q) use ($selectedProdi) {
                 if (is_numeric($selectedProdi)) {
                     $q->where('id', $selectedProdi);
@@ -53,7 +53,7 @@ class PublicCollaborationController extends Controller
 
         // Filter Status Kerjasama (Aktif / Selesai)
         $selectedStatus = $request->query('status', 'semua');
-        if ($selectedStatus !== 'semua' && !empty($selectedStatus)) {
+        if ($selectedStatus !== 'semua' && ! empty($selectedStatus)) {
             $query->where('status_kerjasama', $selectedStatus);
         }
 
@@ -62,9 +62,9 @@ class PublicCollaborationController extends Controller
             $keyword = $request->q;
             $query->where(function ($q) use ($keyword) {
                 $q->where('nama_mitra', 'like', "%{$keyword}%")
-                  ->orWhere('judul_kerjasama', 'like', "%{$keyword}%")
-                  ->orWhere('nomor_mou_pks', 'like', "%{$keyword}%")
-                  ->orWhere('deskripsi', 'like', "%{$keyword}%");
+                    ->orWhere('judul_kerjasama', 'like', "%{$keyword}%")
+                    ->orWhere('nomor_mou_pks', 'like', "%{$keyword}%")
+                    ->orWhere('deskripsi', 'like', "%{$keyword}%");
             });
         }
 
@@ -85,7 +85,7 @@ class PublicCollaborationController extends Controller
         $totalKerjasama = $allPenelitian->count();
         $totalAktif = $allPenelitian->where('status_kerjasama', 'aktif')->count();
         $totalIndustriBumn = $allPenelitian->whereIn('kategori_mitra', ['industri', 'bumn'])->count();
-        $totalDokumen = $allPenelitian->filter(fn($c) => !empty($c->file_dokumen))->count();
+        $totalDokumen = $allPenelitian->filter(fn ($c) => ! empty($c->file_dokumen))->count();
 
         // 6. Hitung Kategori untuk Filter Tabs / Badges
         $kategoriCounts = [
@@ -119,7 +119,8 @@ class PublicCollaborationController extends Controller
     public function downloadDocument(Collaboration $collaboration): StreamedResponse|RedirectResponse
     {
         if ($collaboration->file_dokumen && Storage::disk('public')->exists($collaboration->file_dokumen)) {
-            $filename = 'Dokumen-Kerjasama-' . str($collaboration->nama_mitra)->slug()->limit(35) . '-' . $collaboration->tahun . '.pdf';
+            $filename = 'Dokumen-Kerjasama-'.str($collaboration->nama_mitra)->slug()->limit(35).'-'.$collaboration->tahun.'.pdf';
+
             return Storage::disk('public')->download($collaboration->file_dokumen, $filename);
         }
 

@@ -21,6 +21,7 @@ class Setting extends Model
     public static function get(string $key, ?string $default = null): ?string
     {
         $setting = static::where('key', $key)->first();
+
         return $setting ? $setting->value : $default;
     }
 
@@ -44,7 +45,7 @@ class Setting extends Model
         $queryParam = $autoplayMuted ? '?autoplay=1&mute=1&playsinline=1&rel=0' : '?rel=0';
 
         if (empty($url)) {
-            return 'https://www.youtube-nocookie.com/embed/5F_fNlPGBdQ' . $queryParam;
+            return 'https://www.youtube-nocookie.com/embed/5F_fNlPGBdQ'.$queryParam;
         }
 
         $trimmed = trim($url);
@@ -52,7 +53,8 @@ class Setting extends Model
         // Jika sudah berbentuk embed URL
         if (str_contains($trimmed, 'youtube-nocookie.com/embed/') || str_contains($trimmed, 'youtube.com/embed/')) {
             $parts = explode('?', $trimmed);
-            return $parts[0] . $queryParam;
+
+            return $parts[0].$queryParam;
         }
 
         $videoId = null;
@@ -60,16 +62,16 @@ class Setting extends Model
         // Format: https://www.youtube.com/watch?v=VIDEO_ID
         if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/i', $trimmed, $matches)) {
             $videoId = $matches[1];
-        } elseif (strlen($trimmed) === 11 && !str_contains($trimmed, '/')) {
+        } elseif (strlen($trimmed) === 11 && ! str_contains($trimmed, '/')) {
             // Jika admin memasukkan langsung 11 karakter ID video
             $videoId = $trimmed;
         }
 
         if ($videoId) {
-            return "https://www.youtube-nocookie.com/embed/{$videoId}" . $queryParam;
+            return "https://www.youtube-nocookie.com/embed/{$videoId}".$queryParam;
         }
 
-        return 'https://www.youtube-nocookie.com/embed/5F_fNlPGBdQ' . $queryParam;
+        return 'https://www.youtube-nocookie.com/embed/5F_fNlPGBdQ'.$queryParam;
     }
 
     /**
@@ -124,12 +126,13 @@ class Setting extends Model
             'footer_link_5_url' => '',
 
             // Footer Copyright
-            'footer_copyright_text' => '© ' . date('Y') . ' P3M Politeknik Keselamatan Transportasi Jalan (PKTJ). Hak Cipta Dilindungi.',
+            'footer_copyright_text' => '© '.date('Y').' P3M Politeknik Keselamatan Transportasi Jalan (PKTJ). Hak Cipta Dilindungi.',
             'footer_copyright_sub' => 'Pusat Penelitian dan Pengabdian kepada Masyarakat PKTJ Tegal',
         ];
 
         try {
             $saved = static::where('group', 'navigation')->pluck('value', 'key')->toArray();
+
             return array_merge($defaults, $saved);
         } catch (\Throwable $e) {
             return $defaults;

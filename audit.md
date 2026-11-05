@@ -2,7 +2,7 @@
 
 Dokumen ini dipakai ulang setiap kali ada fungsi, halaman, atau modul yang perlu diaudit. Salin bagian **Lembar Audit** di akhir dokumen, isi, lalu simpan hasilnya (misalnya di `docs/audit/2026-11-03-beranda.md`).
 
-Acuan utama: [AGENTS.md](AGENTS.md), [design.md](design.md), [PERENCANAAN_PROYEK_P3M.md](PERENCANAAN_PROYEK_P3M.md), [PRD.md](PRD.md).
+Acuan utama: [AGENTS.md](AGENTS.md), [design.md](design.md), [PERENCANAAN_PROYEK_P3M.md](PERENCANAAN_PROYEK_P3M.md), [PRD.md](PRD.md), dan [Kebutuhan Website P3M rev.pdf](Kebutuhan%20Website%20P3M%20rev.pdf).
 
 Stack: Laravel 11, PHP 8.2, Blade, Tailwind CSS 3.4, Alpine.js 3, Vite 5, PHPUnit 10, Laravel Pint.
 
@@ -149,6 +149,15 @@ Stack: Laravel 11, PHP 8.2, Blade, Tailwind CSS 3.4, Alpine.js 3, Vite 5, PHPUni
 - [ ] Error penting dicatat dengan `Log::error()` beserta konteks (id usulan, id pengguna), tanpa mencatat kata sandi atau data pribadi.
 - [ ] `APP_DEBUG=false` di server produksi.
 
+### A9. Anti Over-Engineering (KISS, YAGNI & Pragmatisme)
+
+- [ ] **YAGNI (You Aren't Gonna Need It)**: Tidak membangun fitur, fungsi, atau abstraksi antisipatif untuk kemungkinan masa depan yang belum diminta di dokumen kebutuhan.
+- [ ] **KISS (Keep It Simple, Stupid)**: Memilih solusi paling sederhana dan lugas. Jika alur kerja cukup diselesaikan dengan Controller dan Eloquent Model standar yang bersih, hindari membuat lapisan berlebih (seperti Repository Pattern, DTO kustom, Service Layer artifisial, atau Event/Listener yang tidak memberi nilai tambah).
+- [ ] **Tanpa Premature Optimization**: Menghindari sistem antrean rumit, cache multi-layer yang berbelit, atau arsitektur microservices yang tidak proporsional dengan skala pengguna kampus vokasi.
+- [ ] **Pragmatisme Dependensi**: Tidak menambah package composer atau library npm baru untuk fungsi kecil yang dapat diselesaikan dengan 5–15 baris kode native PHP/Blade/Alpine.js.
+- [ ] **Struktur Data Proporsional**: Struktur tabel, migrasi, dan relasi langsung mencerminkan kebutuhan dokumen tanpa normalisasi ekstrem yang membutuhkan belasan *join* tanpa alasan operasional.
+- [ ] **Alur Kerja Pengguna yang Ringkas**: Tidak ada alur formulir berbelit-belit, tahapan verifikasi yang tidak diminta, atau konfigurasi rumit yang menimbulkan kebingungan bagi dosen maupun reviewer (*no configuration fatigue*).
+
 ---
 
 ## B. Tampilan & Konsistensi Desain
@@ -262,7 +271,9 @@ Periksa setiap halaman pada lebar berikut (Chrome DevTools > Toggle Device Toolb
 
 ---
 
-## C. Kepatuhan Mandat Proyek (AGENTS.md)
+## C. Kepatuhan Mandat Proyek & Kesesuaian Spesifikasi Kebutuhan
+
+### C1. Kepatuhan Mandat Proyek (AGENTS.md)
 
 Ringkasan cepat. Setiap item terhubung ke pemeriksaan di bagian lain.
 
@@ -273,11 +284,44 @@ Ringkasan cepat. Setiap item terhubung ke pemeriksaan di bagian lain.
 | 3 | Tanpa emoji di seluruh sistem | B1, D3 | [ ] |
 | 4 | Bahasa antarmuka tanpa istilah teknis rumit | B5, D3 | [ ] |
 | 5 | Tanpa catatan teknis pengembang di UI | B5 | [ ] |
-| 6 | Hanya 3 prodi PKTJ | A7, B5 | [ ] |
-| 7 | Tanpa kata terlarang | B5, D3 | [ ] |
+| 6 | Hanya 3 prodi PKTJ (D4 RSTJ, D4 TRO, D3 TO) | A7, B5 | [ ] |
+| 7 | Tanpa kata terlarang sesuai kebijakan proyek | B5, D3 | [ ] |
 | 8 | Semua konten publik dapat diubah dari CMS | Cek manual: teks di view tidak di-hardcode tanpa fallback dari `Setting` | [ ] |
 | 9 | Test lulus 100%, build Vite sukses, `composer audit` bersih | D1 | [ ] |
 | 10 | `graphify update .` dijalankan setelah perubahan kode | D1 | [ ] |
+
+### C2. Kesesuaian Dokumen Kebutuhan (Kebutuhan Website P3M rev.pdf & PRD)
+
+Pemeriksaan keselarasan fitur dengan dokumen spesifikasi kebutuhan (20 halaman acuan):
+
+**Portal Publik (Halaman 1–2 PDF)**
+- [ ] **Homepage**: Menyajikan Profil Singkat P3M PKTJ, Video Profil tersemat, dan Berita Terkini.
+- [ ] **Profil (5 Sub-Menu)**: Rencana Strategis (Renstra Penelitian 2026-2031 & Renstra Pengabdian), Roadmap Penelitian, Visi Misi & Tujuan, Profil Peneliti (dosen aktif beserta data riset & publikasi), SDM (Struktur Organisasi).
+- [ ] **Riset (3 Sub-Menu)**: Kegiatan Penelitian (daftar per tahun & sumber dana dilengkapi grafik statistik dan tabel filter prodi/tahun), Luaran Penelitian (publikasi, HKI, produk/jasa lisensi terbuka), Kerjasama Penelitian tersusun per tahun.
+- [ ] **Pengabdian (3 Sub-Menu)**: Pengabdian Kepada Masyarakat (daftar per tahun & sumber dana dengan statistik grafik & tabel), Luaran Pengabdian (analisis luaran), Kerjasama Pengabdian tersusun per tahun.
+- [ ] **Layanan (2 Sub-Menu)**: Panduan dan Pedoman (pedoman riset SDM, pedoman pengabdian, proses pengabdian, panduan sistem), Standar Operasional Prosedur (SOP Penelitian dan SOP Pengabdian).
+- [ ] **Jurnal**: Terhubung langsung ke tautan portal jurnal berkala P3M.
+- [ ] **Pintu Masuk SIM P3M**: Formulir pendaftaran usulan, pemantauan progress, pengajuan biaya, dan peninjauan reviewer.
+
+**Sistem Informasi Admin (Halaman 3–4 PDF)**
+- [ ] **Alur Usulan & Laporan**: Mengelola 3 jenis berkas (proposal, monev, laporan kegiatan) pada tab Penelitian dan Pengabdian.
+- [ ] **Tahapan Pipeline**: Memfasilitasi antrean *Belum Ditugaskan* (penugasan reviewer), *Sedang Ditugaskan* (pemantauan proses review), dan *Arsip* berkas selesai.
+- [ ] **Pengaturan Pengguna & Peran**: Pengaturan hak akses peran (Admin, Reviewer, Peneliti) berbasis tabel kotak centang (*checkbox table*) dengan kemampuan multi-role.
+
+**Sistem Informasi Peneliti / Dosen (Halaman 5–14 PDF)**
+- [ ] **Pendaftaran Proposal**: Formulir identitas usulan (jenis kegiatan, fokus, topik, lokasi, usulan biaya, rekening bank), anggota 3 kelompok (Dosen Internal, Dosen Eksternal, Taruna/Mahasiswa), atribut upload berkas proposal PDF, luaran target, rencana anggaran 4 jenis belanja (honor, bahan habis pakai, perjalanan, sewa), jadwal tahunan, kelengkapan mitra, dan konfirmasi.
+- [ ] **Pemantauan Usulan**: Pelacakan progress 5 tahap (Terkirim, Proses Review, Revisi [upload file revisi], Diterima/Ditolak, Selesai).
+- [ ] **Pelaporan Monev**: Identitas laporan monev, pengisian instrumen 7 pertanyaan pilihan ganda capaian & 7 pertanyaan esai evaluasi pelaksanaan, upload bukti luaran, dan konfirmasi.
+- [ ] **Pelaporan Laporan Kegiatan (Laporan Akhir)**: Pemutakhiran anggota (bila ada), upload berkas laporan kegiatan, pencatatan luaran terealisasi, rekap anggaran, dan konfirmasi.
+
+**Sistem Informasi Reviewer (Halaman 15–20 PDF)**
+- [ ] **Konfirmasi Penugasan**: Menerima permintaan review dari admin dengan batas waktu, tombol persetujuan kesediaan review.
+- [ ] **Penilaian Proposal**: Rubrik penilaian terbobot (Penelitian: 5 kriteria; Pengabdian: 6 kriteria) dengan skala skor terstandarisasi 1, 2, 3, 5, 6, 7 (1=buruk, 2=sangat kurang, 3=kurang, 5=cukup, 6=baik, 7=sangat baik), perhitungan nilai otomatis, upload tabel catatan revisi, rekomendasi hasil, dan konfirmasi.
+- [ ] **Penilaian Monev**: Penilaian 7 kriteria capaian monev dengan skala skor 1–7 dan catatan penilai.
+- [ ] **Penilaian Laporan Akhir**: Penilaian 4 kriteria capaian laporan dengan skala skor 1–7, rekomendasi, upload berkas koreksi, dan konfirmasi.
+
+**Pencegahan Scope Creep & Over-Engineering**
+- [ ] **Kesesuaian Batasan**: Fitur tidak menyimpang atau menambahkan modul berbelit di luar koridor 20 halaman dokumen spesifikasi kebutuhan.
 
 ---
 
@@ -412,12 +456,14 @@ Nilai **Status**: `Terbuka`, `Dikerjakan`, `Selesai`, `Diterima` (risiko diterim
 | A6 Keamanan | | | | |
 | A7 Database | | | | |
 | A8 Error & Log | | | | |
+| A9 Anti Over-Engineering | | | | |
 | B1 Konsistensi Desain | | | | |
 | B2 Responsif | | | | |
 | B3 Aksesibilitas | | | | |
 | B4 Status Tampilan | | | | |
 | B5 Bahasa & Teks | | | | |
-| C Mandat Proyek | | | | |
+| C1 Mandat AGENTS.md | | | | |
+| C2 Dokumen Kebutuhan PDF | | | | |
 
 ## Hasil Pemeriksaan Otomatis
 

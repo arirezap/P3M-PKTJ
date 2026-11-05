@@ -36,9 +36,9 @@ class OutputController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('judul', 'like', "%{$search}%")
-                  ->orWhere('author_inventor', 'like', "%{$search}%")
-                  ->orWhere('mitra_kerjasama', 'like', "%{$search}%")
-                  ->orWhere('nomor_registrasi_hki', 'like', "%{$search}%");
+                    ->orWhere('author_inventor', 'like', "%{$search}%")
+                    ->orWhere('mitra_kerjasama', 'like', "%{$search}%")
+                    ->orWhere('nomor_registrasi_hki', 'like', "%{$search}%");
             });
         }
 

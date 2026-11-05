@@ -36,10 +36,10 @@ class CommunityServiceOutputController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('judul', 'like', "%{$search}%")
-                  ->orWhere('pelaksana', 'like', "%{$search}%")
-                  ->orWhere('mitra_sasaran', 'like', "%{$search}%")
-                  ->orWhere('lokasi', 'like', "%{$search}%")
-                  ->orWhere('indikator_keberhasilan', 'like', "%{$search}%");
+                    ->orWhere('pelaksana', 'like', "%{$search}%")
+                    ->orWhere('mitra_sasaran', 'like', "%{$search}%")
+                    ->orWhere('lokasi', 'like', "%{$search}%")
+                    ->orWhere('indikator_keberhasilan', 'like', "%{$search}%");
             });
         }
 
@@ -57,6 +57,7 @@ class CommunityServiceOutputController extends Controller
     {
         $prodis = Prodi::where('status_aktif', true)->get();
         $communityServices = CommunityService::orderByDesc('tahun')->latest('id')->get();
+
         return view('admin.community-service-outputs.create', compact('prodis', 'communityServices'));
     }
 
@@ -105,6 +106,7 @@ class CommunityServiceOutputController extends Controller
     {
         $prodis = Prodi::where('status_aktif', true)->get();
         $communityServices = CommunityService::orderByDesc('tahun')->latest('id')->get();
+
         return view('admin.community-service-outputs.edit', compact('communityServiceOutput', 'prodis', 'communityServices'));
     }
 
@@ -181,7 +183,7 @@ class CommunityServiceOutputController extends Controller
 
                 if ($prodi) {
                     $kategori = strtolower(trim($row[0]));
-                    if (!in_array($kategori, ['publikasi', 'ttg', 'modul', 'hki', 'desa_binaan'])) {
+                    if (! in_array($kategori, ['publikasi', 'ttg', 'modul', 'hki', 'desa_binaan'])) {
                         $kategori = 'publikasi';
                     }
 

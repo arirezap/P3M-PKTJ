@@ -62,22 +62,22 @@ class Collaboration extends Model
     {
         return $query
             ->when($filters['tahun'] ?? null, function ($q, $tahun) {
-                if ($tahun !== 'all' && !empty($tahun)) {
+                if ($tahun !== 'all' && ! empty($tahun)) {
                     $q->where('tahun', $tahun);
                 }
             })
             ->when($filters['kategori'] ?? null, function ($q, $kategori) {
-                if ($kategori !== 'all' && !empty($kategori)) {
+                if ($kategori !== 'all' && ! empty($kategori)) {
                     $q->where('kategori_mitra', $kategori);
                 }
             })
             ->when($filters['prodi'] ?? null, function ($q, $prodi) {
-                if ($prodi !== 'all' && !empty($prodi)) {
+                if ($prodi !== 'all' && ! empty($prodi)) {
                     $q->where('prodi_id', $prodi);
                 }
             })
             ->when($filters['status'] ?? null, function ($q, $status) {
-                if ($status !== 'all' && !empty($status)) {
+                if ($status !== 'all' && ! empty($status)) {
                     $q->where('status_kerjasama', $status);
                 }
             })

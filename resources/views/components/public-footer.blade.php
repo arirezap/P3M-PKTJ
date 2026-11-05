@@ -36,7 +36,7 @@
                     <li><a href="{{ route('profil.roadmap-penelitian') }}" class="hover:text-yellow-400 transition-colors">Roadmap Penelitian Keselamatan</a></li>
                     <li><a href="{{ route('profil.visi-misi') }}" class="hover:text-yellow-400 transition-colors">Visi, Misi & Tujuan</a></li>
                     <li><a href="{{ route('profil.peneliti') }}" class="hover:text-yellow-400 transition-colors">Profil Peneliti & Dosen</a></li>
-                    <li><a href="{{ route('profil.sdm') }}" class="hover:text-yellow-400 transition-colors">Sumber Daya Manusia (SDM)</a></li>
+                    <li><a href="{{ route('profil.sdm') }}" class="hover:text-yellow-400 transition-colors">Struktur Organisasi (SDM)</a></li>
                     <li><a href="{{ route('riset.penelitian') }}" class="hover:text-yellow-400 transition-colors">Kegiatan Penelitian Terapan</a></li>
                     <li><a href="{{ route('riset.luaran') }}" class="hover:text-yellow-400 transition-colors">Luaran Riset (Publikasi & HKI)</a></li>
                     <li><a href="{{ route('riset.kerjasama') }}" class="hover:text-yellow-400 transition-colors">Kerjasama Penelitian</a></li>
@@ -46,23 +46,7 @@
                     <li><a href="{{ route('layanan.panduan-pedoman') }}" class="hover:text-yellow-400 transition-colors">Panduan dan Pedoman</a></li>
                     <li><a href="{{ route('layanan.sop') }}" class="hover:text-yellow-400 transition-colors">Standar Operasional Prosedur (SOP)</a></li>
                     <li><a href="{{ $nav['navbar_jurnal_url'] ?? 'https://ktj.pktj.ac.id/' }}" target="_blank" rel="noopener noreferrer" class="hover:text-yellow-400 transition-colors">{{ $nav['footer_link_3_label'] ?? 'Jurnal Ilmiah PKTJ' }}</a></li>
-                    @auth
-                        @php
-                            $user = auth()->user();
-                            $footerDashboardUrl = $user->isAdmin() 
-                                ? route('admin.dashboard') 
-                                : ($user->isReviewer() ? route('reviewer.dashboard') : route('dosen.dashboard'));
-                            $footerPortalLabel = $user->isAdmin() 
-                                ? 'Buka Panel Admin SIM P3M' 
-                                : ($user->isReviewer() ? 'Buka Portal Reviewer SIM' : 'Buka Portal Dosen SIM');
-                        @endphp
-                        <li class="pt-2 border-t border-slate-700/60">
-                            <a href="{{ $footerDashboardUrl }}" class="text-yellow-400 font-semibold hover:underline transition-colors flex items-center gap-2">
-                                <span>{{ $footerPortalLabel }}</span>
-                                <svg class="w-4 h-4 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                            </a>
-                        </li>
-                    @endauth
+
                 </ul>
             </div>
 

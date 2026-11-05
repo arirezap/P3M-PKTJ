@@ -52,4 +52,3 @@ class ProposalFinalReport extends Model
         return $this->belongsTo(User::class);
     }
 }
-

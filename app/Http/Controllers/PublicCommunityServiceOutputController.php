@@ -52,11 +52,11 @@ class PublicCommunityServiceOutputController extends Controller
             $keyword = $request->q;
             $query->where(function ($q) use ($keyword) {
                 $q->where('judul', 'like', "%{$keyword}%")
-                  ->orWhere('pelaksana', 'like', "%{$keyword}%")
-                  ->orWhere('mitra_sasaran', 'like', "%{$keyword}%")
-                  ->orWhere('lokasi', 'like', "%{$keyword}%")
-                  ->orWhere('deskripsi_manfaat', 'like', "%{$keyword}%")
-                  ->orWhere('indikator_keberhasilan', 'like', "%{$keyword}%");
+                    ->orWhere('pelaksana', 'like', "%{$keyword}%")
+                    ->orWhere('mitra_sasaran', 'like', "%{$keyword}%")
+                    ->orWhere('lokasi', 'like', "%{$keyword}%")
+                    ->orWhere('deskripsi_manfaat', 'like', "%{$keyword}%")
+                    ->orWhere('indikator_keberhasilan', 'like', "%{$keyword}%");
             });
         }
 
@@ -85,6 +85,7 @@ class PublicCommunityServiceOutputController extends Controller
         // Rata-rata Kepuasan Mitra (diekstraksi dari persentase)
         $satisfactionValues = $allOutputs->map(function ($out) {
             preg_match('/(\d+)%/', $out->tingkat_kepuasan_mitra ?? '', $matches);
+
             return isset($matches[1]) ? (int) $matches[1] : 90;
         });
         $avgKepuasan = $satisfactionValues->count() > 0 ? round($satisfactionValues->average(), 1) : 94.5;
@@ -92,6 +93,7 @@ class PublicCommunityServiceOutputController extends Controller
         // 6. Analisis Capaian 3 Program Studi PKTJ
         $prodiStats = $prodis->map(function ($p) use ($allOutputs) {
             $filtered = $allOutputs->where('prodi_id', $p->id);
+
             return [
                 'id' => $p->id,
                 'kode' => $p->kode_prodi,
@@ -122,9 +124,9 @@ class PublicCommunityServiceOutputController extends Controller
                 'modul' => $yearGroup->where('kategori', 'modul')->count(),
                 'hki' => $yearGroup->where('kategori', 'hki')->count(),
                 'desa_binaan' => $yearGroup->where('kategori', 'desa_binaan')->count(),
-                'rstj' => $prodiCounts['D4 RSTJ'] ?? 0,
-                'tro' => $prodiCounts['D4 TRO'] ?? 0,
-                'to' => $prodiCounts['D3 TO'] ?? 0,
+                'rstj' => $prodiCounts['RSTJ'] ?? $prodiCounts['D4 RSTJ'] ?? 0,
+                'tro' => $prodiCounts['TRO'] ?? $prodiCounts['D4 TRO'] ?? 0,
+                'to' => $prodiCounts['TO'] ?? $prodiCounts['D3 TO'] ?? 0,
             ];
         });
 
@@ -155,7 +157,8 @@ class PublicCommunityServiceOutputController extends Controller
     {
         if ($communityServiceOutput->berkas_luaran && Storage::disk('public')->exists($communityServiceOutput->berkas_luaran)) {
             $cleanTitle = str($communityServiceOutput->judul)->slug()->limit(40);
-            $filename = 'Luaran-PkM-' . $cleanTitle . '.pdf';
+            $filename = 'Luaran-PkM-'.$cleanTitle.'.pdf';
+
             return Storage::disk('public')->download($communityServiceOutput->berkas_luaran, $filename);
         }
 

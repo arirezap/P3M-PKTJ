@@ -20,7 +20,7 @@ return new class extends Migration
                 'perjalanan_lapangan',
                 'honorarium',
                 'publikasi_diseminasi',
-                'lainnya'
+                'lainnya',
             ])->default('bahan_habis_pakai');
             $table->string('uraian');
             $table->decimal('volume', 10, 2)->default(1);

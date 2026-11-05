@@ -26,13 +26,8 @@ class PublicRoadmapTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('Roadmap Penelitian');
         $response->assertSee('Roadmap Penelitian Keselamatan Transportasi Terpadu');
-        $response->assertSee('Visualisasi 3 Fase Peta Jalan Riset PKTJ');
-        $response->assertSee('Fase 1');
-        $response->assertSee('Fase 2');
-        $response->assertSee('Fase 3');
-        $response->assertSee('D4 RSTJ');
-        $response->assertSee('D4 TRO');
-        $response->assertSee('D3 TO');
+        $response->assertSee('Unduh Berkas PDF');
+        $response->assertSee('iframe', false);
     }
 
     public function test_download_roadmap_document_increments_counter(): void
@@ -40,7 +35,7 @@ class PublicRoadmapTest extends TestCase
         Storage::fake('public');
 
         $doc = Document::where('kategori', 'roadmap')->first();
-        if (!$doc) {
+        if (! $doc) {
             $doc = Document::create([
                 'judul' => 'Roadmap Penelitian Keselamatan Transportasi Terpadu',
                 'kategori' => 'roadmap',

@@ -12,7 +12,6 @@ use App\Models\Research;
 use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -294,6 +293,9 @@ class DatabaseSeeder extends Seeder
                 Research::updateOrCreate(['judul' => $res['judul']], $res);
             }
 
+            // Jalankan Seeder Riset Riil 2025 dari Excel P3M PKTJ
+            $this->call(Research2025Seeder::class);
+
             // Data Publikasi Ilmiah, HKI & Produk/Jasa (Outputs)
             $outputs = [
                 // 1. KATEGORI PUBLIKASI ILMIAH
@@ -483,6 +485,9 @@ class DatabaseSeeder extends Seeder
             foreach ($outputs as $out) {
                 Output::updateOrCreate(['judul' => $out['judul']], $out);
             }
+
+            // Jalankan Seeder Luaran Penelitian Riil 2025 (Publikasi, Pending, Buku, HaKI) dari Excel P3M PKTJ
+            $this->call(Output2025Seeder::class);
 
             // 5. Data Rekap Pengabdian Masyarakat Publik (Community Services)
             $communityServices = [
@@ -724,6 +729,9 @@ class DatabaseSeeder extends Seeder
             foreach ($pkmOutputs as $outputData) {
                 CommunityServiceOutput::updateOrCreate(['judul' => $outputData['judul']], $outputData);
             }
+
+            // Jalankan Seeder Pengabdian Masyarakat Riil 2025 (Pengabdian & PkM_Pokja Diklat) dari Excel P3M PKTJ
+            $this->call(Pkm2025Seeder::class);
         }
 
         // 6. Data Pengaturan Beranda & Video Profil (Settings)

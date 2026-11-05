@@ -22,7 +22,7 @@ class ProposalReviewController extends Controller
         }
 
         // Inisialisasi batas waktu review default jika belum ada (H+7)
-        if (!$review->batas_waktu_review) {
+        if (! $review->batas_waktu_review) {
             $review->update([
                 'batas_waktu_review' => now()->addDays(7)->toDateString(),
             ]);
@@ -207,7 +207,7 @@ class ProposalReviewController extends Controller
         $proposal = $review->proposal->load(['monev', 'prodi', 'ketua']);
         $monev = $proposal->monev;
 
-        if (!$monev) {
+        if (! $monev) {
             abort(404, 'Instrumen Monev belum diisi oleh pengusul.');
         }
 
@@ -226,7 +226,7 @@ class ProposalReviewController extends Controller
         $proposal = $review->proposal;
         $monev = $proposal->monev;
 
-        if (!$monev) {
+        if (! $monev) {
             abort(404, 'Instrumen Monev belum diisi oleh pengusul.');
         }
 
@@ -287,7 +287,7 @@ class ProposalReviewController extends Controller
         $proposal = $review->proposal->load(['finalReport', 'prodi', 'ketua']);
         $finalReport = $proposal->finalReport;
 
-        if (!$finalReport) {
+        if (! $finalReport) {
             abort(404, 'Dokumen Laporan Akhir belum diunggah oleh pengusul.');
         }
 
@@ -306,7 +306,7 @@ class ProposalReviewController extends Controller
         $proposal = $review->proposal;
         $finalReport = $proposal->finalReport;
 
-        if (!$finalReport) {
+        if (! $finalReport) {
             abort(404, 'Dokumen Laporan Akhir belum diunggah oleh pengusul.');
         }
 

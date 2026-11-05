@@ -44,6 +44,20 @@ class PublicCommunityServicePageTest extends TestCase
         $response->assertRedirect(route('pengabdian.pkm'));
     }
 
+    public function test_real_2025_pkm_data_from_excel_is_seeded_without_duplicates(): void
+    {
+        $pkm2025 = CommunityService::where('tahun', 2025)->get();
+        $this->assertCount(74, $pkm2025);
+
+        $this->assertEquals(14, $pkm2025->where('jenis_diklat', 'Penyuluhan & Sosialisasi')->count());
+        $this->assertEquals(60, $pkm2025->whereIn('jenis_diklat', ['DPM', 'Teknis'])->count());
+
+        $uniqueTitles = $pkm2025->pluck('judul')->map(fn ($t) => strtolower(trim($t)))->unique();
+        $this->assertCount(74, $uniqueTitles);
+
+        $this->assertEquals(0, (int) $pkm2025->sum('anggaran'));
+    }
+
     public function test_filter_by_prodi(): void
     {
         $troProdi = Prodi::where('kode_prodi', 'TRO')->first();

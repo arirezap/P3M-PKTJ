@@ -2,10 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Document;
-use App\Models\Post;
-use App\Models\Prodi;
-use App\Models\Research;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -17,6 +13,7 @@ class AdminCmsTest extends TestCase
     use RefreshDatabase;
 
     protected User $admin;
+
     protected User $dosen;
 
     protected function setUp(): void

@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\OrganizationMember;
 use App\Models\Setting;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
@@ -20,7 +22,7 @@ class OrganizationController extends Controller
         $settings = Setting::where('group', 'organization')->pluck('value', 'key')->toArray();
 
         $defaultSettings = [
-            'org_title' => 'Struktur Organisasi & Tata Kelola P3M PKTJ',
+            'org_title' => 'Struktur Organisasi P3M PKTJ',
             'org_sk_number' => 'SK Direktur PKTJ No. KP.004/1/12/PKTJ-2026',
             'org_period' => '2026 – 2031',
             'org_chart_image' => null,
@@ -168,11 +170,34 @@ class OrganizationController extends Controller
     }
 
     /**
+     * Memperbarui susunan nomor urut pengurus struktur organisasi (Drag and Drop / Up-Down Reorder).
+     */
+    public function reorderMembers(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'orders' => ['required', 'array'],
+            'orders.*.id' => ['required', 'integer', 'exists:organization_members,id'],
+            'orders.*.urutan' => ['required', 'integer', 'min:0'],
+        ]);
+
+        DB::transaction(function () use ($validated) {
+            foreach ($validated['orders'] as $item) {
+                OrganizationMember::where('id', $item['id'])->update(['urutan' => $item['urutan']]);
+            }
+        });
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Susunan urutan pengurus struktur organisasi berhasil diperbarui.',
+        ]);
+    }
+
+    /**
      * Mengubah status keaktifan pengurus.
      */
     public function toggleStatus(OrganizationMember $member): RedirectResponse
     {
-        $member->update(['status_aktif' => !$member->status_aktif]);
+        $member->update(['status_aktif' => ! $member->status_aktif]);
         $statusStr = $member->status_aktif ? 'diaktifkan' : 'dinonaktifkan';
 
         return back()->with('success', "Status kepengurusan {$member->nama} berhasil {$statusStr}.");

@@ -16,11 +16,9 @@ use App\Http\Controllers\Admin\SettingController as AdminSettingController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Dosen\DashboardController as DosenDashboardController;
-use App\Http\Controllers\Dosen\ProposalController as DosenProposalController;
-use App\Http\Controllers\Dosen\MonevController as DosenMonevController;
 use App\Http\Controllers\Dosen\FinalReportController as DosenFinalReportController;
-use App\Http\Controllers\Reviewer\DashboardController as ReviewerDashboardController;
-use App\Http\Controllers\Reviewer\ProposalReviewController as ReviewerProposalReviewController;
+use App\Http\Controllers\Dosen\MonevController as DosenMonevController;
+use App\Http\Controllers\Dosen\ProposalController as DosenProposalController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicCollaborationController;
@@ -30,6 +28,8 @@ use App\Http\Controllers\PublicCommunityServiceOutputController;
 use App\Http\Controllers\PublicGuidelineController;
 use App\Http\Controllers\PublicOutputController;
 use App\Http\Controllers\PublicResearchController;
+use App\Http\Controllers\Reviewer\DashboardController as ReviewerDashboardController;
+use App\Http\Controllers\Reviewer\ProposalReviewController as ReviewerProposalReviewController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -45,6 +45,7 @@ Route::prefix('profil')->name('profil.')->group(function () {
     Route::get('/roadmap-penelitian', [ProfileController::class, 'roadmapPenelitian'])->name('roadmap-penelitian');
     Route::get('/visi-misi', [ProfileController::class, 'visiMisi'])->name('visi-misi');
     Route::get('/peneliti', [ProfileController::class, 'peneliti'])->name('peneliti');
+    Route::get('/peneliti/{user}', [ProfileController::class, 'showPeneliti'])->name('peneliti.show');
     Route::get('/sdm', [ProfileController::class, 'sdm'])->name('sdm');
 });
 
@@ -172,10 +173,19 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
     Route::get('settings/header-footer', [AdminSettingController::class, 'editHeaderFooter'])->name('settings.header-footer');
     Route::put('settings/header-footer', [AdminSettingController::class, 'updateHeaderFooter'])->name('settings.header-footer.update');
 
+    // CMS Pengaturan Rencana Strategis (Renstra)
+    Route::get('settings/renstra', [AdminSettingController::class, 'editRenstra'])->name('settings.renstra');
+    Route::put('settings/renstra', [AdminSettingController::class, 'updateRenstra'])->name('settings.renstra.update');
+
+    // CMS Pengaturan Roadmap Penelitian
+    Route::get('settings/roadmap', [AdminSettingController::class, 'editRoadmap'])->name('settings.roadmap');
+    Route::put('settings/roadmap', [AdminSettingController::class, 'updateRoadmap'])->name('settings.roadmap.update');
+
     // CMS Struktur Organisasi & Sumber Daya Manusia (SDM)
     Route::get('organization', [AdminOrganizationController::class, 'index'])->name('organization.index');
     Route::put('organization/settings', [AdminOrganizationController::class, 'updateSettings'])->name('organization.settings.update');
     Route::post('organization/members', [AdminOrganizationController::class, 'storeMember'])->name('organization.members.store');
+    Route::post('organization/members/reorder', [AdminOrganizationController::class, 'reorderMembers'])->name('organization.members.reorder');
     Route::put('organization/members/{member}', [AdminOrganizationController::class, 'updateMember'])->name('organization.members.update');
     Route::delete('organization/members/{member}', [AdminOrganizationController::class, 'destroyMember'])->name('organization.members.destroy');
     Route::patch('organization/members/{member}/toggle-status', [AdminOrganizationController::class, 'toggleStatus'])->name('organization.members.toggle-status');

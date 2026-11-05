@@ -67,7 +67,7 @@ class PublicGuidelineController extends Controller
 
         // Filter Kategori
         $selectedKategori = $request->query('kategori', 'semua');
-        if ($selectedKategori !== 'semua' && !empty($selectedKategori)) {
+        if ($selectedKategori !== 'semua' && ! empty($selectedKategori)) {
             if ($selectedKategori === 'sop') {
                 $query->where(function ($q) {
                     $q->where('kategori', 'like', 'sop%');
@@ -75,7 +75,7 @@ class PublicGuidelineController extends Controller
             } elseif ($selectedKategori === 'renstra') {
                 $query->where(function ($q) {
                     $q->where('kategori', 'like', 'renstra%')
-                      ->orWhere('kategori', 'roadmap');
+                        ->orWhere('kategori', 'roadmap');
                 });
             } elseif ($selectedKategori === 'panduan_sistem') {
                 $query->whereIn('kategori', ['panduan_sistem', 'panduan']);
@@ -86,11 +86,11 @@ class PublicGuidelineController extends Controller
 
         // Filter Pencarian
         $searchQuery = trim($request->query('q', ''));
-        if (!empty($searchQuery)) {
+        if (! empty($searchQuery)) {
             $query->where(function ($q) use ($searchQuery) {
                 $q->where('judul', 'like', "%{$searchQuery}%")
-                  ->orWhere('deskripsi', 'like', "%{$searchQuery}%")
-                  ->orWhere('tahun', 'like', "%{$searchQuery}%");
+                    ->orWhere('deskripsi', 'like', "%{$searchQuery}%")
+                    ->orWhere('tahun', 'like', "%{$searchQuery}%");
             });
         }
 
@@ -123,17 +123,17 @@ class PublicGuidelineController extends Controller
         $queryPenelitian = Document::where('kategori', 'sop_penelitian')->latest('id');
         $queryPengabdian = Document::where('kategori', 'sop_pengabdian')->latest('id');
 
-        if (!empty($searchQuery)) {
+        if (! empty($searchQuery)) {
             $queryPenelitian->where(function ($q) use ($searchQuery) {
                 $q->where('judul', 'like', "%{$searchQuery}%")
-                  ->orWhere('deskripsi', 'like', "%{$searchQuery}%")
-                  ->orWhere('tahun', 'like', "%{$searchQuery}%");
+                    ->orWhere('deskripsi', 'like', "%{$searchQuery}%")
+                    ->orWhere('tahun', 'like', "%{$searchQuery}%");
             });
 
             $queryPengabdian->where(function ($q) use ($searchQuery) {
                 $q->where('judul', 'like', "%{$searchQuery}%")
-                  ->orWhere('deskripsi', 'like', "%{$searchQuery}%")
-                  ->orWhere('tahun', 'like', "%{$searchQuery}%");
+                    ->orWhere('deskripsi', 'like', "%{$searchQuery}%")
+                    ->orWhere('tahun', 'like', "%{$searchQuery}%");
             });
         }
 
@@ -164,10 +164,11 @@ class PublicGuidelineController extends Controller
 
         if ($document->file_path && Storage::disk('public')->exists($document->file_path)) {
             $extension = pathinfo($document->file_path, PATHINFO_EXTENSION);
-            $cleanName = str($document->judul)->slug() . '.' . ($extension ?: 'pdf');
+            $cleanName = str($document->judul)->slug().'.'.($extension ?: 'pdf');
+
             return Storage::disk('public')->download($document->file_path, $cleanName);
         }
 
-        return redirect(asset('storage/' . $document->file_path));
+        return redirect(asset('storage/'.$document->file_path));
     }
 }

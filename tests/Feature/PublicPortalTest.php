@@ -2,10 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Document;
-use App\Models\Post;
-use App\Models\Prodi;
-use App\Models\Research;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -84,42 +80,23 @@ class PublicPortalTest extends TestCase
         $response->assertDontSee('Masuk SIM P3M');
     }
 
-    public function test_navbar_and_footer_display_dashboard_and_logout_for_authenticated_admin(): void
+    public function test_public_portal_appearance_is_consistent_for_authenticated_users(): void
     {
         $admin = User::where('role', 'admin')->first();
-
-        $response = $this->actingAs($admin)->get('/');
-
-        $response->assertStatus(200);
-        $response->assertSee('Panel Admin');
-        $response->assertSee(route('admin.dashboard'));
-        $response->assertSee('Keluar');
-        $response->assertSee('Buka Panel Admin SIM P3M');
-    }
-
-    public function test_navbar_and_footer_display_dashboard_and_logout_for_authenticated_dosen(): void
-    {
         $dosen = User::where('role', 'dosen')->first();
-
-        $response = $this->actingAs($dosen)->get('/');
-
-        $response->assertStatus(200);
-        $response->assertSee('Portal Dosen');
-        $response->assertSee(route('dosen.dashboard'));
-        $response->assertSee('Keluar');
-        $response->assertSee('Buka Portal Dosen SIM');
-    }
-
-    public function test_navbar_and_footer_display_dashboard_and_logout_for_authenticated_reviewer(): void
-    {
         $reviewer = User::where('role', 'reviewer')->first();
 
-        $response = $this->actingAs($reviewer)->get('/');
+        foreach ([$admin, $dosen, $reviewer] as $user) {
+            $response = $this->actingAs($user)->get('/');
 
-        $response->assertStatus(200);
-        $response->assertSee('Portal Reviewer');
-        $response->assertSee(route('reviewer.dashboard'));
-        $response->assertSee('Keluar');
-        $response->assertSee('Buka Portal Reviewer SIM');
+            $response->assertStatus(200);
+            $response->assertSee(route('login'));
+            $response->assertDontSee('Panel Admin');
+            $response->assertDontSee('Portal Dosen');
+            $response->assertDontSee('Portal Reviewer');
+            $response->assertDontSee('Buka Panel Admin SIM P3M');
+            $response->assertDontSee('Buka Portal Dosen SIM');
+            $response->assertDontSee('Buka Portal Reviewer SIM');
+        }
     }
 }

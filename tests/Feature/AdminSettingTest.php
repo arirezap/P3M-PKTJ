@@ -2,9 +2,10 @@
 
 namespace Tests\Feature;
 
-use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class AdminSettingTest extends TestCase
@@ -191,6 +192,113 @@ class AdminSettingTest extends TestCase
         $dosen = User::where('role', 'dosen')->first();
 
         $response = $this->actingAs($dosen)->get(route('admin.settings.header-footer'));
+
+        $response->assertRedirect('/dosen/dashboard');
+    }
+
+    public function test_admin_can_view_renstra_settings_page(): void
+    {
+        $admin = User::where('role', 'admin')->first();
+
+        $response = $this->actingAs($admin)->get(route('admin.settings.renstra'));
+
+        $response->assertStatus(200);
+        $response->assertSee('Pengaturan Rencana Strategis');
+        $response->assertSee('Berkas Dokumen Renstra Penelitian 2026-2031');
+        $response->assertSee('Berkas Dokumen Renstra Pengabdian kepada Masyarakat');
+    }
+
+    public function test_admin_can_update_renstra_settings_and_upload_pdf(): void
+    {
+        Storage::fake('public');
+
+        $admin = User::where('role', 'admin')->first();
+        $pdfPenelitian = UploadedFile::fake()->create('renstra_penelitian_baru.pdf', 1024, 'application/pdf');
+        $pdfPengabdian = UploadedFile::fake()->create('renstra_pengabdian_baru.pdf', 1024, 'application/pdf');
+
+        $response = $this->actingAs($admin)->put(route('admin.settings.renstra.update'), [
+            'renstra_badge' => 'Kebijakan Riset & PKM PKTJ 2026-2031',
+            'renstra_title' => 'Rencana Strategis Mandiri Berkelanjutan',
+            'renstra_lead' => 'Dokumen panduan arah kebijakan riset dan pengabdian terpadu.',
+            'renstra_custom_html' => '<div class="alert-info">Maklumat Rencana Strategis PKTJ Terpadu</div>',
+            'file_renstra_penelitian' => $pdfPenelitian,
+            'file_renstra_pengabdian' => $pdfPengabdian,
+        ]);
+
+        $response->assertRedirect(route('admin.settings.renstra'));
+        $response->assertSessionHas('success');
+
+        $this->assertDatabaseHas('settings', [
+            'key' => 'renstra_title',
+            'value' => 'Rencana Strategis Mandiri Berkelanjutan',
+        ]);
+
+        // Verifikasi halaman publik langsung memuat judul dan HTML kustom dari CMS
+        $publicResponse = $this->get(route('profil.rencana-strategis'));
+        $publicResponse->assertStatus(200);
+        $publicResponse->assertSee('Kebijakan Riset & PKM PKTJ 2026-2031');
+        $publicResponse->assertSee('Rencana Strategis Mandiri Berkelanjutan');
+        $publicResponse->assertSee('Dokumen panduan arah kebijakan riset dan pengabdian terpadu.');
+        $publicResponse->assertSee('Maklumat Rencana Strategis PKTJ Terpadu', false);
+    }
+
+    public function test_non_admin_cannot_access_renstra_settings(): void
+    {
+        $dosen = User::where('role', 'dosen')->first();
+
+        $response = $this->actingAs($dosen)->get(route('admin.settings.renstra'));
+
+        $response->assertRedirect('/dosen/dashboard');
+    }
+
+    public function test_admin_can_view_roadmap_settings_page(): void
+    {
+        $admin = User::where('role', 'admin')->first();
+
+        $response = $this->actingAs($admin)->get(route('admin.settings.roadmap'));
+
+        $response->assertStatus(200);
+        $response->assertSee('Pengaturan Roadmap Penelitian');
+        $response->assertSee('Berkas Dokumen Roadmap Penelitian');
+    }
+
+    public function test_admin_can_update_roadmap_settings_and_upload_pdf(): void
+    {
+        Storage::fake('public');
+
+        $admin = User::where('role', 'admin')->first();
+        $pdfRoadmap = UploadedFile::fake()->create('roadmap_baru.pdf', 1024, 'application/pdf');
+
+        $response = $this->actingAs($admin)->put(route('admin.settings.roadmap.update'), [
+            'roadmap_badge' => 'Peta Jalan Riset Unggulan PKTJ',
+            'roadmap_title' => 'Roadmap Riset Keselamatan Jalan 2026-2031',
+            'roadmap_lead' => 'Haluan riset terpadu sivitas akademika PKTJ.',
+            'roadmap_custom_html' => '<div class="alert-info">Maklumat Roadmap Riset PKTJ</div>',
+            'file_roadmap' => $pdfRoadmap,
+        ]);
+
+        $response->assertRedirect(route('admin.settings.roadmap'));
+        $response->assertSessionHas('success');
+
+        $this->assertDatabaseHas('settings', [
+            'key' => 'roadmap_title',
+            'value' => 'Roadmap Riset Keselamatan Jalan 2026-2031',
+        ]);
+
+        // Verifikasi halaman publik langsung memuat judul dan HTML kustom dari CMS
+        $publicResponse = $this->get(route('profil.roadmap-penelitian'));
+        $publicResponse->assertStatus(200);
+        $publicResponse->assertSee('Peta Jalan Riset Unggulan PKTJ');
+        $publicResponse->assertSee('Roadmap Riset Keselamatan Jalan 2026-2031');
+        $publicResponse->assertSee('Haluan riset terpadu sivitas akademika PKTJ.');
+        $publicResponse->assertSee('Maklumat Roadmap Riset PKTJ', false);
+    }
+
+    public function test_non_admin_cannot_access_roadmap_settings(): void
+    {
+        $dosen = User::where('role', 'dosen')->first();
+
+        $response = $this->actingAs($dosen)->get(route('admin.settings.roadmap'));
 
         $response->assertRedirect('/dosen/dashboard');
     }

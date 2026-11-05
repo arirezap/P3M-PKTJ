@@ -10,7 +10,7 @@
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
         <div>
             <h1 class="text-2xl font-bold text-[#0B2A59] tracking-tight leading-8">Pengaturan Visi, Misi & Tujuan</h1>
-            <p class="text-xs text-slate-500 mt-1 leading-4">Kelola narasi visi kelembagaan, 5 butir misi institusi, dan sasaran strategis mutu P3M PKTJ yang tampil pada portal publik.</p>
+            <p class="text-xs text-slate-500 mt-1 leading-4">Kelola narasi visi kelembagaan, butir misi institusi, dan sasaran strategis mutu P3M PKTJ yang tampil pada portal publik.</p>
         </div>
         <div class="flex items-center gap-2">
             <a href="{{ route('profil.visi-misi') }}" target="_blank" class="inline-flex items-center gap-1.5 h-10 px-4 text-xs font-semibold text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 rounded-xl transition-all leading-4">
@@ -22,25 +22,55 @@
         </div>
     </div>
 
-    <!-- Alert Notifikasi Berhasil -->
-    @if(session('success'))
-        <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-center gap-3">
-            <svg class="w-5 h-5 text-emerald-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <span class="font-medium leading-5">{{ session('success') }}</span>
-        </div>
-    @endif
-
     <!-- Formulir CMS Pengaturan Visi, Misi & Tujuan -->
     <form method="POST" action="{{ route('admin.settings.visi-misi.update') }}" class="space-y-8">
         @csrf
         @method('PUT')
 
-        <!-- Bagian 1: Pernyataan Visi P3M -->
+        <!-- Bagian 1: Identitas & Narasi Header Halaman -->
         <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
             <div class="border-b border-slate-100 pb-4">
                 <span class="text-xs font-bold uppercase tracking-wider text-yellow-600 leading-4">Bagian 1</span>
+                <h2 class="text-lg font-bold text-[#0B2A59] leading-6">Identitas & Narasi Header Halaman</h2>
+                <p class="text-xs text-slate-500 mt-1 leading-4">Kustomisasi badge, judul utama halaman, dan deskripsi pengantar pada portal publik.</p>
+            </div>
+
+            <div class="space-y-4">
+                <div>
+                    <label for="visi_badge" class="block text-xs font-semibold text-slate-700 mb-2 leading-4">
+                        Label Lencana (Badge)
+                    </label>
+                    <input type="text" id="visi_badge" name="visi_badge" value="{{ old('visi_badge', $settings['visi_badge'] ?? '') }}"
+                           placeholder="Contoh: Arah Haluan Riset & Pengabdian PKTJ 2026 - 2031"
+                           class="w-full h-11 px-4 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-[#0B2A59] focus:border-[#0B2A59] leading-5">
+                    @error('visi_badge') <span class="text-xs text-rose-500 mt-1 block">{{ $message }}</span> @enderror
+                </div>
+
+                <div>
+                    <label for="page_title" class="block text-xs font-semibold text-slate-700 mb-2 leading-4">
+                        Judul Utama Halaman <span class="text-rose-500">*</span>
+                    </label>
+                    <input type="text" id="page_title" name="page_title" value="{{ old('page_title', $settings['page_title'] ?? '') }}" required
+                           placeholder="Contoh: Visi, Misi & Tujuan P3M"
+                           class="w-full h-11 px-4 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-[#0B2A59] focus:border-[#0B2A59] leading-5">
+                    @error('page_title') <span class="text-xs text-rose-500 mt-1 block">{{ $message }}</span> @enderror
+                </div>
+
+                <div>
+                    <label for="page_lead" class="block text-xs font-semibold text-slate-700 mb-2 leading-4">
+                        Deskripsi / Paragraf Pengantar Halaman <span class="text-rose-500">*</span>
+                    </label>
+                    <textarea id="page_lead" name="page_lead" rows="3" required
+                              class="w-full p-4 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-[#0B2A59] focus:border-[#0B2A59] leading-5">{{ old('page_lead', $settings['page_lead'] ?? '') }}</textarea>
+                    @error('page_lead') <span class="text-xs text-rose-500 mt-1 block">{{ $message }}</span> @enderror
+                </div>
+            </div>
+        </div>
+
+        <!-- Bagian 2: Pernyataan Visi P3M -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
+            <div class="border-b border-slate-100 pb-4">
+                <span class="text-xs font-bold uppercase tracking-wider text-yellow-600 leading-4">Bagian 2</span>
                 <h2 class="text-lg font-bold text-[#0B2A59] leading-6">Pernyataan Visi P3M</h2>
                 <p class="text-xs text-slate-500 mt-0.5 leading-4">Visi jangka menengah dan komitmen institusional di bawah BPSDMP Kemenhub.</p>
             </div>
@@ -74,66 +104,103 @@
             </div>
         </div>
 
-        <!-- Bagian 2: 5 Butir Misi Kelembagaan -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
-            <div class="border-b border-slate-100 pb-4">
-                <span class="text-xs font-bold uppercase tracking-wider text-yellow-600 leading-4">Bagian 2</span>
-                <h2 class="text-lg font-bold text-[#0B2A59] leading-6">5 Butir Misi Kelembagaan</h2>
-                <p class="text-xs text-slate-500 mt-0.5 leading-4">Pilar operasional riset, pengabdian masyarakat, kemitraan, hilirisasi, dan tata kelola digital.</p>
+        <!-- Bagian 3: Butir Misi Kelembagaan (Dinamis) -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6"
+             x-data="{
+                misis: {{ json_encode(old('misi_items', $misiList)) }},
+                addMisi() {
+                    this.misis.push('');
+                },
+                removeMisi(index) {
+                    if (this.misis.length > 1) {
+                        this.misis.splice(index, 1);
+                    }
+                }
+             }">
+            <div class="border-b border-slate-100 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-yellow-600 leading-4">Bagian 3</span>
+                    <h2 class="text-lg font-bold text-[#0B2A59] leading-6">Butir Misi Kelembagaan</h2>
+                    <p class="text-xs text-slate-500 mt-0.5 leading-4">Pilar operasional riset terapan, pengabdian masyarakat, kemitraan strategis, dan tata kelola digital. Jumlah butir dapat ditambah atau dikurangi secara dinamis (minimal 1 butir).</p>
+                </div>
+                <div class="flex-shrink-0">
+                    <button type="button" @click="addMisi()"
+                            class="inline-flex items-center gap-2 h-10 px-4 rounded-xl bg-blue-50 text-[#0B2A59] hover:bg-blue-100 border border-blue-200 text-xs font-semibold transition-colors leading-4">
+                        <svg class="w-4 h-4 text-[#0B2A59]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                        <span>Tambah Butir Misi</span>
+                    </button>
+                </div>
             </div>
 
+            <!-- List Dinamis Misi -->
             <div class="space-y-4">
-                <div>
-                    <label for="misi_1" class="block text-xs font-semibold text-slate-700 mb-2 leading-4">
-                        Misi 1: Riset Terapan Keselamatan Jalan <span class="text-rose-500">*</span>
-                    </label>
-                    <textarea id="misi_1" name="misi_1" rows="2" required
-                              class="w-full p-3.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-[#0B2A59] leading-5">{{ old('misi_1', $settings['misi_1'] ?? '') }}</textarea>
-                    @error('misi_1') <span class="text-xs text-rose-500 mt-1 block">{{ $message }}</span> @enderror
-                </div>
+                <template x-for="(misi, index) in misis" :key="index">
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2 relative transition-all">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="w-7 h-7 rounded-lg bg-[#0B2A59] text-white text-xs font-bold flex items-center justify-center leading-4"
+                                      x-text="String(index + 1).padStart(2, '0')"></span>
+                                <span class="text-xs font-bold text-slate-700 leading-4" x-text="'Butir Misi ' + (index + 1)"></span>
+                            </div>
+                            <button type="button" 
+                                    x-show="misis.length > 1"
+                                    @click="removeMisi(index)"
+                                    class="inline-flex items-center gap-1.5 h-8 px-2.5 rounded-lg bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 text-xs font-medium transition-colors leading-4">
+                                <svg class="w-3.5 h-3.5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                                <span>Hapus</span>
+                            </button>
+                        </div>
+                        <textarea :name="'misi_items[]'" rows="2" required x-model="misis[index]"
+                                  placeholder="Tuliskan pernyataan butir misi..."
+                                  class="w-full p-3.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-[#0B2A59] leading-5 bg-white"></textarea>
+                    </div>
+                </template>
+            </div>
 
-                <div>
-                    <label for="misi_2" class="block text-xs font-semibold text-slate-700 mb-2 leading-4">
-                        Misi 2: Pengabdian Aksi Nyata & Desa Binaan <span class="text-rose-500">*</span>
-                    </label>
-                    <textarea id="misi_2" name="misi_2" rows="2" required
-                              class="w-full p-3.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-[#0B2A59] leading-5">{{ old('misi_2', $settings['misi_2'] ?? '') }}</textarea>
-                    @error('misi_2') <span class="text-xs text-rose-500 mt-1 block">{{ $message }}</span> @enderror
-                </div>
-
-                <div>
-                    <label for="misi_3" class="block text-xs font-semibold text-slate-700 mb-2 leading-4">
-                        Misi 3: Kemitraan Strategis Transportasi <span class="text-rose-500">*</span>
-                    </label>
-                    <textarea id="misi_3" name="misi_3" rows="2" required
-                              class="w-full p-3.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-[#0B2A59] leading-5">{{ old('misi_3', $settings['misi_3'] ?? '') }}</textarea>
-                    @error('misi_3') <span class="text-xs text-rose-500 mt-1 block">{{ $message }}</span> @enderror
-                </div>
-
-                <div>
-                    <label for="misi_4" class="block text-xs font-semibold text-slate-700 mb-2 leading-4">
-                        Misi 4: Hilirisasi HKI, Paten & Publikasi Jurnal
-                    </label>
-                    <textarea id="misi_4" name="misi_4" rows="2"
-                              class="w-full p-3.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-[#0B2A59] leading-5">{{ old('misi_4', $settings['misi_4'] ?? '') }}</textarea>
-                </div>
-
-                <div>
-                    <label for="misi_5" class="block text-xs font-semibold text-slate-700 mb-2 leading-4">
-                        Misi 5: Tata Kelola Digital & SIM P3M
-                    </label>
-                    <textarea id="misi_5" name="misi_5" rows="2"
-                              class="w-full p-3.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-[#0B2A59] leading-5">{{ old('misi_5', $settings['misi_5'] ?? '') }}</textarea>
-                </div>
+            <!-- Tombol Tambah di Bawah List -->
+            <div class="pt-2 flex justify-start">
+                <button type="button" @click="addMisi()"
+                        class="inline-flex items-center gap-2 h-10 px-4 rounded-xl border border-dashed border-slate-300 hover:border-[#0B2A59] text-xs font-semibold text-slate-700 hover:text-[#0B2A59] bg-white transition-colors leading-4">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                    <span>Tambah Butir Misi Baru</span>
+                </button>
             </div>
         </div>
 
-        <!-- Bagian 3: Tujuan Strategis & Sasaran Mutu -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
-            <div class="border-b border-slate-100 pb-4">
-                <span class="text-xs font-bold uppercase tracking-wider text-yellow-600 leading-4">Bagian 3</span>
-                <h2 class="text-lg font-bold text-[#0B2A59] leading-6">Tujuan Strategis & Sasaran Mutu</h2>
-                <p class="text-xs text-slate-500 mt-0.5 leading-4">4 Indikator capaian strategis luaran riset dan dampak sosial pengabdian kepada masyarakat.</p>
+        <!-- Bagian 4: Tujuan Strategis & Sasaran Mutu (Dinamis) -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6"
+             x-data="{
+                tujuans: {{ json_encode(old('tujuan_items', $tujuanList)) }},
+                addTujuan() {
+                    this.tujuans.push({ title: '', desc: '' });
+                },
+                removeTujuan(index) {
+                    if (this.tujuans.length > 1) {
+                        this.tujuans.splice(index, 1);
+                    }
+                }
+             }">
+            <div class="border-b border-slate-100 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-yellow-600 leading-4">Bagian 4</span>
+                    <h2 class="text-lg font-bold text-[#0B2A59] leading-6">Tujuan Strategis & Sasaran Mutu</h2>
+                    <p class="text-xs text-slate-500 mt-0.5 leading-4">Indikator capaian strategis luaran riset dan dampak kelembagaan. Jumlah sasaran dapat ditambah atau dikurangi secara dinamis (minimal 1 butir).</p>
+                </div>
+                <div class="flex-shrink-0">
+                    <button type="button" @click="addTujuan()"
+                            class="inline-flex items-center gap-2 h-10 px-4 rounded-xl bg-blue-50 text-[#0B2A59] hover:bg-blue-100 border border-blue-200 text-xs font-semibold transition-colors leading-4">
+                        <svg class="w-4 h-4 text-[#0B2A59]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                        <span>Tambah Butir Sasaran</span>
+                    </button>
+                </div>
             </div>
 
             <div>
@@ -144,66 +211,57 @@
                           class="w-full p-3.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-[#0B2A59] leading-5">{{ old('tujuan_lead', $settings['tujuan_lead'] ?? '') }}</textarea>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-                <!-- Tujuan 1 -->
-                <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
-                    <span class="text-[10px] font-bold uppercase tracking-wider text-yellow-600 block leading-3">Tujuan 1</span>
-                    <div>
-                        <label for="tujuan_1_title" class="block text-xs font-semibold text-slate-700 mb-1 leading-4">Judul Tujuan 1 <span class="text-rose-500">*</span></label>
-                        <input type="text" id="tujuan_1_title" name="tujuan_1_title" value="{{ old('tujuan_1_title', $settings['tujuan_1_title'] ?? '') }}" required
-                               class="w-full h-10 px-3 border border-slate-300 rounded-lg text-xs leading-4">
+            <!-- List Dinamis Sasaran Tujuan -->
+            <div class="space-y-4 pt-2">
+                <template x-for="(tujuan, index) in tujuans" :key="index">
+                    <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-4 relative transition-all">
+                        <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+                            <div class="flex items-center gap-2">
+                                <span class="w-7 h-7 rounded-lg bg-yellow-500 text-slate-900 text-xs font-extrabold flex items-center justify-center leading-4"
+                                      x-text="index + 1"></span>
+                                <span class="text-xs font-bold text-slate-800 leading-4" x-text="'Sasaran / Tujuan Mutu ' + (index + 1)"></span>
+                            </div>
+                            <button type="button" 
+                                    x-show="tujuans.length > 1"
+                                    @click="removeTujuan(index)"
+                                    class="inline-flex items-center gap-1.5 h-8 px-2.5 rounded-lg bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 text-xs font-medium transition-colors leading-4">
+                                <svg class="w-3.5 h-3.5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                                <span>Hapus</span>
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-1 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1 leading-4">
+                                    Judul Sasaran Mutu <span class="text-rose-500">*</span>
+                                </label>
+                                <input type="text" :name="'tujuan_items[' + index + '][title]'" required x-model="tujuan.title"
+                                       placeholder="Contoh: Publikasi Internasional Bereputasi"
+                                       class="w-full h-10 px-3.5 border border-slate-300 rounded-lg text-xs leading-4 bg-white focus:ring-2 focus:ring-[#0B2A59]">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1 leading-4">
+                                    Uraian Sasaran & Target Capaian <span class="text-rose-500">*</span>
+                                </label>
+                                <textarea :name="'tujuan_items[' + index + '][desc]'" rows="3" required x-model="tujuan.desc"
+                                          placeholder="Uraikan target capaian kuantitatif maupun kualitatif..."
+                                          class="w-full p-3.5 border border-slate-300 rounded-lg text-xs leading-5 bg-white focus:ring-2 focus:ring-[#0B2A59]"></textarea>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <label for="tujuan_1_desc" class="block text-xs font-semibold text-slate-700 mb-1 leading-4">Uraian Sasaran <span class="text-rose-500">*</span></label>
-                        <textarea id="tujuan_1_desc" name="tujuan_1_desc" rows="3" required
-                                  class="w-full p-3 border border-slate-300 rounded-lg text-xs leading-5">{{ old('tujuan_1_desc', $settings['tujuan_1_desc'] ?? '') }}</textarea>
-                    </div>
-                </div>
+                </template>
+            </div>
 
-                <!-- Tujuan 2 -->
-                <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
-                    <span class="text-[10px] font-bold uppercase tracking-wider text-yellow-600 block leading-3">Tujuan 2</span>
-                    <div>
-                        <label for="tujuan_2_title" class="block text-xs font-semibold text-slate-700 mb-1 leading-4">Judul Tujuan 2 <span class="text-rose-500">*</span></label>
-                        <input type="text" id="tujuan_2_title" name="tujuan_2_title" value="{{ old('tujuan_2_title', $settings['tujuan_2_title'] ?? '') }}" required
-                               class="w-full h-10 px-3 border border-slate-300 rounded-lg text-xs leading-4">
-                    </div>
-                    <div>
-                        <label for="tujuan_2_desc" class="block text-xs font-semibold text-slate-700 mb-1 leading-4">Uraian Sasaran <span class="text-rose-500">*</span></label>
-                        <textarea id="tujuan_2_desc" name="tujuan_2_desc" rows="3" required
-                                  class="w-full p-3 border border-slate-300 rounded-lg text-xs leading-5">{{ old('tujuan_2_desc', $settings['tujuan_2_desc'] ?? '') }}</textarea>
-                    </div>
-                </div>
-
-                <!-- Tujuan 3 -->
-                <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
-                    <span class="text-[10px] font-bold uppercase tracking-wider text-yellow-600 block leading-3">Tujuan 3</span>
-                    <div>
-                        <label for="tujuan_3_title" class="block text-xs font-semibold text-slate-700 mb-1 leading-4">Judul Tujuan 3</label>
-                        <input type="text" id="tujuan_3_title" name="tujuan_3_title" value="{{ old('tujuan_3_title', $settings['tujuan_3_title'] ?? '') }}"
-                               class="w-full h-10 px-3 border border-slate-300 rounded-lg text-xs leading-4">
-                    </div>
-                    <div>
-                        <label for="tujuan_3_desc" class="block text-xs font-semibold text-slate-700 mb-1 leading-4">Uraian Sasaran</label>
-                        <textarea id="tujuan_3_desc" name="tujuan_3_desc" rows="3"
-                                  class="w-full p-3 border border-slate-300 rounded-lg text-xs leading-5">{{ old('tujuan_3_desc', $settings['tujuan_3_desc'] ?? '') }}</textarea>
-                    </div>
-                </div>
-
-                <!-- Tujuan 4 -->
-                <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
-                    <span class="text-[10px] font-bold uppercase tracking-wider text-yellow-600 block leading-3">Tujuan 4</span>
-                    <div>
-                        <label for="tujuan_4_title" class="block text-xs font-semibold text-slate-700 mb-1 leading-4">Judul Tujuan 4</label>
-                        <input type="text" id="tujuan_4_title" name="tujuan_4_title" value="{{ old('tujuan_4_title', $settings['tujuan_4_title'] ?? '') }}"
-                               class="w-full h-10 px-3 border border-slate-300 rounded-lg text-xs leading-4">
-                    </div>
-                    <div>
-                        <label for="tujuan_4_desc" class="block text-xs font-semibold text-slate-700 mb-1 leading-4">Uraian Sasaran</label>
-                        <textarea id="tujuan_4_desc" name="tujuan_4_desc" rows="3"
-                                  class="w-full p-3 border border-slate-300 rounded-lg text-xs leading-5">{{ old('tujuan_4_desc', $settings['tujuan_4_desc'] ?? '') }}</textarea>
-                    </div>
-                </div>
+            <!-- Tombol Tambah di Bawah List -->
+            <div class="pt-2 flex justify-start">
+                <button type="button" @click="addTujuan()"
+                        class="inline-flex items-center gap-2 h-10 px-4 rounded-xl border border-dashed border-slate-300 hover:border-[#0B2A59] text-xs font-semibold text-slate-700 hover:text-[#0B2A59] bg-white transition-colors leading-4">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                    <span>Tambah Butir Sasaran Baru</span>
+                </button>
             </div>
         </div>
 

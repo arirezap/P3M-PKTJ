@@ -92,7 +92,7 @@ class User extends Authenticatable
     public function getRolesList(): array
     {
         $roles = is_array($this->roles) ? $this->roles : [];
-        if (empty($roles) && !empty($this->role)) {
+        if (empty($roles) && ! empty($this->role)) {
             $roles = [$this->role === 'dosen' ? 'peneliti' : $this->role];
         }
 
@@ -117,9 +117,15 @@ class User extends Authenticatable
         }
 
         // Kompatibilitas mundur dengan kolom role tunggal
-        if ($this->role === 'admin' && $roleToCheck === 'admin') return true;
-        if ($this->role === 'reviewer' && $roleToCheck === 'reviewer') return true;
-        if (($this->role === 'dosen' || $this->role === 'peneliti') && ($roleToCheck === 'peneliti' || $roleToCheck === 'dosen')) return true;
+        if ($this->role === 'admin' && $roleToCheck === 'admin') {
+            return true;
+        }
+        if ($this->role === 'reviewer' && $roleToCheck === 'reviewer') {
+            return true;
+        }
+        if (($this->role === 'dosen' || $this->role === 'peneliti') && ($roleToCheck === 'peneliti' || $roleToCheck === 'dosen')) {
+            return true;
+        }
 
         return false;
     }
@@ -127,7 +133,7 @@ class User extends Authenticatable
     /**
      * Memeriksa apakah pengguna memiliki setidaknya satu peran dari daftar peran yang diberikan.
      *
-     * @param array<string> $roles
+     * @param  array<string>  $roles
      */
     public function hasAnyRole(array $roles): bool
     {
@@ -136,6 +142,7 @@ class User extends Authenticatable
                 return true;
             }
         }
+
         return false;
     }
 

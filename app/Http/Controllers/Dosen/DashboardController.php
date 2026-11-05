@@ -14,7 +14,7 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         $selectedTab = $request->query('tab', 'semua');
-        if (!in_array($selectedTab, ['semua', 'penelitian', 'pengabdian'])) {
+        if (! in_array($selectedTab, ['semua', 'penelitian', 'pengabdian'])) {
             $selectedTab = 'semua';
         }
 
