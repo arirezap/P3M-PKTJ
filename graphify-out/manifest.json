@@ -2262,8 +2262,8 @@
     "semantic_hash": ""
   },
   "tests/Feature/PublicResearcherTest.php": {
-    "mtime": 1793870467.9696147,
-    "seen": 1793870499.8202338,
+    "mtime": 1793870921.68834,
+    "seen": 1793871320.5068252,
     "ast_hash": "d48ef951c0547a34db0ab456d364fe36",
     "semantic_hash": ""
   },
@@ -2285,15 +2285,9 @@
     "ast_hash": "15460f4b3ad56940727bd1ba4f5c9b4a",
     "semantic_hash": ""
   },
-  "vite.config.js.timestamp-1791990649871-70449ce9d617e8.mjs": {
-    "mtime": 1791990649.8718257,
-    "seen": 1792027812.042992,
-    "ast_hash": "622558f579393829541e3544cb01ae54",
-    "semantic_hash": ""
-  },
   "app/Http/Controllers/PublicResearchController.php": {
-    "mtime": 1793866312.6004555,
-    "seen": 1793866654.2262807,
+    "mtime": 1793870921.5575044,
+    "seen": 1793871320.5063958,
     "ast_hash": "ae17d5ae0c881f611c9df19fad06f755",
     "semantic_hash": ""
   },
@@ -2358,8 +2352,8 @@
     "semantic_hash": ""
   },
   "tests/Feature/PublicOutputPageTest.php": {
-    "mtime": 1793869588.562003,
-    "seen": 1793869694.6743393,
+    "mtime": 1793870921.965558,
+    "seen": 1793871320.5068212,
     "ast_hash": "dac4459bb2ebedbf22ac427bcb148108",
     "semantic_hash": ""
   },
@@ -2436,8 +2430,8 @@
     "semantic_hash": ""
   },
   "app/Http/Controllers/PublicCommunityServiceController.php": {
-    "mtime": 1793870276.2092957,
-    "seen": 1793870369.8098228,
+    "mtime": 1793870921.7425146,
+    "seen": 1793871320.5063913,
     "ast_hash": "a31fac02b3e883fe7a9e732510b63f74",
     "semantic_hash": ""
   },
@@ -2466,8 +2460,8 @@
     "semantic_hash": ""
   },
   "app/Http/Controllers/PublicCommunityServiceOutputController.php": {
-    "mtime": 1793870278.1133566,
-    "seen": 1793870369.809825,
+    "mtime": 1793870921.7957945,
+    "seen": 1793871320.506392,
     "ast_hash": "a22e2674c2dce2ad141d4a0f2475bd67",
     "semantic_hash": ""
   },
@@ -2583,12 +2577,6 @@
     "mtime": 1793845113.1896026,
     "seen": 1793845229.4220362,
     "ast_hash": "4d280106f8d8083729ac60208065f6ac",
-    "semantic_hash": ""
-  },
-  "vite.config.js.timestamp-1793540626368-6acc9a8df85b48.mjs": {
-    "mtime": 1793540626.3717575,
-    "seen": 1793540700.9334688,
-    "ast_hash": "622558f579393829541e3544cb01ae54",
     "semantic_hash": ""
   },
   "PRD.md": {
@@ -2831,12 +2819,6 @@
     "ast_hash": "65417e4a240644d76dd9a167f23a0fa4",
     "semantic_hash": ""
   },
-  "Kebutuhan Website P3M rev.pdf": {
-    "mtime": 1793540759.4942212,
-    "seen": 1793841322.4048145,
-    "ast_hash": "113c04840250d88a42d6f371eda1349d",
-    "semantic_hash": ""
-  },
   "resources/views/admin/settings/renstra.blade.php": {
     "mtime": 1793845277.2736328,
     "seen": 1793846090.7715604,
@@ -2891,12 +2873,6 @@
     "ast_hash": "2326239388e5cc3c045b82368e9b90db",
     "semantic_hash": ""
   },
-  "database excel p3m.pdf": {
-    "mtime": 1793864875.8317902,
-    "seen": 1793865300.9861836,
-    "ast_hash": "da127cdcfdd45cd71a332ed61b69fb8b",
-    "semantic_hash": ""
-  },
   "app/Console/Commands/ImportPenelitian2025Command.php": {
     "mtime": 1793869662.7325618,
     "seen": 1793869694.6307492,
@@ -2904,8 +2880,8 @@
     "semantic_hash": ""
   },
   "database/seeders/Research2025Seeder.php": {
-    "mtime": 1793869667.686702,
-    "seen": 1793869694.6402724,
+    "mtime": 1793870921.9085457,
+    "seen": 1793871320.5064857,
     "ast_hash": "bc61e353d7bbf749697ec70875033d08",
     "semantic_hash": ""
   },
@@ -2915,33 +2891,21 @@
     "ast_hash": "079062883f6ac0aa3fa6d4a3bd5c46b8",
     "semantic_hash": ""
   },
-  "graphify-out/converted/2025_Database_Kinerja Penelitian&PkM_937519ec.md": {
-    "mtime": 1793866639.124447,
-    "seen": 1793866654.257131,
-    "ast_hash": "defa2e89b70ef4b12c2acd0d2ca3ff83",
-    "semantic_hash": ""
-  },
-  "graphify-out/converted/Kebutuhan Website P3M rev_259970d5.md": {
-    "mtime": 1793866639.1514542,
-    "seen": 1793866654.257132,
-    "ast_hash": "8dc58127bd1b2b6b37ac660e8aa18e44",
-    "semantic_hash": ""
-  },
   "app/Console/Commands/ImportLuaran2025Command.php": {
-    "mtime": 1793869548.5520828,
-    "seen": 1793869694.6307452,
-    "ast_hash": "b5ac9d517ff10cf61c2f409440c69aad",
+    "mtime": 1793870518.9991083,
+    "seen": 1793871320.5063362,
+    "ast_hash": "0e41b9cdebe543875a6b8caabbb9467f",
     "semantic_hash": ""
   },
   "database/migrations/2026_11_05_000001_add_spreadsheet_columns_to_outputs_table.php": {
-    "mtime": 1793869399.7676344,
-    "seen": 1793869694.6399841,
-    "ast_hash": "a178d92396250c852cc97ab1618a7578",
+    "mtime": 1793870519.3523123,
+    "seen": 1793871320.5064766,
+    "ast_hash": "c80abf1992c0b17ddbc60832f7df80f0",
     "semantic_hash": ""
   },
   "database/seeders/Output2025Seeder.php": {
-    "mtime": 1793869652.7400737,
-    "seen": 1793869694.640178,
+    "mtime": 1793870921.8555696,
+    "seen": 1793871320.5064821,
     "ast_hash": "d32376fa405cf77d09e06db97556bae3",
     "semantic_hash": ""
   },
@@ -2951,34 +2915,22 @@
     "ast_hash": "96c34df7732273a1dad7dce04b4e9ccb",
     "semantic_hash": ""
   },
-  "graphify-out/converted/Data_Penelitian_72b44aed.md": {
-    "mtime": 1793869670.2931397,
-    "seen": 1793869694.680196,
-    "ast_hash": "bcc2720493669700ce92437e13129060",
-    "semantic_hash": ""
-  },
-  "graphify-out/converted/Data_PkM_cea9dd2f.md": {
-    "mtime": 1793869670.331286,
-    "seen": 1793869694.6801977,
-    "ast_hash": "38b1ef06e4a2a9310bb657c4c3e1dc00",
-    "semantic_hash": ""
-  },
   "app/Console/Commands/ImportPkm2025Command.php": {
-    "mtime": 1793870267.4457476,
-    "seen": 1793870369.8072267,
-    "ast_hash": "d6acda6678ac94b6fbb0f443a2e68ad6",
+    "mtime": 1793870519.0783834,
+    "seen": 1793871320.5063424,
+    "ast_hash": "e8bcaf465c94008361b2979178513c92",
     "semantic_hash": ""
   },
   "database/migrations/2026_11_05_000002_add_spreadsheet_columns_to_community_services_table.php": {
-    "mtime": 1793870151.3038645,
-    "seen": 1793870369.816125,
-    "ast_hash": "a209f287b47483782d7cd22bece66a1e",
+    "mtime": 1793870519.4201307,
+    "seen": 1793871320.5064776,
+    "ast_hash": "2b2daa93d202c4192fb12fa0d0bf726a",
     "semantic_hash": ""
   },
   "database/seeders/Pkm2025Seeder.php": {
-    "mtime": 1793870265.823733,
-    "seen": 1793870369.816401,
-    "ast_hash": "8606114936f1f6a23b993e7c10771c0f",
+    "mtime": 1793870519.6017497,
+    "seen": 1793871320.5064836,
+    "ast_hash": "149ba496ca86d6e917abdbac383ceba7",
     "semantic_hash": ""
   },
   "database/seeders/pkm_2025_data.json": {
@@ -2988,9 +2940,15 @@
     "semantic_hash": ""
   },
   "docs/audit/2026-11-05-integrasi-database-excel-p3m-2025.md": {
-    "mtime": 1793870455.0003686,
-    "seen": 1793870499.8242824,
-    "ast_hash": "1018c9c0491e9933d4168a1fa02f4123",
+    "mtime": 1793870519.750795,
+    "seen": 1793871320.5068758,
+    "ast_hash": "e26b3291fb8c7627181fa16c849919ae",
+    "semantic_hash": ""
+  },
+  "docs/audit/2026-11-05-audit-keamanan-dan-kebocoran-data-github.md": {
+    "mtime": 1793871300.7028675,
+    "seen": 1793871320.5068746,
+    "ast_hash": "1e794ba72c7390194e99ad805dedb04b",
     "semantic_hash": ""
   }
 }

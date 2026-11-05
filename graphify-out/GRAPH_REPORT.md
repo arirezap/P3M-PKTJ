@@ -1,17 +1,17 @@
 # Graph Report - p3m  (2026-11-05)
 
 ## Corpus Check
-- 492 files · ~1,051,280 words
+- 486 files · ~1,013,695 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 65 file(s) not represented in the graph (top: .css 45, (none) 17, .example 1)
 
 ## Summary
-- 5107 nodes · 7061 edges · 626 communities (247 shown, 379 thin omitted)
+- 5093 nodes · 7052 edges · 641 communities (243 shown, 398 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 97 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `780aa556`
+- Built from commit: `651eb6db`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -32,11 +32,11 @@
 - CheckRole.php
 - ExampleTest
 - Panduan Audit Kode & Tampilan P3M PKTJ
-- Prodi
+- Illuminate\Database\Seeder
 - antislop
 - Part 1: AI Slop Patterns (Warning Signs)
 - Analisis Kesesuaian Dokumen Kebutuhan & Rekomendasi Peningkatan
-- CommunityService
+- PublicCommunityServicePageTest
 - What You Must Do When Invoked
 - A. Portal Publik (Frontend / Pengunjung)
 - design.md
@@ -100,11 +100,11 @@
 - Optional
 - a
 - n
-- OrganizationMember
+- PublicSdmTest
 - s
 - v
 - c
-- Illuminate\Console\Command
+- Illuminate\Http\RedirectResponse
 - Optional
 - s
 - a
@@ -120,7 +120,7 @@
 - CommonFormat
 - hi
 - xh
-- 2025_Database_Kinerja Penelitian&PkM_937519ec.md
+- TestCase
 - execCommand
 - tinymce/composer.json
 - EditorManager
@@ -229,7 +229,7 @@
 - BeforeSetContentEvent
 - ParserArgs
 - Shortcuts
-- Illuminate\Http\Request
+- Prodi
 - 4.1.0 - 2014-06-18
 - DBOPS Changeset Generation
 - 4.1.4 - 2014-08-21
@@ -276,12 +276,12 @@
 - NodeChange
 - Quirks
 - 4.3.6 - 2016-03-01
-- Kebutuhan Website P3M rev_259970d5.md
+- i
 - 5.0.8 - 2019-06-18
 - 4.3.10 - 2016-04-12
 - 6.8.3 - 2024-02-08
 - 4.8.0 - 2018-06-27
-- Research
+- PublicResearchPageTest
 - Audit: Halaman Profil > Visi, Misi & Tujuan SIM P3M PKTJ
 - Illuminate\Support\Facades\Schema
 - Analisis Kesesuaian Dokumen Kebutuhan & Anti Over-Engineering
@@ -289,8 +289,8 @@
 - 4.7.7 - 2018-02-19
 - 5.0.0-preview-3 - 2018-10-18
 - 4.1.1 - 2014-07-08
-- UserController.php
-- Output
+- web.php
+- PublicOutputPageTest
 - 4.1.5 - 2014-09-09
 - 4.7.13 - 2018-05-16
 - Harness v1 Native Actions Reference
@@ -361,12 +361,13 @@
 - ViewButtonApi
 - 4.9.1 - 2018-12-04
 - DBOPS Liquibase YAML Rules
+- ProposalReview
 - Harness v1 Pipeline Spec Reference
 - Step Types
 - Stages
 - Failure Strategy (`on-failure`)
 - 4.1.9 - 2015-03-10
-- Document
+- PublicGuidelinePageTest
 - 4.1.2 - 2014-07-15
 - 6.8.2 - 2023-12-11
 - Strategy (Matrix, For, While)
@@ -377,11 +378,12 @@
 - Repository and Clone
 - 4.3.12 - 2016-05-10
 - AppServiceProvider.php
-- Data_Penelitian_72b44aed.md
+- AuthenticationTest
 - Laporan Integrasi Database Kinerja Penelitian & PkM 2025 (Excel P3M PKTJ)
-- Data_PkM_cea9dd2f.md
+- PublicCommunityServiceOutputPageTest
 - Audit: Halaman Profil > Roadmap Penelitian SIM P3M PKTJ
 - 4.3.2 - 2015-12-14
+- Illuminate\Database\Eloquent\Relations\HasMany
 - 4.5.2 - 2017-01-04
 - 4.6.3 - 2017-05-30
 - 4.3.7 - 2016-03-02
@@ -418,7 +420,22 @@
 - 6.4.1 - 2023-03-29
 - 7.9.1 - 2025-05-29
 - 8.0.2 - 2025-08-14
+- PublicCollaborationPageTest
+- DosenMonevAndFinalReportTest
+- PublicRenstraTest
+- PublicVisiMisiTest
+- UserMultiRoleTest
+- AdminCmsTest
 - Audit: Halaman Profil > Profil Peneliti (Daftar Dosen & Peneliti Aktif) SIM P3M PKTJ
+- PublicCommunityServiceCollaborationPageTest
+- PublicPortalTest
+- CommunityServiceOutputController
+- Laporan Audit Keamanan Repositori & Kebocoran Data GitHub
+- CommunityServiceController
+- PostController
+- ResearchController
+- OutputController
+- PublicRoadmapTest
 
 ## God Nodes (most connected - your core abstractions)
 1. `Changelog` - 211 edges
@@ -447,7 +464,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (626 total, 379 thin omitted)
+## Communities (641 total, 398 thin omitted)
 
 ### Community 0 - "composer.json"
 Cohesion: 0.04
@@ -466,8 +483,8 @@ Cohesion: 0.33
 Nodes (10): _channel(), check_contrast(), contrast_ratio(), _error(), main(), Minimal MCP stdio server exposing the antislop contrast checker as a tool. All…, relative_luminance(), _reply() (+2 more)
 
 ### Community 6 - "Illuminate\Database\Eloquent\Relations\BelongsTo"
-Cohesion: 0.05
-Nodes (12): Post, ProposalBudget, ProposalFinalReport, ProposalMember, ProposalMonev, Illuminate\Database\Eloquent\Factories\HasFactory, Illuminate\Database\Eloquent\Model, Illuminate\Database\Eloquent\Relations\BelongsTo (+4 more)
+Cohesion: 0.06
+Nodes (14): DashboardController, CommunityService, CommunityServiceOutput, Output, Post, ProposalBudget, ProposalFinalReport, ProposalMember (+6 more)
 
 ### Community 7 - "Tone & Voice"
 Cohesion: 0.05
@@ -482,8 +499,8 @@ Cohesion: 0.06
 Nodes (30): 100vh Sections, antislop-layoutmobile, Bottom Nav That Eats Content, Breakpoint Driven by Device List, Breakpoints, Columns That Don't Collapse, Desktop-Only Layout, Desktop-Sized Everything (+22 more)
 
 ### Community 10 - "User"
-Cohesion: 0.03
-Nodes (15): User, Illuminate\Foundation\Testing\RefreshDatabase, Illuminate\Foundation\Testing\TestCase, Illuminate\Http\UploadedFile, Illuminate\Support\Facades\Storage, AdminCmsTest, AdminSettingTest, AdminWorkflowTest (+7 more)
+Cohesion: 0.07
+Nodes (6): User, Illuminate\Foundation\Auth\User, Illuminate\Notifications\Notifiable, AdminSettingTest, AdminWorkflowTest, PublicResearcherTest
 
 ### Community 11 - "Analisis Kesesuaian Dokumen Kebutuhan & Rekomendasi Peningkatan"
 Cohesion: 0.29
@@ -505,9 +522,9 @@ Nodes (6): CheckRole, Closure, Illuminate\Foundation\Application, Illuminate\Fou
 Cohesion: 0.12
 Nodes (16): 0. Cara Pakai, C1. Kepatuhan Mandat Proyek (AGENTS.md), C2. Kesesuaian Dokumen Kebutuhan (Kebutuhan Website P3M rev.pdf & PRD), C. Kepatuhan Mandat Proyek & Kesesuaian Spesifikasi Kebutuhan, Contoh Perintah ke AI Agent, D1. Pemeriksaan Wajib, D2. Kualitas Kode, D3. Tampilan & Mandat Proyek (+8 more)
 
-### Community 17 - "Prodi"
-Cohesion: 0.04
-Nodes (17): CommunityServiceOutputController, ResearchController, CommunityServiceOutput, Prodi, CollaborationSeeder, DatabaseSeeder, Output2025Seeder, ProdiSeeder (+9 more)
+### Community 17 - "Illuminate\Database\Seeder"
+Cohesion: 0.08
+Nodes (16): ImportLuaran2025Command, ImportPenelitian2025Command, ImportPkm2025Command, Command, CollaborationSeeder, OrganizationMemberSeeder, Output2025Seeder, Pkm2025Seeder (+8 more)
 
 ### Community 18 - "antislop"
 Cohesion: 0.22
@@ -520,10 +537,6 @@ Nodes (8): Accessibility, Copywriting & Content, Decorative Elements, Functional
 ### Community 21 - "Analisis Kesesuaian Dokumen Kebutuhan & Rekomendasi Peningkatan"
 Cohesion: 0.29
 Nodes (6): 1. Definisi Dokumen Acuan (Kebutuhan Website P3M rev.pdf), 2. Evaluasi Pemenuhan Fitur Saat Ini, 3. Poin Tindak Lanjut Penyelarasan, Analisis Kesesuaian Dokumen Kebutuhan & Rekomendasi Peningkatan, Audit: Halaman Riset > Luaran Penelitian SIM P3M PKTJ, Ringkasan Skor
-
-### Community 23 - "CommunityService"
-Cohesion: 0.10
-Nodes (3): CommunityServiceController, CommunityService, PublicCommunityServicePageTest
 
 ### Community 30 - "What You Must Do When Invoked"
 Cohesion: 0.07
@@ -697,13 +710,9 @@ Nodes (4): Optional, TODO: Remove in 5.2 once iOS fixed positioning is fixed. Se
 Cohesion: 0.08
 Nodes (3): Optional, TODO: Merge categories with TBIO, TODO: Merge categories with TBIO
 
-### Community 98 - "OrganizationMember"
-Cohesion: 0.12
-Nodes (3): OrganizationMember, OrganizationMemberSeeder, PublicSdmTest
-
-### Community 102 - "Illuminate\Console\Command"
-Cohesion: 0.23
-Nodes (6): ImportLuaran2025Command, ImportPenelitian2025Command, ImportPkm2025Command, Command, Pkm2025Seeder, Illuminate\Console\Command
+### Community 102 - "Illuminate\Http\RedirectResponse"
+Cohesion: 0.07
+Nodes (11): DocumentController, OrganizationController, SettingController, LoginController, ProfileController, Document, Setting, Illuminate\Http\JsonResponse (+3 more)
 
 ### Community 106 - "ScriptLoader"
 Cohesion: 0.12
@@ -741,9 +750,9 @@ Nodes (16): BaseFormat, Block, BlockFormat, BlockStyleFormat, CommonFormat, Comm
 Cohesion: 0.14
 Nodes (4): add(), createEditor(), hi, items()
 
-### Community 118 - "2025_Database_Kinerja Penelitian&PkM_937519ec.md"
-Cohesion: 0.22
-Nodes (8): Sheet: Buku, Sheet: HaKI, Sheet: Ketentuan, Sheet: Penelitian, Sheet: Pengabdian, Sheet: PkM_Pokja Diklat, Sheet: Publikasi, Sheet: Publikasi_pending
+### Community 118 - "TestCase"
+Cohesion: 0.16
+Nodes (5): Illuminate\Foundation\Testing\RefreshDatabase, Illuminate\Foundation\Testing\TestCase, Illuminate\Http\UploadedFile, ExampleTest, TestCase
 
 ### Community 121 - "tinymce/composer.json"
 Cohesion: 0.14
@@ -1109,9 +1118,9 @@ Nodes (4): BeforeSetContentEvent, SetContentArgs, SetContentEvent, SetSelectionC
 Cohesion: 0.50
 Nodes (4): DomSerializerArgs, ParserArgs, PostProcessEvent, PreProcessEvent
 
-### Community 229 - "Illuminate\Http\Request"
-Cohesion: 0.04
-Nodes (32): CommunityServiceProposalController, OrganizationController, PostController, ProposalController, ResearchProposalController, SettingController, LoginController, Controller (+24 more)
+### Community 229 - "Prodi"
+Cohesion: 0.08
+Nodes (17): Controller, DashboardController, PublicCollaborationController, PublicCommunityServiceCollaborationController, PublicCommunityServiceController, PublicCommunityServiceOutputController, PublicGuidelineController, PublicOutputController (+9 more)
 
 ### Community 230 - "4.1.0 - 2014-06-18"
 Cohesion: 0.67
@@ -1214,16 +1223,16 @@ Cohesion: 0.67
 Nodes (3): 4.9.5 - 2019-07-02, Changed, Fixed
 
 ### Community 260 - "Collaboration"
-Cohesion: 0.09
-Nodes (4): CollaborationController, Collaboration, Illuminate\Database\Eloquent\Builder, PublicCollaborationPageTest
+Cohesion: 0.12
+Nodes (4): CollaborationController, Collaboration, OrganizationMember, Illuminate\Database\Eloquent\Builder
 
 ### Community 262 - "5.0.16 - 2019-09-24"
 Cohesion: 0.67
 Nodes (3): 5.0.16 - 2019-09-24, Added, Fixed
 
 ### Community 263 - "Proposal"
-Cohesion: 0.11
-Nodes (5): FinalReportController, MonevController, Proposal, Illuminate\Database\Eloquent\Relations\HasOne, DosenProposalTest
+Cohesion: 0.07
+Nodes (8): CommunityServiceProposalController, ResearchProposalController, FinalReportController, MonevController, ProposalController, Proposal, Illuminate\Database\Eloquent\Relations\HasOne, DosenProposalTest
 
 ### Community 264 - "4.7.11 - 2018-04-11"
 Cohesion: 0.67
@@ -1293,10 +1302,6 @@ Nodes (3): 6.8.3 - 2024-02-08, Changed, Fixed
 Cohesion: 0.67
 Nodes (3): 4.8.0 - 2018-06-27, Added, Fixed
 
-### Community 289 - "Research"
-Cohesion: 0.14
-Nodes (3): DashboardController, Research, PublicResearchPageTest
-
 ### Community 290 - "Audit: Halaman Profil > Visi, Misi & Tujuan SIM P3M PKTJ"
 Cohesion: 0.25
 Nodes (7): 1. Temuan Ketidaksesuaian Awal (Over-Engineering & Hardcoded Inconsistencies), 2. Solusi Refaktorisasi yang Diterapkan, Analisis Kesesuaian Dokumen Kebutuhan & Anti Over-Engineering, Audit: Halaman Profil > Visi, Misi & Tujuan SIM P3M PKTJ, Keputusan, Ringkasan Skor, Temuan & Tindakan Perbaikan
@@ -1317,9 +1322,9 @@ Nodes (3): 4.7.7 - 2018-02-19, Added, Fixed
 Cohesion: 0.67
 Nodes (3): 5.0.0-preview-3 - 2018-10-18, Changed, Fixed
 
-### Community 305 - "Output"
-Cohesion: 0.11
-Nodes (3): OutputController, Output, PublicOutputPageTest
+### Community 304 - "web.php"
+Cohesion: 0.19
+Nodes (4): ProposalController, UserController, HomeController, Illuminate\Support\Facades\Route
 
 ### Community 309 - "4.7.13 - 2018-05-16"
 Cohesion: 0.67
@@ -1357,6 +1362,10 @@ Nodes (3): 4.9.1 - 2018-12-04, Added, Fixed
 Cohesion: 0.11
 Nodes (17): Author, Update Mode, and Error Recovery, Batch Data Migrations, Clarifying Questions Policy, Column resolution, Common Change Types (SQL Examples), createdAt / updatedAt on New SQL Tables, Database-Type Timestamp Rules, DBOPS Liquibase YAML Rules (+9 more)
 
+### Community 530 - "ProposalReview"
+Cohesion: 0.13
+Nodes (3): ProposalReviewController, ProposalReview, ReviewerReviewTest
+
 ### Community 531 - "Harness v1 Pipeline Spec Reference"
 Cohesion: 0.15
 Nodes (12): Caching, Complete CD Example (Kubernetes Rolling), Complete CI Example, Event Triggers (`on`), Expressions, Global Environment Variables, Harness v1 Pipeline Spec Reference, Inputs (+4 more)
@@ -1372,10 +1381,6 @@ Nodes (8): CI Stage (steps only), CI Stage with Runtime, Deployment Stage (servi
 ### Community 535 - "Failure Strategy (`on-failure`)"
 Cohesion: 0.40
 Nodes (5): Basic Actions, Failure Strategy (`on-failure`), Manual Intervention, Retry, Retry with Manual Intervention Fallback
-
-### Community 543 - "Document"
-Cohesion: 0.07
-Nodes (5): DocumentController, Document, PublicGuidelinePageTest, PublicRenstraTest, PublicRoadmapTest
 
 ### Community 548 - "4.1.2 - 2014-07-15"
 Cohesion: 0.67
@@ -1401,17 +1406,9 @@ Nodes (3): Clone Configurations, Repository, Repository and Clone
 Cohesion: 0.29
 Nodes (4): AppServiceProvider, Illuminate\Auth\Middleware\RedirectIfAuthenticated, Illuminate\Support\Facades\View, Illuminate\Support\ServiceProvider
 
-### Community 559 - "Data_Penelitian_72b44aed.md"
-Cohesion: 0.50
-Nodes (3): Sheet: Data_Peneliti, Sheet: Data_Penelitian, Sheet: Luaran_Penelitian
-
 ### Community 560 - "Laporan Integrasi Database Kinerja Penelitian & PkM 2025 (Excel P3M PKTJ)"
 Cohesion: 0.40
 Nodes (4): 1. Ringkasan Eksekutif, 2. Penyesuaian Skema Database (Tanpa Tabel Ganda), 3. Deduplikasi & Pembersihan Data Dummy 2025, Laporan Integrasi Database Kinerja Penelitian & PkM 2025 (Excel P3M PKTJ)
-
-### Community 561 - "Data_PkM_cea9dd2f.md"
-Cohesion: 0.50
-Nodes (3): Sheet: Data_Pelaksana, Sheet: Data_PkM, Sheet: Luaran_PkM
 
 ### Community 562 - "Audit: Halaman Profil > Roadmap Penelitian SIM P3M PKTJ"
 Cohesion: 0.25
@@ -1437,22 +1434,26 @@ Nodes (8): 1. Temuan Ketidaksesuaian Awal (Over-Engineering & Scope Creep), 2. S
 Cohesion: 0.25
 Nodes (7): 1. Temuan Ketidaksesuaian Awal (Incomplete Clickable Behavior & Unusable Modal), 2. Solusi Refaktorisasi yang Diterapkan, Analisis Kesesuaian Dokumen Kebutuhan & Anti Over-Engineering, Audit: Halaman Profil > Profil Peneliti (Daftar Dosen & Peneliti Aktif) SIM P3M PKTJ, Keputusan, Ringkasan Skor, Temuan & Tindakan Perbaikan
 
+### Community 635 - "Laporan Audit Keamanan Repositori & Kebocoran Data GitHub"
+Cohesion: 0.29
+Nodes (6): 1. Ringkasan Eksekutif, 2. Rincian Temuan Berkas Sensitif Sebelumnya di GitHub, 3. Hasil Pemindaian Kredensial & Kunci Rahasia (*Secret Scanning*), 4. Tindakan Pengamanan yang Telah Diterapkan, 5. Rekomendasi Tindak Lanjut, Laporan Audit Keamanan Repositori & Kebocoran Data GitHub
+
 ## Knowledge Gaps
-- **1658 isolated node(s):** `name`, `type`, `description`, `keywords`, `license` (+1653 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 3247 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **379 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **1648 isolated node(s):** `name`, `type`, `description`, `keywords`, `license` (+1643 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 3235 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **398 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `t()` connect `t` to `model.js`, `c`, `a`, `n`, `tinymce.min.js`, `c`, `a`, `theme.min.js`, `C`, `theme.js`, `m`, `i`, `l`, `a`, `h`, `h`, `tinymce.js`?**
+- **Why does `t()` connect `t` to `model.js`, `c`, `a`, `n`, `s`, `tinymce.min.js`, `a`, `theme.min.js`, `i`, `C`, `theme.js`, `m`, `i`, `l`, `a`, `h`, `h`, `tinymce.js`?**
   _High betweenness centrality (0.070) - this node is a cross-community bridge._
 - **Why does `EditorManager` connect `EditorManager` to `Observable`, `tinymce.d.ts`?**
-  _High betweenness centrality (0.056) - this node is a cross-community bridge._
-- **Why does `o()` connect `t` to `model.js`, `n`, `c`, `tinymce.min.js`, `theme.min.js`, `C`, `theme.js`, `hi`, `m`, `i`, `a`, `h`, `h`, `tinymce.js`?**
-  _High betweenness centrality (0.044) - this node is a cross-community bridge._
+  _High betweenness centrality (0.057) - this node is a cross-community bridge._
+- **Why does `o()` connect `t` to `model.js`, `n`, `c`, `s`, `tinymce.min.js`, `theme.min.js`, `C`, `theme.js`, `hi`, `m`, `i`, `a`, `h`, `h`, `tinymce.js`?**
+  _High betweenness centrality (0.045) - this node is a cross-community bridge._
 - **What connects `name`, `type`, `description` to the rest of the system?**
-  _1658 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _1648 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `composer.json` be split into smaller, more focused modules?**
   _Cohesion score 0.044444444444444446 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
