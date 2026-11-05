@@ -13,6 +13,7 @@ class Research extends Model
     protected $table = 'researches';
 
     protected $fillable = [
+        'kode_penelitian',
         'judul',
         'abstrak',
         'prodi_id',
@@ -24,7 +25,9 @@ class Research extends Model
         'sumber_dana',
         'anggaran',
         'berkas_laporan',
+        'target_luaran',
         'status',
+        'relevansi_prodi',
     ];
 
     protected function casts(): array

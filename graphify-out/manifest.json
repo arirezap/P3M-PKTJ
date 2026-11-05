@@ -378,9 +378,9 @@
     "semantic_hash": ""
   },
   "app/Models/CommunityService.php": {
-    "mtime": 1793870153.303515,
-    "seen": 1793870369.8105137,
-    "ast_hash": "3b7ce92d76e81a3cc05be89a089a3318",
+    "mtime": 1793872424.5262794,
+    "seen": 1793873226.469315,
+    "ast_hash": "dd8bc8371e0970455162f75c9d522c16",
     "semantic_hash": ""
   },
   "app/Models/Document.php": {
@@ -432,9 +432,9 @@
     "semantic_hash": ""
   },
   "app/Models/Research.php": {
-    "mtime": 1792028448.7390196,
-    "seen": 1792029205.7744179,
-    "ast_hash": "8521a69b4d0f017af0167c9be06ad376",
+    "mtime": 1793872414.5870924,
+    "seen": 1793873226.4693313,
+    "ast_hash": "2957076eae1b11fa28c1f27ea3d83ba2",
     "semantic_hash": ""
   },
   "database/migrations/2026_10_14_000001_create_prodis_table.php": {
@@ -2220,9 +2220,9 @@
     "semantic_hash": ""
   },
   "resources/views/profil/peneliti.blade.php": {
-    "mtime": 1793859592.4723775,
-    "seen": 1793860007.2838662,
-    "ast_hash": "53b4a9563df49cb98d246541453ff816",
+    "mtime": 1793872168.6184244,
+    "seen": 1793873226.46972,
+    "ast_hash": "39b1a78f37bacb762052d514c65ebac3",
     "semantic_hash": ""
   },
   "resources/views/profil/rencana-strategis.blade.php": {
@@ -2298,15 +2298,15 @@
     "semantic_hash": ""
   },
   "resources/views/riset/penelitian.blade.php": {
-    "mtime": 1793864239.8459537,
-    "seen": 1793865300.9596956,
-    "ast_hash": "1bd9ff190371708145a3510b6c687dc4",
+    "mtime": 1793872997.8679705,
+    "seen": 1793873226.469732,
+    "ast_hash": "76d8ab3619d8497578f074f2126665bc",
     "semantic_hash": ""
   },
   "tests/Feature/PublicResearchPageTest.php": {
-    "mtime": 1793866470.361383,
-    "seen": 1793866654.2530625,
-    "ast_hash": "2923a75e25e4e24731d5396a0aa69971",
+    "mtime": 1793873149.6441255,
+    "seen": 1793873226.4697669,
+    "ast_hash": "cb9ee80550f4563c8e5cade4f9f9e476",
     "semantic_hash": ""
   },
   "app/Http/Controllers/Admin/OutputController.php": {
@@ -2442,15 +2442,15 @@
     "semantic_hash": ""
   },
   "resources/views/pengabdian/pkm.blade.php": {
-    "mtime": 1793845962.4399989,
-    "seen": 1793846090.7778573,
-    "ast_hash": "ded2062abaedb8c777f3e8814ee971ce",
+    "mtime": 1793873060.384311,
+    "seen": 1793873226.4697177,
+    "ast_hash": "7a794f688e08b60487d70a1864566aff",
     "semantic_hash": ""
   },
   "tests/Feature/PublicCommunityServicePageTest.php": {
-    "mtime": 1793870323.1522932,
-    "seen": 1793870369.8461814,
-    "ast_hash": "e73bfe2272ed99f57fc923855d35b120",
+    "mtime": 1793873086.693817,
+    "seen": 1793873226.4697611,
+    "ast_hash": "611bc9df5efe6f0dfb6b7e222b8c178b",
     "semantic_hash": ""
   },
   "app/Http/Controllers/Admin/CommunityServiceOutputController.php": {
@@ -2844,9 +2844,9 @@
     "semantic_hash": ""
   },
   "resources/views/profil/peneliti-detail.blade.php": {
-    "mtime": 1793859541.46363,
-    "seen": 1793860007.2838578,
-    "ast_hash": "6ed481d49ebd2e0471db74d20d2c34f4",
+    "mtime": 1793871603.9837523,
+    "seen": 1793871663.8470054,
+    "ast_hash": "5fcd890b22a9af71153b92453d67b8f9",
     "semantic_hash": ""
   },
   "docs/audit/2026-11-05-profil-dosen-peneliti-aktif.md": {
@@ -2880,9 +2880,9 @@
     "semantic_hash": ""
   },
   "database/seeders/Research2025Seeder.php": {
-    "mtime": 1793870921.9085457,
-    "seen": 1793871320.5064857,
-    "ast_hash": "bc61e353d7bbf749697ec70875033d08",
+    "mtime": 1793873144.2777944,
+    "seen": 1793873226.4694042,
+    "ast_hash": "e5432c4e764e7faace84bfd847a794d6",
     "semantic_hash": ""
   },
   "database/seeders/research_2025_data.json": {
@@ -2904,9 +2904,9 @@
     "semantic_hash": ""
   },
   "database/seeders/Output2025Seeder.php": {
-    "mtime": 1793870921.8555696,
-    "seen": 1793871320.5064821,
-    "ast_hash": "d32376fa405cf77d09e06db97556bae3",
+    "mtime": 1793873198.322009,
+    "seen": 1793873226.4694006,
+    "ast_hash": "211fbd5281fc195522b98af96af97db0",
     "semantic_hash": ""
   },
   "database/seeders/outputs_2025_data.json": {
@@ -2928,15 +2928,15 @@
     "semantic_hash": ""
   },
   "database/seeders/Pkm2025Seeder.php": {
-    "mtime": 1793870519.6017497,
-    "seen": 1793871320.5064836,
-    "ast_hash": "149ba496ca86d6e917abdbac383ceba7",
+    "mtime": 1793873198.3740575,
+    "seen": 1793873226.4694018,
+    "ast_hash": "ec1fd7d2916a38818a3315d6ad62d10b",
     "semantic_hash": ""
   },
   "database/seeders/pkm_2025_data.json": {
-    "mtime": 1793870217.9869862,
-    "seen": 1793870369.8167577,
-    "ast_hash": "dad41fb1748a061f0a84420a64cb96e6",
+    "mtime": 1793872582.8844676,
+    "seen": 1793873226.4694088,
+    "ast_hash": "d36e83ad36c14ce55426abd3fd825a4a",
     "semantic_hash": ""
   },
   "docs/audit/2026-11-05-integrasi-database-excel-p3m-2025.md": {
@@ -2946,9 +2946,123 @@
     "semantic_hash": ""
   },
   "docs/audit/2026-11-05-audit-keamanan-dan-kebocoran-data-github.md": {
-    "mtime": 1793871300.7028675,
-    "seen": 1793871320.5068746,
-    "ast_hash": "1e794ba72c7390194e99ad805dedb04b",
+    "mtime": 1793871355.3789036,
+    "seen": 1793871663.8470962,
+    "ast_hash": "a068a153ce66ee5ddb7904ee8f996104",
+    "semantic_hash": ""
+  },
+  "app/Console/Commands/SyncMasterDataCommand.php": {
+    "mtime": 1793872843.574926,
+    "seen": 1793873226.4692628,
+    "ast_hash": "e9d19d25cc4330c53ce53f920290f8ad",
+    "semantic_hash": ""
+  },
+  "database/migrations/2026_11_05_000003_add_master_excel_columns_to_researches_and_pkm_tables.php": {
+    "mtime": 1793872399.5305226,
+    "seen": 1793873226.4693952,
+    "ast_hash": "04e54f143175b3e58fa291c8e1fc8acd",
+    "semantic_hash": ""
+  },
+  "database/seeders/outputs_published_master_data.json": {
+    "mtime": 1793872819.6039145,
+    "seen": 1793873226.4694076,
+    "ast_hash": "0539f49f1acc6323abda7d4806ffb9d3",
+    "semantic_hash": ""
+  },
+  "database/seeders/pkm_master_data.json": {
+    "mtime": 1793872819.6039145,
+    "seen": 1793873226.4694095,
+    "ast_hash": "d29fc56ec4460ff5898275118e980f95",
+    "semantic_hash": ""
+  },
+  "database/seeders/research_master_data.json": {
+    "mtime": 1793872819.6039145,
+    "seen": 1793873226.4694118,
+    "ast_hash": "2400f3bb9e206a119cf4888b7fba83a9",
+    "semantic_hash": ""
+  },
+  "scratch/check_columns.php": {
+    "mtime": 1793873198.4284556,
+    "seen": 1793873226.469736,
+    "ast_hash": "915666e965f82b3b67ba4b94cfa62c14",
+    "semantic_hash": ""
+  },
+  "scratch/check_outputs.php": {
+    "mtime": 1793873198.4349878,
+    "seen": 1793873226.4697373,
+    "ast_hash": "318c8b5f3d0cc90881ce4c6645ec066f",
+    "semantic_hash": ""
+  },
+  "scratch/check_pkm.php": {
+    "mtime": 1793873198.4390228,
+    "seen": 1793873226.4697382,
+    "ast_hash": "759d00c15169e0561a33cb970227e1c6",
+    "semantic_hash": ""
+  },
+  "scratch/check_prodis.php": {
+    "mtime": 1793873198.444505,
+    "seen": 1793873226.469739,
+    "ast_hash": "dcdf03edebd05a5bea5542651c841e59",
+    "semantic_hash": ""
+  },
+  "scratch/check_r15_r28.php": {
+    "mtime": 1793873198.4498715,
+    "seen": 1793873226.46974,
+    "ast_hash": "8376441bf964052de2e71e3a9d646863",
+    "semantic_hash": ""
+  },
+  "scratch/check_researches_without_kode.php": {
+    "mtime": 1793873198.4568715,
+    "seen": 1793873226.4697409,
+    "ast_hash": "a785f8e4cb845c4f45cb09f782aa1d59",
+    "semantic_hash": ""
+  },
+  "scratch/generate_master_json.py": {
+    "mtime": 1793872815.5128047,
+    "seen": 1793873226.4697416,
+    "ast_hash": "b0230fa46acaea2ea6d52e3100d2a572",
+    "semantic_hash": ""
+  },
+  "scratch/inspect_data.py": {
+    "mtime": 1793872229.3130105,
+    "seen": 1793873226.4697423,
+    "ast_hash": "774666d5d23796679101495ae8d3736c",
+    "semantic_hash": ""
+  },
+  "scratch/inspect_pkm_json.php": {
+    "mtime": 1793873198.4608717,
+    "seen": 1793873226.4697433,
+    "ast_hash": "094724d0b8ca11da71abf156dccf2f37",
+    "semantic_hash": ""
+  },
+  "scratch/merge_pkm_data.py": {
+    "mtime": 1793872579.2730582,
+    "seen": 1793873226.4697442,
+    "ast_hash": "cf1b64fbbe0d11c036e76a7cf615834c",
+    "semantic_hash": ""
+  },
+  "scratch/process_preview.py": {
+    "mtime": 1793872323.9575903,
+    "seen": 1793873226.469745,
+    "ast_hash": "0adcb1b1072955f48be2b30b251ec89d",
+    "semantic_hash": ""
+  },
+  "scratch/test_match.py": {
+    "mtime": 1793872802.9921613,
+    "seen": 1793873226.4697459,
+    "ast_hash": "13cbd3c8290201d9186eb469c886fb89",
+    "semantic_hash": ""
+  },
+  "scratch/update_pkm_view.py": {
+    "mtime": 1793873035.0790155,
+    "seen": 1793873226.4697466,
+    "ast_hash": "1861e82d54624a9e6b839f580d668644",
+    "semantic_hash": ""
+  },
+  "scratch/update_pkm_view2.py": {
+    "mtime": 1793873057.0990746,
+    "seen": 1793873226.4697478,
+    "ast_hash": "93ea33a83beea526b0c0df5c9c849855",
     "semantic_hash": ""
   }
 }

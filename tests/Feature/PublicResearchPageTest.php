@@ -59,17 +59,20 @@ class PublicResearchPageTest extends TestCase
     public function test_real_research_2025_data_is_seeded_and_displayed(): void
     {
         $this->assertEquals(27, Research::where('tahun', 2025)->count());
+        $this->assertEquals(56, Research::whereNotNull('kode_penelitian')->count());
 
-        $sample = Research::where('tahun', 2025)->where('ketua_peneliti', 'Brasie Pradana')->first();
+        $sample = Research::where('kode_penelitian', '2025/PT/01')->first();
         $this->assertNotNull($sample);
-        $this->assertEquals('DIPA PKTJ', $sample->sumber_dana);
-        $this->assertEquals(0, (float) $sample->anggaran);
+        $this->assertStringContainsString('Brasie Pradana', $sample->ketua_peneliti);
+        $this->assertEquals('PT / Mandiri', $sample->sumber_dana);
+        $this->assertEquals(6000000, (float) $sample->anggaran);
         $this->assertNotNull($sample->user_id);
 
         $response = $this->get(route('riset.penelitian', ['tahun' => 2025]));
         $response->assertStatus(200);
         $response->assertSee('Brasie Pradana');
         $response->assertSee('Evaluasi Efektivitas Implementasi Laboratorium Virtual Reality');
+        $response->assertSee('2025/PT/01');
     }
 
     public function test_filter_by_prodi(): void

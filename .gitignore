@@ -40,3 +40,6 @@ vite.config.js.timestamp-*
 # Berkas Sistem Operasi
 .DS_Store
 Thumbs.db
+
+# Berkas Skrip Sementara (Scratch)
+/scratch/

@@ -884,6 +884,14 @@
 
                                                     <td class="py-4 px-4">
 
+                                                        @if($item->kode_pkm)
+                                                            <div class="mb-1">
+                                                                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-mono font-bold bg-slate-100 text-slate-700 border border-slate-200">
+                                                                    {{ $item->kode_pkm }}
+                                                                </span>
+                                                            </div>
+                                                        @endif
+
                                                         <div class="font-bold text-slate-900 leading-snug hover:text-[#0B2A59] transition-colors cursor-pointer"
 
                                                              @click="openDetail({{ json_encode($item) }})">
@@ -1067,6 +1075,14 @@
 
 
                                             <!-- Judul Kegiatan -->
+
+                                            @if($item->kode_pkm)
+                                                <div class="mb-1">
+                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-mono font-bold bg-slate-100 text-slate-700 border border-slate-200">
+                                                        {{ $item->kode_pkm }}
+                                                    </span>
+                                                </div>
+                                            @endif
 
                                             <h3 class="text-sm font-bold text-slate-900 leading-snug hover:text-[#0B2A59] transition-colors cursor-pointer"
 
@@ -1276,6 +1292,11 @@
 
                     <div class="flex items-center gap-2 flex-wrap">
 
+                        <template x-if="selectedService?.kode_pkm">
+                            <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-slate-100 text-slate-700 border border-slate-200"
+                                  x-text="selectedService?.kode_pkm"></span>
+                        </template>
+
                         <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-50 text-amber-800 border border-amber-200"
 
                               x-text="selectedService?.prodi?.kode_prodi"></span>
@@ -1309,6 +1330,14 @@
             <div class="space-y-4 text-xs">
 
                 
+
+                <!-- Relevansi Program Studi -->
+                <template x-if="selectedService?.relevansi_prodi">
+                    <div class="p-3 rounded-xl bg-blue-50/60 border border-blue-100">
+                        <span class="text-[#0B2A59] block text-xs font-bold leading-4">Relevansi Program Studi:</span>
+                        <span class="text-slate-700 text-xs font-medium leading-5 mt-1 block" x-text="selectedService?.relevansi_prodi"></span>
+                    </div>
+                </template>
 
                 <!-- Ringkasan Manfaat & Dampak -->
 

@@ -356,6 +356,13 @@
                                             <!-- Judul & Cuplikan Abstrak -->
                                             <td class="py-4 px-4">
                                                 <div class="space-y-1">
+                                                    @if($r->kode_penelitian)
+                                                        <div class="flex items-center gap-2">
+                                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-mono font-bold bg-slate-100 text-slate-700 border border-slate-200">
+                                                                {{ $r->kode_penelitian }}
+                                                            </span>
+                                                        </div>
+                                                    @endif
                                                     <h4 class="font-bold text-slate-900 leading-5 text-sm hover:text-[#0B2A59] cursor-pointer"
                                                         @click="openDetail({{ json_encode($r) }})">
                                                         {{ $r->judul }}
@@ -487,9 +494,16 @@
             
             <div class="flex items-start justify-between gap-4 border-b border-slate-100 pb-4">
                 <div class="space-y-1">
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-50 text-[#0B2A59] border border-blue-200"
-                          x-text="selectedResearch?.prodi?.kode_prodi + ' • Tahun ' + selectedResearch?.tahun">
-                    </span>
+                    <div class="flex items-center gap-2">
+                        <template x-if="selectedResearch?.kode_penelitian">
+                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-mono font-bold bg-slate-100 text-slate-700 border border-slate-200"
+                                  x-text="selectedResearch?.kode_penelitian">
+                            </span>
+                        </template>
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-50 text-[#0B2A59] border border-blue-200"
+                              x-text="(selectedResearch?.prodi?.kode_prodi || 'RSTJ') + ' • Tahun ' + selectedResearch?.tahun">
+                        </span>
+                    </div>
                     <h3 class="text-base sm:text-lg font-bold text-[#0B2A59] leading-6" x-text="selectedResearch?.judul"></h3>
                 </div>
                 <button @click="detailModalOpen = false" type="button" class="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 flex items-center justify-center flex-shrink-0">
@@ -542,6 +556,14 @@
                               x-text="'Rp ' + Number(selectedResearch?.anggaran || 0).toLocaleString('id-ID')"></span>
                     </div>
                 </div>
+
+                <!-- Target Luaran Penelitian -->
+                <template x-if="selectedResearch?.target_luaran">
+                    <div class="p-3 rounded-xl bg-blue-50/60 border border-blue-100">
+                        <span class="text-[#0B2A59] block text-xs font-bold leading-4">Target Luaran Penelitian:</span>
+                        <span class="text-slate-700 text-xs font-medium leading-5 mt-1 block" x-text="selectedResearch?.target_luaran"></span>
+                    </div>
+                </template>
 
                 <!-- Abstrak / Ringkasan Eksekutif -->
                 <div>

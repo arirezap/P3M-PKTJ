@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Output;
 use App\Models\Prodi;
+use App\Models\Research;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
@@ -124,6 +125,29 @@ class Output2025Seeder extends Seeder
 
         foreach (array_chunk($batchInsert, 50) as $chunk) {
             Output::insert($chunk);
+        }
+
+        // Sinkronkan luaran publikasi berstatus Published dari master Excel
+        $pubJsonPath = database_path('seeders/outputs_published_master_data.json');
+        if (File::exists($pubJsonPath)) {
+            $publishedItems = json_decode(File::get($pubJsonPath), true);
+            foreach ($publishedItems as $pub) {
+                $exists = Output::where('judul', $pub['judul'])->exists();
+                if (! $exists) {
+                    $relatedResearch = Research::where('kode_penelitian', $pub['kode_penelitian'])->first();
+                    Output::create([
+                        'kategori' => 'publikasi',
+                        'judul' => $pub['judul'],
+                        'prodi_id' => $relatedResearch?->prodi_id ?? $prodis->first()?->id,
+                        'user_id' => $relatedResearch?->user_id,
+                        'author_inventor' => $relatedResearch?->ketua_peneliti ?? 'Tim Peneliti PKTJ',
+                        'tahun' => (string) $pub['tahun'],
+                        'nama_jurnal_penerbit' => 'Jurnal Ilmiah Terakreditasi Nasional / Internasional',
+                        'link_dokumen' => $pub['doi'] ?: null,
+                        'status_publikasi' => 'published',
+                    ]);
+                }
+            }
         }
 
         $importedCount = count($batchInsert);

@@ -55,6 +55,7 @@ class Pkm2025Seeder extends Seeder
             $prodi = $prodis->get($prodiCode) ?? $prodis->first();
 
             $serviceBatch[] = [
+                'kode_pkm' => $item['kode_pkm'] ?? null,
                 'judul' => $item['judul'],
                 'ringkasan' => $item['ringkasan'] ?? null,
                 'prodi_id' => $prodi?->id,
@@ -78,6 +79,7 @@ class Pkm2025Seeder extends Seeder
                 'link_foto' => $item['link_foto'] ?? null,
                 'link_laporan' => $item['link_laporan'] ?? null,
                 'status' => $item['status'] ?? 'Selesai',
+                'relevansi_prodi' => $item['relevansi_prodi'] ?? null,
                 'created_at' => $now,
                 'updated_at' => $now,
             ];
@@ -132,4 +134,3 @@ class Pkm2025Seeder extends Seeder
         $this->command?->info("Sukses menyinkronkan {$serviceCount} kegiatan PkM 2025 dan {$outputCount} capaian luaran PkM 2025.");
     }
 }
-

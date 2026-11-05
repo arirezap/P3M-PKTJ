@@ -13,28 +13,46 @@ use Illuminate\Support\Str;
 class Research2025Seeder extends Seeder
 {
     /**
-     * Jalankan seeder data riil penelitian tahun 2025 dari berkas Excel P3M PKTJ.
+     * Jalankan seeder data master penelitian multi-tahun (2025-2027) dari berkas Excel sah P3M PKTJ.
      */
     public function run(): void
     {
-        $jsonPath = database_path('seeders/research_2025_data.json');
-        if (! File::exists($jsonPath)) {
-            $this->command?->error('Berkas data research_2025_data.json tidak ditemukan.');
+        $masterJsonPath = database_path('seeders/research_master_data.json');
+        $fallbackJsonPath = database_path('seeders/research_2025_data.json');
+
+        if (! File::exists($masterJsonPath) && ! File::exists($fallbackJsonPath)) {
+            $this->command?->error('Berkas data penelitian master tidak ditemukan.');
 
             return;
         }
 
-        $items = json_decode(File::get($jsonPath), true);
+        $items = File::exists($masterJsonPath)
+            ? json_decode(File::get($masterJsonPath), true)
+            : json_decode(File::get($fallbackJsonPath), true);
+
         if (empty($items)) {
-            $this->command?->error('Data research_2025_data.json kosong.');
+            $this->command?->error('Data penelitian master kosong.');
 
             return;
+        }
+
+        // Peta data pendukung (abstrak dan nama file laporan) dari dataset awal 2025
+        $abstrakMap = [];
+        $berkasMap = [];
+        if (File::exists($fallbackJsonPath)) {
+            $orig2025 = json_decode(File::get($fallbackJsonPath), true);
+            foreach ($orig2025 as $o) {
+                $norm = $this->normalizeString($o['judul']);
+                $abstrakMap[$norm] = $o['abstrak'] ?? null;
+                $berkasMap[$norm] = $o['berkas_laporan'] ?? null;
+            }
         }
 
         $prodis = Prodi::all()->keyBy('kode_prodi');
 
-        // 1. Bersihkan data penelitian dummy tahun 2025 (pertahankan riwayat tahun lainnya)
+        // 1. Bersihkan data penelitian master atau 2025 sebelumnya
         Research::where('tahun', 2025)->delete();
+        Research::whereNotNull('kode_penelitian')->delete();
 
         // 2. Kumpulan pemetaan keahlian dosen ketua peneliti
         $keahlianMap = [
@@ -61,11 +79,12 @@ class Research2025Seeder extends Seeder
             'Muhammad Reza Artha' => 'Inspeksi Keselamatan Jalan & Audit Kelaikan Prasarana',
         ];
 
-        // 3. Masukkan 27 data penelitian riil tahun 2025
+        // 3. Masukkan 56 data penelitian riil dari master Excel P3M PKTJ
         $defaultPasswordHash = Hash::make('password');
         $importedCount = 0;
+
         foreach ($items as $idx => $item) {
-            $ketua = trim($item['ketua']);
+            $ketua = trim($item['ketua_peneliti'] ?? ($item['ketua'] ?? 'Tim Peneliti PKTJ'));
             $prodiCode = $item['prodi_code'] ?? 'RSTJ';
             $prodi = $prodis->get($prodiCode) ?? $prodis->first();
 
@@ -87,7 +106,6 @@ class Research2025Seeder extends Seeder
                 ]
             );
 
-            // Jika user sudah ada tapi belum punya prodi/nama lengkap, update
             if ($user->prodi_id !== $prodi?->id || ! $user->status_aktif) {
                 $user->update([
                     'prodi_id' => $prodi?->id,
@@ -95,25 +113,40 @@ class Research2025Seeder extends Seeder
                 ]);
             }
 
-            // Simpan kegiatan penelitian
+            $normTitle = $this->normalizeString($item['judul']);
+            $abstrak = $item['abstrak'] ?? ($abstrakMap[$normTitle] ?? ('Kegiatan penelitian terapan vokasi program studi '.$prodiCode.' bidang keselamatan transportasi jalan PKTJ.'));
+            $berkas = $item['berkas_laporan'] ?? ($berkasMap[$normTitle] ?? ('Laporan Penelitian '.$ketua.'.pdf'));
+            $statusVal = strtolower((string) ($item['status'] ?? '')) === 'selesai' ? 'Selesai' : 'Berjalan';
+
             Research::create([
+                'kode_penelitian' => $item['kode_penelitian'] ?? null,
                 'judul' => $item['judul'],
-                'abstrak' => $item['abstrak'],
+                'abstrak' => $abstrak,
                 'prodi_id' => $prodi?->id,
                 'user_id' => $user->id,
                 'ketua_peneliti' => $ketua,
                 'anggota' => $item['anggota'] ?: null,
-                'tahun' => 2025,
-                'skema' => 'Penelitian Terapan Vokasi',
-                'sumber_dana' => $item['sumber_dana'],
-                'anggaran' => 0, // Sesuai arahan: diisi 0 jika tidak tercantum angka spesifik di sheet Excel
-                'berkas_laporan' => $item['berkas_laporan'] ?: null,
-                'status' => 'Selesai',
+                'tahun' => (string) ($item['tahun'] ?? 2025),
+                'skema' => $item['skema'] ?? 'Penelitian Terapan Vokasi',
+                'sumber_dana' => $item['sumber_dana'] ?? 'PT / Mandiri',
+                'anggaran' => (float) ($item['anggaran'] ?? 0),
+                'berkas_laporan' => $berkas,
+                'target_luaran' => $item['target_luaran'] ?? null,
+                'relevansi_prodi' => $item['relevansi_prodi'] ?? null,
+                'status' => $statusVal,
             ]);
 
             $importedCount++;
         }
 
-        $this->command?->info("Sukses menyinkronkan {$importedCount} data kegiatan penelitian riil tahun 2025.");
+        $this->command?->info("Sukses menyinkronkan {$importedCount} data kegiatan penelitian riil dari master Excel.");
+    }
+
+    private function normalizeString(string $str): string
+    {
+        $cleaned = preg_replace('/[^a-zA-Z0-9\s]/', '', strtolower($str));
+        $cleaned = str_replace('metode', '', (string) $cleaned);
+
+        return trim(preg_replace('/\s+/', ' ', (string) $cleaned));
     }
 }

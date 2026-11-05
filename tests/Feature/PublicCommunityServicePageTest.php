@@ -55,6 +55,9 @@ class PublicCommunityServicePageTest extends TestCase
         $uniqueTitles = $pkm2025->pluck('judul')->map(fn ($t) => strtolower(trim($t)))->unique();
         $this->assertCount(74, $uniqueTitles);
 
+        $this->assertEquals(14, $pkm2025->whereNotNull('kode_pkm')->count());
+        $samplePkm = $pkm2025->where('kode_pkm', '2025/PkM/01')->first();
+        $this->assertNotNull($samplePkm);
         $this->assertEquals(0, (int) $pkm2025->sum('anggaran'));
     }
 

@@ -13,6 +13,7 @@ class CommunityService extends Model
     protected $table = 'community_services';
 
     protected $fillable = [
+        'kode_pkm',
         'judul',
         'ringkasan',
         'prodi_id',
@@ -36,6 +37,7 @@ class CommunityService extends Model
         'link_foto',
         'link_laporan',
         'status',
+        'relevansi_prodi',
     ];
 
     protected function casts(): array
