@@ -41,7 +41,7 @@
                                     Program Studi {{ $dosen->prodi->jenjang }} {{ $dosen->prodi->nama_prodi }}
                                 </span>
                             @endif
-                            <span class="inline-flex items-center px-2.5 py-1 rounded bg-slate-100 text-slate-700 text-xs font-medium leading-4">
+                            <span class="inline-flex items-center px-2 py-1 rounded bg-slate-100 text-slate-700 text-xs font-medium leading-4">
                                 Status: Aktif
                             </span>
                         </div>
@@ -70,14 +70,14 @@
                         <!-- Tautan Profil Eksternal Akademik -->
                         <div class="flex items-center gap-2 pt-1 flex-wrap text-xs">
                             @if($dosen->sinta_id)
-                                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-orange-50 border border-orange-200 text-orange-900 text-xs font-bold rounded-lg leading-4">
+                                <span class="inline-flex items-center gap-2 px-3 py-2 bg-orange-50 border border-orange-200 text-orange-900 text-xs font-bold rounded-lg leading-4">
                                     <span>SINTA ID:</span>
                                     <span class="font-mono">{{ $dosen->sinta_id }}</span>
                                 </span>
                             @endif
 
                             @if($dosen->scopus_id)
-                                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-cyan-50 border border-cyan-200 text-cyan-900 text-xs font-bold rounded-lg leading-4">
+                                <span class="inline-flex items-center gap-2 px-3 py-2 bg-cyan-50 border border-cyan-200 text-cyan-900 text-xs font-bold rounded-lg leading-4">
                                     <span>Scopus ID:</span>
                                     <span class="font-mono">{{ $dosen->scopus_id }}</span>
                                 </span>
@@ -85,9 +85,9 @@
 
                             @if($dosen->google_scholar)
                                 <a href="{{ $dosen->google_scholar }}" target="_blank" rel="noopener noreferrer"
-                                   class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 border border-blue-200 text-[#0B2A59] hover:bg-blue-100 text-xs font-semibold rounded-lg transition-colors leading-4">
+                                   class="inline-flex items-center gap-2 px-3 py-2 bg-blue-50 border border-blue-200 text-[#0B2A59] hover:bg-blue-100 text-xs font-semibold rounded-lg transition-colors leading-4">
                                     <span>Google Scholar</span>
-                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                     </svg>
                                 </a>
@@ -111,7 +111,7 @@
                     </div>
 
                     <a href="{{ route('profil.peneliti') }}" 
-                       class="h-11 px-4 inline-flex items-center justify-center gap-2 rounded-xl text-xs font-semibold text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 transition-colors leading-4 shadow-2xs">
+                       class="h-11 px-4 inline-flex items-center justify-center gap-2 rounded-xl text-xs font-semibold text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 transition-colors leading-4 shadow-sm">
                         <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                         </svg>
@@ -127,7 +127,7 @@
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
                 <div>
                     <div class="flex items-center gap-2">
-                        <span class="w-2.5 h-2.5 rounded-full bg-[#0B2A59]"></span>
+                        <span class="w-2 h-2 rounded-full bg-[#0B2A59]"></span>
                         <h2 class="text-lg sm:text-xl font-bold text-[#0B2A59] tracking-tight leading-7">
                             Data Kegiatan Penelitian
                         </h2>
@@ -144,20 +144,20 @@
             @if($researches->isNotEmpty())
                 <div class="divide-y divide-slate-100">
                     @foreach($researches as $riset)
-                        <article class="py-5 first:pt-0 last:pb-0 space-y-2.5">
+                        <article class="py-5 first:pt-0 last:pb-0 space-y-3">
                             <div class="flex items-center justify-between gap-4 flex-wrap">
                                 <div class="flex items-center gap-2 flex-wrap">
-                                    <span class="px-2.5 py-0.5 rounded bg-[#0B2A59] text-white text-xs font-bold leading-4">
+                                    <span class="px-2 py-1 rounded bg-[#0B2A59] text-white text-xs font-bold leading-4">
                                         Tahun {{ $riset->tahun }}
                                     </span>
-                                    <span class="px-2.5 py-0.5 rounded bg-slate-100 text-slate-700 text-xs font-medium leading-4">
+                                    <span class="px-2 py-1 rounded bg-slate-100 text-slate-700 text-xs font-medium leading-4">
                                         {{ $riset->skema ?? 'Penelitian Terapan' }}
                                     </span>
-                                    <span class="px-2.5 py-0.5 rounded bg-blue-50 text-blue-800 text-xs font-medium leading-4">
+                                    <span class="px-2 py-1 rounded bg-blue-50 text-blue-800 text-xs font-medium leading-4">
                                         Sumber Dana: {{ $riset->sumber_dana ?? 'DIPA PKTJ' }}
                                     </span>
                                 </div>
-                                <span class="px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider leading-4
+                                <span class="px-2 py-1 rounded text-xs font-bold uppercase tracking-wider leading-4
                                     {{ $riset->status === 'Selesai' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800' }}">
                                     {{ $riset->status ?? 'Selesai' }}
                                 </span>
@@ -195,7 +195,7 @@
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
                 <div>
                     <div class="flex items-center gap-2">
-                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-600"></span>
+                        <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
                         <h2 class="text-lg sm:text-xl font-bold text-[#0B2A59] tracking-tight leading-7">
                             Data Publikasi Ilmiah &amp; Luaran HKI
                         </h2>
@@ -212,18 +212,18 @@
             @if($outputs->isNotEmpty())
                 <div class="divide-y divide-slate-100">
                     @foreach($outputs as $luaran)
-                        <article class="py-5 first:pt-0 last:pb-0 space-y-2.5">
+                        <article class="py-5 first:pt-0 last:pb-0 space-y-3">
                             <div class="flex items-center justify-between gap-4 flex-wrap">
                                 <div class="flex items-center gap-2 flex-wrap">
-                                    <span class="px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider
+                                    <span class="px-2 py-1 rounded text-xs font-bold uppercase tracking-wider
                                         {{ strtolower($luaran->kategori) === 'jurnal internasional' ? 'bg-indigo-100 text-indigo-800' : (strtolower($luaran->kategori) === 'hki' ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800') }}">
                                         {{ $luaran->kategori }}
                                     </span>
-                                    <span class="px-2.5 py-0.5 rounded bg-slate-100 text-slate-700 text-xs font-semibold leading-4">
+                                    <span class="px-2 py-1 rounded bg-slate-100 text-slate-700 text-xs font-semibold leading-4">
                                         Tahun {{ $luaran->tahun }}
                                     </span>
                                     @if($luaran->tingkat_kesiapan_terapan)
-                                        <span class="px-2 py-0.5 rounded bg-blue-50 text-[#0B2A59] text-xs font-semibold leading-4">
+                                        <span class="px-2 py-1 rounded bg-blue-50 text-[#0B2A59] text-xs font-semibold leading-4">
                                             {{ $luaran->tingkat_kesiapan_terapan }}
                                         </span>
                                     @endif
@@ -233,7 +233,7 @@
                                     <a href="{{ $luaran->link_dokumen }}" target="_blank" rel="noopener noreferrer"
                                        class="inline-flex items-center gap-1 text-xs font-semibold text-[#0B2A59] hover:underline leading-4">
                                         <span>Buka Dokumen</span>
-                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                         </svg>
                                     </a>

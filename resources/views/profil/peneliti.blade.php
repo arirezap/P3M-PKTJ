@@ -52,19 +52,19 @@
     </section>
 
     <!-- Bilah Filter & Pencarian -->
-    <section class="bg-white border-b border-slate-200 sticky top-20 z-30 shadow-xs">
+    <section class="bg-white border-b border-slate-200 sticky top-20 z-30 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <form method="GET" action="{{ route('profil.peneliti') }}" class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
                 
                 <!-- Tab Filter Program Studi (3 Prodi) -->
-                <div class="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 scrollbar-none text-xs">
+                <div class="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0 scrollbar-none text-xs">
                     <a href="{{ route('profil.peneliti', array_merge(request()->except(['prodi', 'page']), ['prodi' => 'semua'])) }}"
-                       class="px-3.5 py-2 rounded-lg font-semibold transition-colors whitespace-nowrap leading-4 {{ !request('prodi') || request('prodi') == 'semua' ? 'bg-[#0B2A59] text-white shadow-xs' : 'bg-slate-100 text-slate-700 hover:bg-slate-200' }}">
+                       class="h-10 px-4 inline-flex items-center justify-center rounded-lg font-semibold transition-colors whitespace-nowrap leading-4 {{ !request('prodi') || request('prodi') == 'semua' ? 'bg-[#0B2A59] text-white shadow-sm' : 'bg-slate-100 text-slate-700 hover:bg-slate-200' }}">
                         Semua Prodi
                     </a>
                     @foreach($prodis as $pr)
                         <a href="{{ route('profil.peneliti', array_merge(request()->except(['prodi', 'page']), ['prodi' => strtolower($pr->kode_prodi)])) }}"
-                           class="px-3.5 py-2 rounded-lg font-semibold transition-colors whitespace-nowrap leading-4 {{ strtolower(request('prodi')) == strtolower($pr->kode_prodi) ? 'bg-[#0B2A59] text-white shadow-xs' : 'bg-slate-100 text-slate-700 hover:bg-slate-200' }}">
+                           class="h-10 px-4 inline-flex items-center justify-center rounded-lg font-semibold transition-colors whitespace-nowrap leading-4 {{ strtolower(request('prodi')) == strtolower($pr->kode_prodi) ? 'bg-[#0B2A59] text-white shadow-sm' : 'bg-slate-100 text-slate-700 hover:bg-slate-200' }}">
                             {{ $pr->kode_prodi }}
                         </a>
                     @endforeach
@@ -86,8 +86,8 @@
                         Cari
                     </button>
                     @if(request()->hasAny(['prodi', 'q']))
-                        <a href="{{ route('profil.peneliti') }}" class="h-10 px-3 border border-slate-300 text-slate-600 text-xs font-medium rounded-lg hover:bg-slate-50 flex items-center leading-4 whitespace-nowrap">
-                            Reset
+                        <a href="{{ route('profil.peneliti') }}" class="h-10 px-4 border border-slate-300 text-slate-600 text-xs font-medium rounded-lg hover:bg-slate-50 flex items-center leading-4 whitespace-nowrap">
+                            Atur Ulang
                         </a>
                     @endif
                 </div>
@@ -121,7 +121,7 @@
 
                                     <div class="flex-1 min-w-0">
                                         @if($dosen->prodi)
-                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-bold tracking-wider uppercase leading-4
+                                            <span class="inline-flex items-center px-2 py-1 rounded text-xs font-bold tracking-wider uppercase leading-4
                                                 {{ $dosen->prodi->kode_prodi === 'RSTJ' ? 'bg-blue-100 text-blue-800' : ($dosen->prodi->kode_prodi === 'TRO' ? 'bg-indigo-100 text-indigo-800' : 'bg-amber-100 text-amber-800') }}">
                                                 {{ $dosen->prodi->jenjang }} {{ $dosen->prodi->kode_prodi }}
                                             </span>
@@ -131,7 +131,7 @@
                                                 {{ $dosen->name }}
                                             </a>
                                         </h2>
-                                        <p class="text-xs text-slate-500 mt-0.5 leading-4">
+                                        <p class="text-xs text-slate-500 mt-1 leading-4">
                                             NIDN/NIP: <span class="font-medium text-slate-700">{{ $dosen->nidn_nip ?? '-' }}</span>
                                         </p>
                                     </div>
@@ -139,7 +139,7 @@
 
                                 <!-- Bidang Keahlian / Fokus Riset -->
                                 <div class="p-3 bg-slate-50 border border-slate-100 rounded-xl space-y-1">
-                                    <div class="text-xs uppercase font-bold text-slate-400 tracking-wider leading-3">Fokus Riset & Kepakaran</div>
+                                    <div class="text-xs uppercase font-bold text-slate-400 tracking-wider leading-4">Fokus Riset & Kepakaran</div>
                                     <p class="text-xs font-medium text-slate-700 leading-4 line-clamp-2">
                                         {{ $dosen->keahlian ?? 'Riset Keselamatan Transportasi Terapan' }}
                                     </p>
@@ -154,14 +154,14 @@
                                     </div>
 
                                     <!-- Badge Tautan Eksternal SINTA / Scopus -->
-                                    <div class="flex items-center gap-1.5">
+                                    <div class="flex items-center gap-2">
                                         @if($dosen->sinta_id)
-                                            <span class="px-2 py-0.5 bg-orange-50 border border-orange-200 text-orange-800 text-xs font-bold rounded" title="SINTA ID: {{ $dosen->sinta_id }}">
+                                            <span class="px-2 py-1 bg-orange-50 border border-orange-200 text-orange-800 text-xs font-bold rounded" title="SINTA ID: {{ $dosen->sinta_id }}">
                                                 SINTA
                                             </span>
                                         @endif
                                         @if($dosen->scopus_id)
-                                            <span class="px-2 py-0.5 bg-cyan-50 border border-cyan-200 text-cyan-800 text-xs font-bold rounded" title="Scopus ID: {{ $dosen->scopus_id }}">
+                                            <span class="px-2 py-1 bg-cyan-50 border border-cyan-200 text-cyan-800 text-xs font-bold rounded" title="Scopus ID: {{ $dosen->scopus_id }}">
                                                 Scopus
                                             </span>
                                         @endif
@@ -173,12 +173,12 @@
                             <!-- Tombol Aksi Buka Halaman Portofolio Lengkap -->
                             <div class="pt-5 mt-4 border-t border-slate-100">
                                 <a href="{{ route('profil.peneliti.show', $dosen) }}"
-                                   class="w-full h-11 px-4 inline-flex items-center justify-center gap-2 rounded-xl text-xs font-semibold text-[#0B2A59] bg-blue-50/80 hover:bg-[#0B2A59] hover:text-white transition-all duration-150 active:scale-[0.99] leading-4 shadow-2xs">
+                                   class="w-full h-11 px-4 inline-flex items-center justify-center gap-2 rounded-xl text-xs font-semibold text-[#0B2A59] bg-blue-50/80 hover:bg-[#0B2A59] hover:text-white transition-all duration-150 active:scale-[0.99] leading-4 shadow-sm">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                     </svg>
                                     <span>Lihat Rekap Riset dan Publikasi</span>
-                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                     </svg>
                                 </a>

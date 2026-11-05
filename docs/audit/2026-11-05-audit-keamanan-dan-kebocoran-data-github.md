@@ -61,3 +61,4 @@ Pemeriksaan menyeluruh telah dilakukan terhadap seluruh berkas yang terlacak pad
    ```
 2. **Pembersihan Riwayat Commit Lama (Opsional)**:
    Jika repositori berstatus publik dan Anda ingin menghapus berkas-berkas tersebut dari seluruh riwayat commit lama (*commit history* terdahulu), dapat digunakan utilitas `git-filter-repo` atau BFG Repo-Cleaner.
+
